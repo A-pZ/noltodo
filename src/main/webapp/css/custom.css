@@ -6,9 +6,10 @@ body {
 .inputaddon-width {
 	width: 120px;
 	text-align: center;
+	background-color: #f2f5f7;
 }
 
 .jobHover {
 	background-color: #48a;
-	color: #f5f6fb;
+	color: #f9f9fb;
 }
