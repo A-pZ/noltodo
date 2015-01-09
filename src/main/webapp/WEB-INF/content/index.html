@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"></meta>
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<meta name="description" content="のぼんのタスクをmarkdownで管理しようプロジェクト"></meta>
+<meta name="author" content="A-pZ"></meta>
+
+<title>のぶろぐ！</title>
+<link href="../../css/bootstrap.min.css" rel="stylesheet"
+	th:href="@{/css/bootstrap.min.css}" />
+<link href="../../css/bootstrap-theme.min.css" rel="stylesheet"
+	th:href="@{/css/bootstrap-theme.min.css}" />
+<link href="../../css/bootstrap-markdown.min.css" rel="stylesheet"
+	th:href="@{/css/bootstrap-markdown.min.css}" />
+<link href="../../css/custom.css" rel="stylesheet"
+	th:href="@{/css/custom.css}" />
+
+<script src="../../js/jquery-1.11.1.min.js"
+	th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../../js/bootstrap-markdown.js"
+	th:src="@{/js/bootstrap-markdown.js}"></script>
+<script src="../../js/locale/bootstrap-markdown.ja-custom.js"
+	th:src="@{/js/locale/bootstrap-markdown.ja-custom.js}"></script>
+<script src="../../js/markdown.js" th:src="@{/js/markdown.js}"></script>
+<script src="../../js/to-markdown.js" th:src="@{/js/to-markdown.js}"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+	$(document).ready(function() {
+
+		// マークダウンのテキストエリア
+		$("#content").markdown({
+			fullscreen : false,
+			width : 'col-xs-12',
+			height : 240,
+			resize : 'vertical',
+			language : 'ja',
+			hiddenButtons : [ 'cmdCode', 'cmdImage', 'cmdUrl' ],
+		});
+
+		// 職業・特化のホバー処理
+		$("[data-job]").bind("click" , function() {
+			var name = $(this).text();
+			var id = $(this).attr("data-job")
+			$("#jobname").val( name  );
+			$("#jobid").val( id );
+			// モーダルを閉じる
+			$("#closeModal").click();
+		});
+
+		$("[data-job]").bind("mouseover" , function() {
+			$(this).addClass("jobHover");
+		});
+		$("[data-job]").bind("mouseout" , function() {
+			$(this).removeClass("jobHover");
+		});
+	});
+
+	/*]]>*/
+</script>
+<style type="text/css">
+</style>
+<body role="document">
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container" th:replace="templates/header :: header">
+			<!-- この中身はtemplates/headerのheaderスニペットに切り替わる -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Bootstrap theme</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#about">About</a></li>
+					<li><a href="#contact">Contact</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+
+	<div class="container theme-showcase" role="main">
+		<div class="messages" th:replace="templates/messages :: messages">
+			<div class="alert alert-success" role="alert">通常メッセージです。</div>
+			<div class="alert alert-danger" role="alert">エラーメッセージです。</div>
+		</div>
+
+		<form class="form-horizontal" role="form" method="POST">
+			<div class="row">
+
+				<div class="col-md-6">
+					<div class="input-group">
+						<div class="input-group-addon inputaddon-width">タスクのタイトル</div>
+						<input name="title" class="form-control col-lg" type="text"
+							placeholder="タイトルをどうぞ" />
+					</div>
+				</div>
+
+				<div class="col-md-6"></div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<div class="input-group col-sm-12">
+							<div class="input-group-addon inputaddon-width"><span class="glyphicon glyphicon-user"></span>職業・特化</div>
+							<input type="text" class="form-control" id="jobname" name="jobname" value=""/>
+							<span class="input-group-btn">
+								<button id="departureList" type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">選択する</button>
+							</span>
+							<input type="hidden" id="jobid" name="jobid" value="" />
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6"></div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="input-group">
+						<div class="input-group-addon inputaddon-width">本文</div>
+						<textarea id="content" name="content" class="form-control"></textarea>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="input-group">
+						<button type="button" class="btn btn-success">
+							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>書きこむ
+						</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<!-- 職業＆特化選択モーダル -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header" >
+					<button type="button" id="closeModal" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">職業・特化選択</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table table-bordered table-condensed">
+						<tbody>
+							<tr>
+								<td data-job="sam">侍</td>
+								<td data-job="bug">武芸</td>
+								<td data-job="gun">軍学</td>
+								<td data-job="bus">武士道</td>
+							</tr>
+							<tr>
+								<td data-job="sou">僧</td>
+								<td data-job="hei">僧兵</td>
+								<td data-job="fut">仏門</td>
+								<td data-job="mik">密教</td>
+							</tr>
+							<tr>
+								<td data-job="onm">陰陽師</td>
+								<td data-job="dou">陰陽道</td>
+								<td data-job="sen">仙論</td>
+								<td data-job="sho">召喚</td>
+							</tr>
+							<tr>
+								<td data-job="kam">神職</td>
+								<td data-job="sin">神道</td>
+								<td data-job="kos">古神</td>
+								<td data-job="gag">雅楽</td>
+							</tr>
+							<tr>
+								<td data-job="nin">忍者</td>
+								<td data-job="pou">忍法</td>
+								<td data-job="ans">暗殺</td>
+								<td data-job="jyu">忍術</td>
+							</tr>
+							<tr>
+								<td data-job="kaj">鍛冶屋</td>
+								<td data-job="kat">刀</td>
+								<td data-job="yor">鎧</td>
+								<td data-job="tep">鉄砲</td>
+							</tr>
+							<tr>
+								<td data-job="yak">薬師</td>
+								<td data-job="iga">医学</td>
+								<td data-job="jin">神通力</td>
+								<td data-job="shu">修験</td>
+							</tr>
+							<tr>
+								<td data-job="kab">傾奇者</td>
+								<td data-job="tat">殺陣</td>
+								<td data-job="enb">四象</td>
+								<td data-job="nou">能楽</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+				<div class="modal-footer">
+
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+</body>
+
+</html>

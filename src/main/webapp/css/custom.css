@@ -1,0 +1,14 @@
+body {
+  padding-top: 70px;
+  padding-bottom: 30px;
+}
+
+.inputaddon-width {
+	width: 120px;
+	text-align: center;
+}
+
+.jobHover {
+	background-color: #48a;
+	color: #f5f6fb;
+}
