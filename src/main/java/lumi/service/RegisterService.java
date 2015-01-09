@@ -35,8 +35,22 @@ public class RegisterService extends LumiService {
 	 */
 	public boolean execute(RegisterVO vo) throws Exception {
 
-		// 登録を行う。
-		int count = dao.insert(Query.insertTask.name(), vo);
+		int count = 0;
+
+		if ( vo.getId() == 0 ) {
+			// 登録を行う。
+			count = dao.insert(Query.insertTask.name(), vo);
+		} else {
+			// 更新を行う。
+			count = dao.update(Query.updateTask.name(), vo);
+		}
+
+		if ( count == 1) {
+			addInfoMessage("register.complete");
+		} else {
+			addErrorMessage("register.failure");
+			throw new Exception("register.failure:register rows:" + count);
+		}
 
 		// 登録結果を返す。
 		return ( count == 1);
@@ -54,6 +68,6 @@ public class RegisterService extends LumiService {
 	 *
 	 */
 	public enum Query {
-		insertTask ,
+		insertTask , updateTask ,
 	}
 }

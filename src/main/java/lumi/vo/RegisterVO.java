@@ -56,4 +56,10 @@ public class RegisterVO {
 	private String userid;
 	/** 職業・特化ID */
 	private String jobid;
+	/** 職業名 */
+	private String jobname;
+	/** 期限 */
+	private Timestamp limitdate;
+	/** タスクステータス */
+	private String status;
 }

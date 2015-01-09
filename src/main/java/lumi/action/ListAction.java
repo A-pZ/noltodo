@@ -1,13 +1,12 @@
 package lumi.action;
 
 import java.util.List;
-import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import lumi.action.LumiActionSupport;
-import lumi.service.SampleService;
+import lumi.service.SearchService;
+import lumi.vo.SearchVO;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -30,24 +29,21 @@ import com.opensymphony.xwork2.interceptor.annotations.Blocked;
 @ParentPackage("lumi-default")
 @Results({
 	// location属性に指定したhtmlファイル名は、/WEB-INF/content 以下からの相対パス。
-	@Result(name = ActionSupport.SUCCESS, location = "index" , type="thymeleaf"),
+	@Result(name = ActionSupport.SUCCESS, location = "list" , type="thymeleaf"),
 })
 @Controller
 @Scope("prototype")
 @Slf4j
-public class SampleAction extends LumiActionSupport {
+public class ListAction extends LumiActionSupport {
 
 	/**
 	 * デフォルトアクション。
 	 */
-	@Action("")
+	@Action("list")
 	public String start() throws Exception {
 
 		// Serviceクラスの呼び出し
-		// List<Map<String,Object>> resultList = service.execute("param");
-
-		// 画面上部に表示するテキスト
-		sample = "Actionを実行しました。";
+		resultList = service.execute(vo);
 
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
 		// この値は@Resultで指定したname値となる。
@@ -60,11 +56,11 @@ public class SampleAction extends LumiActionSupport {
 	@Blocked
 	@Autowired
 	@Getter @Setter
-	private SampleService service;
+	private SearchService service;
 
 	@Getter @Setter
-	private String sample;
+	private SearchVO vo;
 
 	@Getter @Setter
-	private List<Map<String,Object>> resultList;
+	private List<SearchVO>  resultList;
 }

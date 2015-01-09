@@ -13,3 +13,7 @@ body {
 	background-color: #48a;
 	color: #f9f9fb;
 }
+
+.field-error {
+	color: #D53;
+}

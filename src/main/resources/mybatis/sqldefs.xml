@@ -23,21 +23,69 @@
 		)
 	</insert>
 
+	<!-- タスクの検索 -->
+	<select id="searchTask" parameterType="lumi.vo.SearchVO" resultType="lumi.vo.SearchVO">
+		SELECT
+			  task.id	id
+			, task.name	name
+			, task
+			, writedate
+			, userid
+			, jobid
+			, m_job.name jobname
+			, limitdate
+			, status
+		FROM
+			task , m_job
+		<where>
+			task.jobid = m_job.id
+			<if test="userid != null">
+				AND userid = #{userid}
+			</if>
+			<if test="jobid != null">
+				AND jobid = #{jobid}
+			</if>
+			<if test="id != null">
+				AND task.id = #{id}
+			</if>
+		</where>
+	</select>
+
+
 	<!-- タスクの登録 -->
 	<insert id="insertTask" parameterType="lumi.vo.RegisterVO">
-	INSERT INTO
-		task (
-		  name
-		, task
-		, writedate
-		, userid
-		, jobid
-	) VALUES (
-		  #{name}
-		, #{task}
-		, now()
-		, #{userid}
-		, #{jobid}
-	)
+		INSERT INTO
+			task (
+			  name
+			, task
+			, writedate
+			, userid
+			, jobid
+			, limitdate
+			, status
+		) VALUES (
+			  #{name}
+			, #{task}
+			, now()
+			, #{userid}
+			, #{jobid}
+			, now()
+			, 'op'
+		)
 	</insert>
+
+	<update id="updateTask" parameterType="lumi.vo.RegisterVO">
+		UPDATE
+			task
+		SET
+			  name = #{name}
+			, task = #{task}
+			, writedate = now()
+			, userid = #{userid}
+			, jobid = #{jobid}
+			, limitdate = now()
+			, status = 'op'
+		WHERE
+			id = #{id}
+	</update>
 </mapper>

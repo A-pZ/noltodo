@@ -3,8 +3,8 @@ package lumi.action;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import lumi.service.RegisterService;
-import lumi.vo.RegisterVO;
+import lumi.service.SearchService;
+import lumi.vo.SearchVO;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -17,11 +17,9 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.interceptor.annotations.Blocked;
-import com.opensymphony.xwork2.validator.annotations.Validations;
-import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 
 /**
- * Actionクラスのテンプレートサンプル。
+ * 1レコードの表示Actionクラス。
  *
  * @author A-pZ ( Serendipity 3 ./ as sundome goes by. )
  */
@@ -30,31 +28,29 @@ import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 @Results({
 	// location属性に指定したhtmlファイル名は、/WEB-INF/content 以下からの相対パス。
 	@Result(name = ActionSupport.SUCCESS, location = "register" , type="thymeleaf"),
-	@Result(name = ActionSupport.ERROR, location = "register" , type="thymeleaf"),
-	@Result(name = ActionSupport.INPUT, location = "register" , type="thymeleaf"),
 })
-@Validations(
-	visitorFields={
-		@VisitorFieldValidator(appendPrefix=false,fieldName="vo")
-	}
-)
 @Controller
 @Scope("prototype")
 @Slf4j
-public class RegisterAction extends LumiActionSupport {
+public class DisplayAction extends LumiActionSupport {
 
 	/**
 	 * デフォルトアクション。
 	 */
-	@Action("register")
+	@Action("display")
 	public String start() throws Exception {
 
-		// Serviceクラスの呼び出し
-		boolean result = service.execute(vo);
+		if ( vo != null && vo.getId() > 0 ) {
+			// Serviceクラスの呼び出し
+			vo = service.detail(vo);
+		} else {
+			// ない場合はブランク作成
+			vo = new SearchVO();
+		}
 
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
 		// この値は@Resultで指定したname値となる。
-		return ( result ? SUCCESS : ERROR );
+		return SUCCESS;
 	}
 
 	/**
@@ -63,8 +59,8 @@ public class RegisterAction extends LumiActionSupport {
 	@Blocked
 	@Autowired
 	@Getter @Setter
-	private RegisterService service;
+	private SearchService service;
 
 	@Getter @Setter
-	private RegisterVO vo;
+	private SearchVO vo;
 }
