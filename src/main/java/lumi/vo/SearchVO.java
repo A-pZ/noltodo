@@ -33,4 +33,6 @@ public class SearchVO {
 	private Timestamp limitdate;
 	/** タスクステータス */
 	private String status;
+	/** 更新レコード判定 */
+	private boolean update;
 }

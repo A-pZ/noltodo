@@ -45,10 +45,15 @@
 			<if test="jobid != null">
 				AND jobid = #{jobid}
 			</if>
-			<if test="id != null">
+			<if test="id != null &amp; id != 0">
 				AND task.id = #{id}
 			</if>
+			<if test="status == null">
+				AND task.status &lt;&gt; 'cl'
+			</if>
 		</where>
+		ORDER BY
+			writedate DESC
 	</select>
 
 
@@ -84,7 +89,7 @@
 			, userid = #{userid}
 			, jobid = #{jobid}
 			, limitdate = now()
-			, status = 'op'
+			, status = #{status}
 		WHERE
 			id = #{id}
 	</update>

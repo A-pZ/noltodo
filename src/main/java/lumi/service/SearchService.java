@@ -35,15 +35,19 @@ public class SearchService extends LumiService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<SearchVO>  execute(SearchVO vo) throws Exception {
+	public List<SearchVO> execute(SearchVO vo) throws Exception {
 
 		// 検索を行う。
-		List<SearchVO>  resultList = dao.select(Query.searchTask.name(), vo);
+		List<SearchVO> resultList = dao.select(Query.searchTask.name(), vo);
 
-		// メッセージ
-		String[] msg = {String.valueOf(resultList.size())};
+		if ( resultList.size() == 0 ) {
+			addWarnMessage("search.result.none");
+		} else {
+			// メッセージ
+			String[] msg = {String.valueOf(resultList.size())};
+			addInfoMessage("search.result", msg);
+		}
 
-		addInfoMessage("search.result", msg);
 
 		// 登録結果を返す。
 		return resultList;
@@ -57,7 +61,7 @@ public class SearchService extends LumiService {
 	 */
 	public SearchVO detail(SearchVO vo) throws Exception {
 		// 検索を行う。
-		List<SearchVO>  resultList = dao.select(Query.searchTask.name(), vo);
+		List<SearchVO> resultList = dao.select(Query.searchTask.name(), vo);
 
 		if ( resultList == null || resultList.size() ==0 ) {
 			addErrorMessage("detail.record.none");
@@ -66,10 +70,14 @@ public class SearchService extends LumiService {
 
 		if ( resultList.size() > 2) {
 			addErrorMessage("detail.record.toomatch");
+			return null;
 		} else {
 			addInfoMessage("detail.display");
 		}
-		return resultList.get(0);
+		SearchVO returnVo = resultList.get(0);
+		returnVo.setUpdate(true);
+
+		return returnVo;
 	}
 
 	/**
