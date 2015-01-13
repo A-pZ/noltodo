@@ -37,57 +37,68 @@
     <![endif]-->
 </head>
 <script type="text/javascript" th:inline="javascript">
-	/*<![CDATA[*/
-	$(document).ready(function() {
+/*<![CDATA[*/
+$(document).ready(function() {
 
-		// マークダウンのテキストエリア
-		$("#content").markdown({
-			fullscreen : false,
-			width : 'col-xs-12',
-			height : 240,
-			resize : 'vertical',
-			language : 'ja',
-			hiddenButtons : [ 'cmdCode', 'cmdImage', 'cmdUrl' ],
-		});
-
-		// 職業・特化のホバー処理
-		$("[data-job]").bind("click", function() {
-			var name = $(this).text();
-			var id = $(this).attr("data-job")
-			$("#jobname").val(name);
-			$("#jobid").val(id);
-			// モーダルを閉じる
-			$("#closeModal").click();
-		});
-
-		$("[data-job]").bind("mouseover", function() {
-			$(this).addClass("jobHover");
-		});
-		$("[data-job]").bind("mouseout", function() {
-			$(this).removeClass("jobHover");
-		});
-
-		$("#writeButtn").bind("click" , function() {
-			$("#status").val("op");
-			url = /*[[ @{/register} ]]*/ 'register.html';
-			goSubmit(url);
-		});
-
-		$("#taskCloseButtn").bind("click" , function() {
-			$("#status").val("cl");
-			url = /*[[ @{/register} ]]*/ 'register.html';
-			goSubmit(url);
-		})
+	// マークダウンのテキストエリア
+	$("#content").markdown({
+		fullscreen : false,
+		width : 'col-xs-12',
+		height : 240,
+		resize : 'vertical',
+		language : 'ja',
+		hiddenButtons : [ 'cmdCode', 'cmdImage', 'cmdUrl' ],
+		onShow : function(e) {
+			showPreview(e);
+		} ,
 	});
 
-	var goSubmit = function(url) {
-		$("button").attr('disabled' , 'disabled');
-		//$("#loading").css('display' , 'block');
-		$("#form").attr('action', url);
-		$("#form").submit();
-	};
+	// 職業・特化のホバー処理
+	$("[data-job]").bind("click", function() {
+		var name = $(this).text();
+		var id = $(this).attr("data-job")
+		$("#jobname").val(name);
+		$("#jobid").val(id);
+		// モーダルを閉じる
+		$("#closeModal").click();
+	});
 
-	/*]]>*/
+	$("[data-job]").bind("mouseover", function() {
+		$(this).addClass("jobHover");
+	});
+	$("[data-job]").bind("mouseout", function() {
+		$(this).removeClass("jobHover");
+	});
+
+	$("#writeButtn").bind("click" , function() {
+		$("#status").val("op");
+		url = /*[[ @{/register} ]]*/ 'register.html';
+		goSubmit(url);
+	});
+
+	$("#taskCloseButtn").bind("click" , function() {
+		$("#status").val("cl");
+		url = /*[[ @{/register} ]]*/ 'register.html';
+		goSubmit(url);
+	})
+});
+
+var goSubmit = function(url) {
+	$("button").attr('disabled' , 'disabled');
+	//$("#loading").css('display' , 'block');
+	$("#form").attr('action', url);
+	$("#form").submit();
+};
+
+var showPreview = function(e) {
+	var txt = $("#content").val();
+	if ( txt.length > 0 ) {
+		e.showPreview();
+
+	}
+}
+
+/*]]>*/
 </script>
 <style type="text/css">
 </style>
@@ -148,8 +159,8 @@
 					</div>
 				</div>
 				<div class="col-md-8">
-					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(action.fieldErrors['jobid'])}">[[${action.fieldErrors.jobid}]]</span>
-					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(action.fieldErrors['task'])}">[[${action.fieldErrors.task}]]</span>
+					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(action.fieldErrors['jobid'])}">[[${action.fieldErrors['jobid']}]]</span>
+					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(action.fieldErrors['task'])}">[[${action.fieldErrors['task']}]]</span>
 				</div>
 			</div>
 
