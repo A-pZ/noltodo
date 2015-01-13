@@ -86,7 +86,6 @@ var goSubmit = function(url) {
 			<div class="alert alert-danger" role="alert">エラーメッセージです。</div>
 		</div>
 
-		<!-- pagination
 		<div class="row">
 			<div class="col-md-3">
 				<button type="button" id="allSearch" name="allSearch" class="btn btn-info">
@@ -94,6 +93,7 @@ var goSubmit = function(url) {
 				</button>
 			</div>
 			<div class="col-md-9">
+				<!-- pagination
 				<nav>
 					<ul class="pagination">
 						<li>
@@ -112,9 +112,9 @@ var goSubmit = function(url) {
 							</a>
 						</li>
 					</ul>
-				</nav>
+				</nav> -->
 			</div>
-		</div> -->
+		</div>
 
 		<!-- 一覧結果 -->
 		<table class="table table-striped table-hover">
@@ -158,7 +158,7 @@ var goSubmit = function(url) {
 	</div>
 
 	<form id="form" name="form" method="POST">
-		<input type="hidden" name="vo.status" id="status" />
+		<input type="hidden" name="vo.status" id="status" value="cl" />
 	</form>
 </body>
 </html>

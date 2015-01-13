@@ -19,6 +19,7 @@
 	th:href="@{/css/bootstrap-markdown.min.css}" />
 <link href="../../css/custom.css" rel="stylesheet"
 	th:href="@{/css/custom.css}" />
+<link href="../../css/datepicker.css" type="text/css" rel="stylesheet" th:href="@{/css/datepicker.css}" />
 
 <script src="../../js/jquery-1.11.1.min.js"
 	th:src="@{/js/jquery-1.11.1.min.js}"></script>
@@ -29,6 +30,8 @@
 	th:src="@{/js/locale/bootstrap-markdown.ja-custom.js}"></script>
 <script src="../../js/markdown.js" th:src="@{/js/markdown.js}"></script>
 <script src="../../js/to-markdown.js" th:src="@{/js/to-markdown.js}"></script>
+<script src="../../js/bootstrap-datepicker.js" th:src="@{/js/bootstrap-datepicker.js}"></script>
+<script src="../../js/locales/bootstrap-datepicker.ja.js" th:src="@{/js/locales/bootstrap-datepicker.ja.js}"></script>
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -80,7 +83,15 @@ $(document).ready(function() {
 		$("#status").val("cl");
 		url = /*[[ @{/register} ]]*/ 'register.html';
 		goSubmit(url);
-	})
+	});
+
+	$("#limitdate").datepicker({
+		format: 'yyyy/mm/dd' ,
+		language: 'ja',
+		autoclose: true,
+		clearBtn: true,
+		startDate: Date()
+	});
 });
 
 var goSubmit = function(url) {
@@ -170,6 +181,15 @@ var showPreview = function(e) {
 						<div class="input-group-addon inputaddon-width">本文</div>
 						<textarea id="content" name="vo.task" class="form-control" cols="72"
 						 th:text="${vo.task}"></textarea>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="input-group">
+						<div class="input-group-addon inputaddon-width">期限</div>
+						<input type="text" id="limitdate" name="vo.limitdate" value="2015/01/12" th:value="${vo.limitdate}" />
 					</div>
 				</div>
 			</div>

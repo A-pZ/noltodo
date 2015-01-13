@@ -19,6 +19,7 @@
 	th:href="@{/css/bootstrap-markdown.min.css}" />
 <link href="../../css/custom.css" rel="stylesheet"
 	th:href="@{/css/custom.css}" />
+<link href="../../css/datepicker.css" type="text/css" rel="stylesheet" th:href="@{/css/datepicker.css}" />
 
 <script src="../../js/jquery-1.11.1.min.js"
 	th:src="@{/js/jquery-1.11.1.min.js}"></script>
@@ -29,6 +30,8 @@
 	th:src="@{/js/locale/bootstrap-markdown.ja-custom.js}"></script>
 <script src="../../js/markdown.js" th:src="@{/js/markdown.js}"></script>
 <script src="../../js/to-markdown.js" th:src="@{/js/to-markdown.js}"></script>
+<script src="../../js/bootstrap-datepicker.js" th:src="@{/js/bootstrap-datepicker.js}"></script>
+<script src="../../js/locales/bootstrap-datepicker.ja.js" th:src="@{/js/locales/bootstrap-datepicker.ja.js}"></script>
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -80,7 +83,15 @@ $(document).ready(function() {
 		$("#status").val("cl");
 		url = /*[[ @{/register} ]]*/ 'register.html';
 		goSubmit(url);
-	})
+	});
+
+	$("#limitdate").datepicker({
+		format: 'yyyy/mm/dd' ,
+		language: 'ja',
+		autoclose: true,
+		clearBtn: true,
+		startDate: '+1',
+	});
 });
 
 var goSubmit = function(url) {
@@ -137,7 +148,7 @@ var showPreview = function(e) {
 				<div class="col-md-4">
 					<div class="input-group">
 						<div class="input-group-addon inputaddon-width">タスクのタイトル</div>
-						<input name="vo.name" class="form-control col-lg" type="text" placeholder="タイトルをどうぞ" th:value="${vo.name}"/>
+						<input name="vo.name" class="form-control col-lg" type="text" placeholder="タイトルをどうぞ" value="" th:value="${action.vo.name}"/>
 					</div>
 				</div>
 				<div class="col-md-8">
@@ -150,12 +161,12 @@ var showPreview = function(e) {
 						<div class="input-group-addon inputaddon-width">
 							<span class="glyphicon glyphicon-user"></span>職業・特化
 						</div>
-						<input type="text" class="form-control" id="jobname" name="vo.jobname" value="" th:value="${vo.jobname}" readonly="readonly" />
+						<input type="text" class="form-control" id="jobname" name="vo.jobname" value="" th:value="${action.vo.jobname}" readonly="readonly" />
 							<span class="input-group-btn">
 								<button id="departureList" type="button" class="btn btn-info"
 										data-toggle="modal" data-target="#myModal">選択する</button>
 							</span>
-						<input type="hidden" id="jobid" name="vo.jobid" value="" th:value="${vo.jobid}"/>
+						<input type="hidden" id="jobid" name="vo.jobid" value="" th:value="${action.vo.jobid}"/>
 					</div>
 				</div>
 				<div class="col-md-8">
@@ -169,15 +180,24 @@ var showPreview = function(e) {
 					<div class="input-group">
 						<div class="input-group-addon inputaddon-width">本文</div>
 						<textarea id="content" name="vo.task" class="form-control" cols="72"
-						 th:text="${vo.task}"></textarea>
+						 th:text="${action.vo.task}"></textarea>
 					</div>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-12">
-					<input type="hidden" id="status" name="vo.status" class="form-control" th:value="${vo.status}" />
-					<input type="hidden" id="id" name="vo.id" th:value="${vo.id}" />
+					<div class="input-group">
+						<div class="input-group-addon inputaddon-width">期限</div>
+						<input type="text" id="limitdate" name="vo.limitdate" value="2015/01/12" th:value="${action.vo.limitdate}" />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<input type="hidden" id="status" name="vo.status" class="form-control" th:value="${action.vo.status}" />
+					<input type="hidden" id="id" name="vo.id" th:value="${action.vo.id}" />
 				</div>
 			</div>
 

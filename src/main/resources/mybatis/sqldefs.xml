@@ -48,8 +48,8 @@
 			<if test="id != null &amp; id != 0">
 				AND task.id = #{id}
 			</if>
-			<if test="status == null">
-				AND task.status &lt;&gt; 'cl'
+			<if test="status != null">
+				AND task.status &lt;&gt; #{status}
 			</if>
 		</where>
 		ORDER BY
@@ -74,11 +74,12 @@
 			, now()
 			, #{userid}
 			, #{jobid}
-			, now()
+			, #{limitdate}
 			, 'op'
 		)
 	</insert>
 
+	<!-- タスクの更新 -->
 	<update id="updateTask" parameterType="lumi.vo.RegisterVO">
 		UPDATE
 			task
@@ -88,7 +89,7 @@
 			, writedate = now()
 			, userid = #{userid}
 			, jobid = #{jobid}
-			, limitdate = now()
+			, limitdate = #{limitdate}
 			, status = #{status}
 		WHERE
 			id = #{id}

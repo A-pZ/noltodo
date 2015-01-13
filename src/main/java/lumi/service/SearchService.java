@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import lumi.dao.DAO;
 import lumi.vo.SearchVO;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,14 @@ public class SearchService extends LumiService {
 	 */
 	public List<SearchVO> execute(SearchVO vo) throws Exception {
 
+		if ( vo == null ) {
+			vo = new SearchVO();
+		}
+
+		if ( StringUtils.isBlank(vo.getStatus()) ) {
+			vo.setStatus("cl");
+		}
+
 		// 検索を行う。
 		List<SearchVO> resultList = dao.select(Query.searchTask.name(), vo);
 
@@ -61,6 +70,7 @@ public class SearchService extends LumiService {
 	 */
 	public SearchVO detail(SearchVO vo) throws Exception {
 		// 検索を行う。
+		vo.setStatus("all");
 		List<SearchVO> resultList = dao.select(Query.searchTask.name(), vo);
 
 		if ( resultList == null || resultList.size() ==0 ) {
@@ -70,7 +80,7 @@ public class SearchService extends LumiService {
 
 		if ( resultList.size() > 2) {
 			addErrorMessage("detail.record.toomatch");
-			return null;
+			return vo;
 		} else {
 			addInfoMessage("detail.display");
 		}
