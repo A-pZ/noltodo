@@ -1,0 +1,17 @@
+[
+	{
+		"category": "status",
+		"code": "op",
+		"value": "編集中"
+	},
+	{
+		"category": "status",
+		"code": "cl",
+		"value": "クローズ"
+	},
+	{
+		"category": "status",
+		"code": "dl",
+		"value": "削除"
+	}
+]

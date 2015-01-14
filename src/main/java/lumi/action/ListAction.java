@@ -29,7 +29,7 @@ import com.opensymphony.xwork2.interceptor.annotations.Blocked;
 @ParentPackage("lumi-default")
 @Results({
 	// location属性に指定したhtmlファイル名は、/WEB-INF/content 以下からの相対パス。
-	@Result(name = ActionSupport.SUCCESS, location = "list" , type="thymeleaf"),
+	@Result(name = ActionSupport.SUCCESS, location = "list" , type="thymeleaf-spring"),
 })
 @Controller
 @Scope("prototype")

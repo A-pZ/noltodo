@@ -1,5 +1,8 @@
 package lumi.service;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
@@ -88,6 +91,29 @@ public class SearchService extends LumiService {
 		returnVo.setUpdate(true);
 
 		return returnVo;
+	}
+
+	/**
+	 * 新規入力するVOを生成する。次の期限を次回メンテナンス日にちに設定する。
+	 * @return 新規生成したVO
+	 * @throws Exception
+	 */
+	public SearchVO blank() throws Exception {
+		SearchVO vo = new SearchVO();
+
+		Calendar calendar = GregorianCalendar.getInstance();
+
+		// 期限を次のメンテナンス時間にする
+		int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+		// 水曜日との差を取得(マイナスないしは水曜日だったら+7する)
+		int diffDay = Calendar.WEDNESDAY - dayOfWeek;
+		diffDay = ( diffDay <= 0 ) ? diffDay + Calendar.SATURDAY : diffDay;
+		calendar.add(Calendar.DAY_OF_MONTH, diffDay);
+
+		vo.setLimitdate( new Timestamp(calendar.getTimeInMillis()));
+
+		return vo;
 	}
 
 	/**

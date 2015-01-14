@@ -133,9 +133,9 @@ var goSubmit = function(url) {
 					<td th:text="${result['id']}">1</td>
 					<td><a href="update.html" th:href="@{display(vo.id=${result['id']})}" th:text="${result['name']}">タスク1</a></td>
 					<td th:text="${result['jobname']}">侍</td>
-					<td th:text="${result['writedate']}">3/5</td>
-					<td th:text="${result['limitdate']}">3/20</td>
-					<td th:text="${result['status']}">Open</td>
+					<td th:text="${#dates.format(result['writedate'], 'yyyy/MM/dd')}">3/5</td>
+					<td th:text="${#dates.format(result['limitdate'], 'yyyy/MM/dd')}">3/20</td>
+					<td th:text="${beans.master.getValue('status',result['status'])}">Open</td>
 				</tr>
 				<tr>
 					<td>2</td>

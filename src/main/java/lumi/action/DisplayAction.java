@@ -45,7 +45,7 @@ public class DisplayAction extends LumiActionSupport {
 			vo = service.detail(vo);
 		} else {
 			// ない場合はブランク作成
-			vo = new SearchVO();
+			vo = service.blank();
 		}
 
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。

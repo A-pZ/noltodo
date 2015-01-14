@@ -39,7 +39,7 @@
 <script type="text/javascript" th:inline="javascript">
 /*<![CDATA[*/
 
-           /*]]>*/
+/*]]>*/
 </script>
 <style type="text/css">
 </style>
@@ -72,9 +72,21 @@
 			<div class="alert alert-success" role="alert">通常メッセージです。</div>
 			<div class="alert alert-danger" role="alert">エラーメッセージです。</div>
 		</div>
-
 		システムエラーが発生しました。
-
+		<hr style="border-style: dotted; border-color: #36A;" />
+		<pre th:inline="text" th:text="${#httpServletRequest.getAttribute('javax.servlet.error.status_code')}"></pre>
+		<pre th:inline="text" th:text="${#httpServletRequest.getAttribute('javax.servlet.error.exception')}"></pre>
+		<pre th:inline="text" th:text="${#httpServletRequest.getAttribute('javax.servlet.error.message')}"></pre>
+		HttpServletRequest :
+		<pre th:inline="text" th:text="${#httpServletRequest}"></pre>
+		HttpSession :
+		<pre th:inline="text" th:text="${#httpSession}"></pre>
+		Request Parameters :
+		<pre th:inline="text" th:text="${param}"></pre>
+		HttpSession - thymeleaf :
+		<pre th:inline="text" th:text="${session}"></pre>
+		ApplicationContext :
+		<pre th:inline="text" th:text="${application}"></pre>
 
 	</div>
 </body>

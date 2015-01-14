@@ -189,7 +189,7 @@ var showPreview = function(e) {
 				<div class="col-md-12">
 					<div class="input-group">
 						<div class="input-group-addon inputaddon-width">期限</div>
-						<input type="text" id="limitdate" name="vo.limitdate" value="2015/01/12" th:value="${action.vo.limitdate}" />
+						<input type="text" id="limitdate" name="vo.limitdate" value="2015/01/12" th:value="${#dates.format(action.vo.limitdate,'yyyy/MM/dd')}" />
 					</div>
 				</div>
 			</div>
