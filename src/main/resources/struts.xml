@@ -15,6 +15,7 @@
 
 		<result-types>
             <result-type name="thymeleaf" class="org.codework.struts.plugins.thymeleaf.ThymeleafResult"/>
+            <result-type name="thymeleaf-spring" class="org.codework.struts.plugins.thymeleaf.ThymeleafSpringResult"/>
         </result-types>
 
 		<interceptors>
@@ -44,7 +45,7 @@
 		</interceptors>
 
 		<global-results>
-			<result name="exception" type="thymeleaf">error.html</result>
+			<result name="exception" type="thymeleaf">error</result>
 		</global-results>
 		<global-exception-mappings>
 			<exception-mapping result="exception" exception="java.lang.Exception"></exception-mapping>
