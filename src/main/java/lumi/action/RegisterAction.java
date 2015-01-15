@@ -29,9 +29,9 @@ import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 @ParentPackage("lumi-default")
 @Results({
 	// location属性に指定したhtmlファイル名は、/WEB-INF/content 以下からの相対パス。
-	@Result(name = ActionSupport.SUCCESS, location = "register" , type="thymeleaf"),
-	@Result(name = ActionSupport.ERROR, location = "register" , type="thymeleaf"),
-	@Result(name = ActionSupport.INPUT, location = "register" , type="thymeleaf"),
+	@Result(name = ActionSupport.SUCCESS, location = "register" , type="thymeleaf-spring"),
+	@Result(name = ActionSupport.ERROR, location = "register" , type="thymeleaf-spring"),
+	@Result(name = ActionSupport.INPUT, location = "register" , type="thymeleaf-spring"),
 })
 @Validations(
 	visitorFields={

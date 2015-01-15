@@ -105,7 +105,6 @@ var showPreview = function(e) {
 	var txt = $("#content").val();
 	if ( txt.length > 0 ) {
 		e.showPreview();
-
 	}
 }
 
@@ -170,7 +169,7 @@ var showPreview = function(e) {
 					</div>
 				</div>
 				<div class="col-md-8">
-					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(action.fieldErrors['jobid'])}">[[${action.fieldErrors['jobid']}]]</span>
+					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(field['jobid'])}">[[${field['jobid']}]]</span>
 					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(action.fieldErrors['task'])}">[[${action.fieldErrors['task']}]]</span>
 				</div>
 			</div>
@@ -189,7 +188,7 @@ var showPreview = function(e) {
 				<div class="col-md-12">
 					<div class="input-group">
 						<div class="input-group-addon inputaddon-width">期限</div>
-						<input type="text" id="limitdate" name="vo.limitdate" value="2015/01/12" th:value="${#dates.format(action.vo.limitdate,'yyyy/MM/dd')}" />
+						<input type="text" id="limitdate" name="vo.limitdate" value="2015/01/12" th:value="${action.vo.limitdate != null} ? ${#dates.format(action.vo.limitdate,'yyyy/MM/dd')} :''" placeholder="日付を選択してください"/>
 					</div>
 				</div>
 			</div>

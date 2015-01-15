@@ -44,12 +44,13 @@
 			</interceptor-stack>
 		</interceptors>
 
+		<!--
 		<global-results>
-			<result name="exception" type="thymeleaf">error</result>
+			<result name="exception" type="thymeleaf-spring">error</result>
 		</global-results>
 		<global-exception-mappings>
 			<exception-mapping result="exception" exception="java.lang.Exception"></exception-mapping>
 		</global-exception-mappings>
-
+		 -->
 	</package>
 </struts>
