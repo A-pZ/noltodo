@@ -79,6 +79,14 @@
 		)
 	</insert>
 
+	<!-- 最新のタスク番号を取得 -->
+	<select id="selectMaxId" parameterType="lumi.vo.RegisterVO" resultType="int">
+		SELECT
+			max(id) as id
+		FROM
+			task
+	</select>
+
 	<!-- タスクの更新 -->
 	<update id="updateTask" parameterType="lumi.vo.RegisterVO">
 		UPDATE

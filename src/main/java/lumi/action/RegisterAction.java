@@ -50,7 +50,12 @@ public class RegisterAction extends LumiActionSupport {
 	public String start() throws Exception {
 
 		// Serviceクラスの呼び出し
-		boolean result = service.execute(vo);
+		service.execute(vo);
+
+		// 実行結果の取得
+		boolean result = service.isResult();
+
+		vo = service.getRegisterVO();
 
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
 		// この値は@Resultで指定したname値となる。

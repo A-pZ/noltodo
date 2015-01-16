@@ -151,7 +151,7 @@ var showPreview = function(e) {
 					</div>
 				</div>
 				<div class="col-md-8">
-					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(action.fieldErrors['name'])}">[[${action.fieldErrors.name}]]</span>
+					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(field['name'])}">[[${field['name']}]]</span>
 				</div>
 			</div>
 			<div class="row">
@@ -170,7 +170,7 @@ var showPreview = function(e) {
 				</div>
 				<div class="col-md-8">
 					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(field['jobid'])}">[[${field['jobid']}]]</span>
-					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(action.fieldErrors['task'])}">[[${action.fieldErrors['task']}]]</span>
+					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(field['task'])}">[[${field['task']}]]</span>
 				</div>
 			</div>
 
@@ -185,11 +185,14 @@ var showPreview = function(e) {
 			</div>
 
 			<div class="row">
-				<div class="col-md-12">
+				<div class="col-md-4">
 					<div class="input-group">
 						<div class="input-group-addon inputaddon-width">期限</div>
 						<input type="text" id="limitdate" name="vo.limitdate" value="2015/01/12" th:value="${action.vo.limitdate != null} ? ${#dates.format(action.vo.limitdate,'yyyy/MM/dd')} :''" placeholder="日付を選択してください"/>
 					</div>
+				</div>
+				<div class="col-md-8">
+					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(field['limitdate'])}">[[${field['limitdate']}]]</span>
 				</div>
 			</div>
 

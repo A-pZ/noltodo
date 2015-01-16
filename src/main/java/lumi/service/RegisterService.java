@@ -1,9 +1,13 @@
 package lumi.service;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lumi.dao.DAO;
 import lumi.vo.RegisterVO;
+import lumi.vo.SearchVO;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -30,30 +34,58 @@ public class RegisterService extends LumiService {
 	/**
 	 * 登録のService。
 	 * @param param
-	 * @return
+	 * @return 登録したタスク番号
 	 * @throws Exception
 	 */
-	public boolean execute(RegisterVO vo) throws Exception {
+	public int execute(RegisterVO vo) throws Exception {
 
 		int count = 0;
 
 		if ( vo.getId() == 0 ) {
 			// 登録を行う。
 			count = dao.insert(Query.insertTask.name(), vo);
+			if ( count == 1 ) {
+				// 登録後、発行したタスク番号を格納する。
+				int registerId = selectMaxId(vo);
+				vo.setId(registerId);
+			}
+
 		} else {
 			// 更新を行う。
 			count = dao.update(Query.updateTask.name(), vo);
 		}
 
-		if ( count == 1) {
+		// 実行結果を格納
+		result = ( count == 1);
+
+		// 登録件数のチェックとメッセージ
+		if ( result ) {
 			addInfoMessage("register.complete");
+
+			// 明細の再表示
+			SearchVO searchVO = new SearchVO();
+			searchVO.setId(vo.getId());
+			searchVO = searchService.detail(searchVO);
+			registerVO = new RegisterVO();
+			BeanUtils.copyProperties(registerVO, searchVO);
+
 		} else {
 			addErrorMessage("register.failure");
 			throw new Exception("register.failure:register rows:" + count);
 		}
 
-		// 登録結果を返す。
-		return ( count == 1);
+		// 登録したタスク番号を返す。
+		return vo.getId();
+	}
+
+	/**
+	 * 発行した最新タスク番号を取得
+	 * @param vo 登録時VO
+	 * @return 発行したタスク番号
+	 * @throws Exception
+	 */
+	int selectMaxId(RegisterVO vo) throws Exception {
+		return (Integer)dao.selectObject(Query.selectMaxId.name() , vo);
 	}
 
 	/**
@@ -68,6 +100,15 @@ public class RegisterService extends LumiService {
 	 *
 	 */
 	public enum Query {
-		insertTask , updateTask ,
+		insertTask , updateTask , selectMaxId
 	}
+
+	@Setter @Getter
+	private boolean result;
+
+	@Getter @Setter
+	private RegisterVO registerVO;
+
+	@Autowired
+	private SearchService searchService;
 }

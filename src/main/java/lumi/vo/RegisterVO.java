@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 
 import lombok.Data;
 
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
@@ -18,12 +19,17 @@ import com.opensymphony.xwork2.validator.annotations.Validations;
  *
  */
 @Validations(
+	requiredFields={
+		@RequiredFieldValidator(
+			fieldName="limitdate" , key="register.limitdate.require"
+		)
+	} ,
 	requiredStrings={
 		@RequiredStringValidator(
 			fieldName="name" , trim=true , key="register.name.require"
 		) ,
 		@RequiredStringValidator(
-			fieldName="task" , trim=true , key="register.jobid.task"
+			fieldName="task" , trim=true , key="register.task.require"
 		) ,
 		@RequiredStringValidator(
 			fieldName="jobid" , trim=true , key="register.jobid.require"
@@ -34,7 +40,7 @@ import com.opensymphony.xwork2.validator.annotations.Validations;
 			fieldName="name" , trim=true , maxLength="64" , key="register.name.length"
 		) ,
 		@StringLengthFieldValidator(
-			fieldName="task" , trim=true , maxLength="2048" , key="register.name.task"
+			fieldName="task" , trim=true , maxLength="2048" , key="register.task.length"
 		) ,
 	} ,
 	customValidators={
