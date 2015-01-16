@@ -54,7 +54,9 @@ public class RegisterAction extends LumiActionSupport {
 
 		// 実行結果の取得
 		boolean result = service.isResult();
+		log.debug(" - service.result:" + result);
 
+		// 登録後、再検索した値を取得
 		vo = service.getRegisterVO();
 
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。

@@ -44,6 +44,7 @@ public class ListAction extends LumiActionSupport {
 
 		// Serviceクラスの呼び出し
 		resultList = service.execute(vo);
+		log.debug(" - getList.");
 
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
 		// この値は@Resultで指定したname値となる。

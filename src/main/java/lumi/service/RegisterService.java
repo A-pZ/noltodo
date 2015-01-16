@@ -42,6 +42,7 @@ public class RegisterService extends LumiService {
 		int count = 0;
 
 		if ( vo.getId() == 0 ) {
+			log.debug(" - add new task.");
 			// 登録を行う。
 			count = dao.insert(Query.insertTask.name(), vo);
 			if ( count == 1 ) {
@@ -51,6 +52,7 @@ public class RegisterService extends LumiService {
 			}
 
 		} else {
+			log.debug(" - update task. id=" + vo.getId());
 			// 更新を行う。
 			count = dao.update(Query.updateTask.name(), vo);
 		}

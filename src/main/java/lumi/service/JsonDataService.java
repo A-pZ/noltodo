@@ -4,7 +4,6 @@
 package lumi.service;
 
 import java.io.File;
-import java.io.FileReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,9 +49,7 @@ public class JsonDataService {
 		String path = Thread.currentThread().getContextClassLoader().getResource(JSON_FILE_NAME).getPath();
 		log.debug("  -- path :" + path);
 
-		File file = new File(path);
-		FileReader fr = new FileReader(file);
-		String string = FileUtils.readFileToString(file);
+		String string = FileUtils.readFileToString(new File(path));
 		log.debug("  -- load to text complete.");
 
 		List<MasterVO> masterList = JSON.decode(string , new TypeReference<List<MasterVO>>() {});

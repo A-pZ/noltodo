@@ -43,9 +43,11 @@ public class DisplayAction extends LumiActionSupport {
 		if ( vo != null && vo.getId() > 0 ) {
 			// Serviceクラスの呼び出し
 			vo = service.detail(vo);
+			log.debug(" - getting vo.id=" + vo.getId());
 		} else {
 			// ない場合はブランク作成
 			vo = service.blank();
+			log.debug(" - create blank.");
 		}
 
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
