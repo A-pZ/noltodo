@@ -188,7 +188,7 @@ var showPreview = function(e) {
 				<div class="col-md-4">
 					<div class="input-group">
 						<div class="input-group-addon inputaddon-width">期限</div>
-						<input type="text" id="limitdate" name="vo.limitdate" value="2015/01/12" th:value="${action.vo.limitdate != null} ? ${#dates.format(action.vo.limitdate,'yyyy/MM/dd')} :''" placeholder="日付を選択してください"/>
+						<input type="text" class="form-control" id="limitdate" name="vo.limitdate" value="2015/01/12" th:value="${action.vo.limitdate != null} ? ${#dates.format(action.vo.limitdate,'yyyy/MM/dd')} :''" placeholder="日付を選択してください"/>
 					</div>
 				</div>
 				<div class="col-md-8">
