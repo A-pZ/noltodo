@@ -35,6 +35,7 @@
 			, m_job.name jobname
 			, limitdate
 			, status
+			, publish
 		FROM
 			task , m_job
 		<where>
@@ -51,6 +52,11 @@
 			<if test="status != null">
 				AND task.status &lt;&gt; #{status}
 			</if>
+			<!--
+			<if test="publish != null">
+				AND task.publish = #{publish}
+			</if>
+			 -->
 		</where>
 		ORDER BY
 			writedate DESC
@@ -68,6 +74,7 @@
 			, jobid
 			, limitdate
 			, status
+			, publish
 		) VALUES (
 			  #{name}
 			, #{task}
@@ -76,6 +83,7 @@
 			, #{jobid}
 			, #{limitdate}
 			, 'op'
+			, #{publish}
 		)
 	</insert>
 
@@ -99,6 +107,7 @@
 			, jobid = #{jobid}
 			, limitdate = #{limitdate}
 			, status = #{status}
+			, publish = #{publish}
 		WHERE
 			id = #{id}
 	</update>

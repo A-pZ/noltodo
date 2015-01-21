@@ -35,4 +35,6 @@ public class SearchVO {
 	private String status;
 	/** 更新レコード判定 */
 	private boolean update;
+	/** 公開/非公開フラグ */
+	private int publish;
 }

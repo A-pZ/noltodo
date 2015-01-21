@@ -68,4 +68,6 @@ public class RegisterVO {
 	private Timestamp limitdate;
 	/** タスクステータス */
 	private String status;
+	/** 公開/非公開フラグ */
+	private int publish;
 }
