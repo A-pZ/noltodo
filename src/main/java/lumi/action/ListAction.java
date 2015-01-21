@@ -1,11 +1,13 @@
 package lumi.action;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lumi.service.SearchService;
+import lumi.service.SystemTimestampService;
 import lumi.vo.SearchVO;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -46,6 +48,7 @@ public class ListAction extends LumiActionSupport {
 		resultList = service.execute(vo);
 		log.debug(" - getList.");
 
+		systemDate = timeService.getSystemTimestamp();
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
 		// この値は@Resultで指定したname値となる。
 		return SUCCESS;
@@ -62,6 +65,12 @@ public class ListAction extends LumiActionSupport {
 	@Getter @Setter
 	private SearchVO vo;
 
+	@Autowired
+	private SystemTimestampService timeService;
+
 	@Getter @Setter
-	private List<SearchVO>  resultList;
+	private List<SearchVO> resultList;
+
+	@Getter @Setter
+	private Timestamp systemDate;
 }
