@@ -29,6 +29,7 @@
 	th:src="@{/js/locale/bootstrap-markdown.ja-custom.js}"></script>
 <script src="../../js/markdown.js" th:src="@{/js/markdown.js}"></script>
 <script src="../../js/to-markdown.js" th:src="@{/js/to-markdown.js}"></script>
+<script src="../../js/common.js" th:src="@{/js/common.js}"></script>
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -57,7 +58,7 @@ var goSubmit = function(url) {
 <style type="text/css">
 </style>
 <body role="document">
-	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container" th:replace="templates/header :: header">
 			<!-- この中身はtemplates/headerのheaderスニペットに切り替わる -->
 			<div class="navbar-header">
@@ -159,6 +160,9 @@ var goSubmit = function(url) {
 
 	<form id="form" name="form" method="POST">
 		<input type="hidden" name="vo.status" id="status" value="cl" />
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 	</form>
+
+	<div th:replace="templates/request :: request"></div>
 </body>
 </html>

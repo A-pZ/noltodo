@@ -11,25 +11,21 @@
 <meta name="author" content="A-pZ(ぢつにんさん)"></meta>
 
 <title>のるとど！</title>
-<link href="../../css/bootstrap.min.css" rel="stylesheet"
+<link href="../../../css/bootstrap.min.css" rel="stylesheet"
 	th:href="@{/css/bootstrap.min.css}" />
-<link href="../../css/bootstrap-theme.min.css" rel="stylesheet"
+<link href="../../../css/bootstrap-theme.min.css" rel="stylesheet"
 	th:href="@{/css/bootstrap-theme.min.css}" />
-<link href="../../css/bootstrap-markdown.min.css" rel="stylesheet"
-	th:href="@{/css/bootstrap-markdown.min.css}" />
-<link href="../../css/custom.css" rel="stylesheet"
+<link href="../../../css/custom.css" rel="stylesheet"
 	th:href="@{/css/custom.css}" />
 
-<script src="../../js/jquery-1.11.1.min.js"
+<script src="../../../js/jquery-1.11.1.min.js"
 	th:src="@{/js/jquery-1.11.1.min.js}"></script>
-<script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
-<script src="../../js/bootstrap-markdown.js"
+<script src="../../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../../../js/bootstrap-markdown.js"
 	th:src="@{/js/bootstrap-markdown.js}"></script>
-<script src="../../js/locale/bootstrap-markdown.ja-custom.js"
+<script src="../../../js/locale/bootstrap-markdown.ja-custom.js"
 	th:src="@{/js/locale/bootstrap-markdown.ja-custom.js}"></script>
-<script src="../../js/markdown.js" th:src="@{/js/markdown.js}"></script>
-<script src="../../js/to-markdown.js" th:src="@{/js/to-markdown.js}"></script>
-<script src="../../js/common.js" th:src="@{/js/common.js}"></script>
+<script src="../../../js/common.js" th:src="@{/js/common.js}"></script>
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -39,14 +35,25 @@
 </head>
 <script type="text/javascript" th:inline="javascript">
 /*<![CDATA[*/
+$(document).ready(function() {
+	$("#login").click(function() {
+		url = /*[[ @{/j_spring_security_check} ]]*/ 'list.html';
+		$("button").attr('disabled' , 'disabled');
+		$("#form").attr('action',url);
+		$("#form").submit();
+	});
 
+	$("#signup").click(function() {
+
+	});
+});
 /*]]>*/
 </script>
 <style type="text/css">
 </style>
 <body role="document">
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<div class="container" th:replace="templates/header :: header">
+		<div class="container" th:replace="templates/loginheader :: header">
 			<!-- この中身はtemplates/headerのheaderスニペットに切り替わる -->
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -73,24 +80,40 @@
 			<div class="alert alert-success" role="alert">通常メッセージです。</div>
 			<div class="alert alert-danger" role="alert">エラーメッセージです。</div>
 		</div>
-		システムエラーが発生しました。
-		<hr style="border-style: dotted; border-color: #36A;" />
-		<pre th:inline="text" th:text="${#httpServletRequest.getAttribute('javax.servlet.error.status_code')}"></pre>
-		<pre th:inline="text" th:text="${#httpServletRequest.getAttribute('javax.servlet.error.exception')}"></pre>
-		<pre th:inline="text" th:text="${#httpServletRequest.getAttribute('javax.servlet.error.message')}"></pre>
-		HttpServletRequest :
-		<pre th:inline="text" th:text="${#httpServletRequest}"></pre>
-		HttpSession :
-		<pre th:inline="text" th:text="${#httpSession}"></pre>
-		Request Parameters :
-		<pre th:inline="text" th:text="${param}"></pre>
-		HttpSession - thymeleaf :
-		<pre th:inline="text" th:text="${session}"></pre>
-		ApplicationContext :
-		<pre th:inline="text" th:text="${application}"></pre>
+
+		<div class="row">
+			<form id="form" name="form" class="form-horizontal" method="POST" action="../list.html" th:action="@{/j_spring_security_check}">
+				<div class="form-group">
+					<label for="username" class="col-md-3 control-label">アカウント名</label>
+					<div class="col-md-4">
+						<input type="text" class="form-control" id="username" name="j_username" placeholder="アカウント名を半角英数で入力してください" />
+					</div>
+					<div class="col-md-5"><!-- NOP --></div>
+				</div>
+
+				<div class="form-group">
+					<label for="password" class="col-md-3 control-label">パスワード</label>
+					<div class="col-md-4">
+						<input type="password" class="form-control" id="password" name="j_password" placeholder="パスワードを入力してください" />
+					</div>
+					<div class="col-md-5"><!-- NOP --></div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-3 col-md-offset-3">
+						<button id="login" type="button" class="btn btn-primary">ログイン</button>
+					</div>
+					<div class="col-md-3">
+						<button id="signup" type="button" class="btn btn-info">サインアップ</button>
+					</div>
+					<div class="col-md-3"><!-- NOP --></div>
+				</div>
+
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+			</form>
+		</div>
 	</div>
 
-	<div th:replace="templates/request :: request"></div>
-</body>
 
+</body>
 </html>

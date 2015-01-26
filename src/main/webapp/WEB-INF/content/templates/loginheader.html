@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<div class="container" th:fragment="header">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">のるとど！ </a>
+		</div>
+		<div class="navbar-collapse collapse">
+			<ul class="nav navbar-nav pull-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">外部リンク
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="http://a-pz.jp/fj2/r/" target="_blank">家臣団能力計算機</a></li>
+						<li class="divider"></li>
+						<li><a href="https://github.com/A-pZ/noltodo/"  target="_blank">github/A-pZ/noltodo</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Technologies
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="http://struts.apache.org/" target="_blank">Apache Struts</a></li>
+						<li><a href="http://spring.io/" target="_blank">Spring Project</a></li>
+						<li><a href="http://mybatis.github.io/mybatis-3/ja/" target="_blank">Mybatis</a></li>
+						<li><a href="http://jquery.com/" target="_blank">jQuery</a></li>
+						<li><a href="http://getbootstrap.com/" target="_blank">Bootstrap</a></li>
+						<li><a href="http://www.thymeleaf.org/" target="_blank">Thymeleaf</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<!--/.nav-collapse -->
+	</div>
+</body>
+</html>
