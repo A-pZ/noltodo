@@ -49,15 +49,10 @@
 			<if test="id != null &amp; id != 0">
 				AND task.id = #{id}
 			</if>
-			<if test="status != null">
-				AND task.status &lt;&gt; #{status}
+			<if test="status == 'all'">
+				AND ( task.userid = #{userid} OR task.publish = 1 )
 			</if>
-			<!--
-			<if test="publish != null">
-				AND task.publish = #{publish}
-			</if>
-			 -->
-		</where>
+			</where>
 		ORDER BY
 			writedate DESC
 	</select>
@@ -110,5 +105,7 @@
 			, publish = #{publish}
 		WHERE
 			id = #{id}
+		AND
+			userid = #{userid}
 	</update>
 </mapper>

@@ -41,6 +41,8 @@ public class RegisterService extends LumiService {
 
 		int count = 0;
 
+		vo.setUserid(getUserId());
+
 		if ( vo.getId() == 0 ) {
 			log.debug(" - add new task.");
 			// 登録を行う。

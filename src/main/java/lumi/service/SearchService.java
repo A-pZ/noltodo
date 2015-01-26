@@ -43,8 +43,12 @@ public class SearchService extends LumiService {
 			vo = new SearchVO();
 		}
 
+		/*
 		if ( StringUtils.isBlank(vo.getStatus()) ) {
 			vo.setStatus("cl");
+		}*/
+		if (! "all".equals(vo.getStatus())) {
+			vo.setUserid(getUserId());
 		}
 
 		// 検索を行う。
@@ -71,7 +75,6 @@ public class SearchService extends LumiService {
 	 */
 	public SearchVO detail(SearchVO vo) throws Exception {
 		// 検索を行う。
-		vo.setStatus("all");
 		List<SearchVO> resultList = dao.select(Query.searchTask.name(), vo);
 
 		if ( resultList == null || resultList.size() ==0 ) {
@@ -86,6 +89,10 @@ public class SearchService extends LumiService {
 			addInfoMessage("detail.display");
 		}
 		SearchVO returnVo = resultList.get(0);
+
+		if (!StringUtils.equals(returnVo.getUserid(), getUserId()) ) {
+			returnVo.setStatus("read");
+		}
 		returnVo.setUpdate(true);
 
 		return returnVo;

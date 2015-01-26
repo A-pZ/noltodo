@@ -14,9 +14,11 @@
 	<package name="lumi-default" abstract="true" extends="json-default">
 
 		<result-types>
-            <result-type name="thymeleaf" class="org.codework.struts.plugins.thymeleaf.ThymeleafResult"/>
-            <result-type name="thymeleaf-spring" class="org.codework.struts.plugins.thymeleaf.ThymeleafSpringResult"/>
-        </result-types>
+			<result-type name="thymeleaf"
+				class="org.codework.struts.plugins.thymeleaf.ThymeleafResult" />
+			<result-type name="thymeleaf-spring"
+				class="org.codework.struts.plugins.thymeleaf.ThymeleafSpringResult" />
+		</result-types>
 
 		<interceptors>
 			<interceptor-stack name="lumiStack">
@@ -39,16 +41,17 @@
 				</interceptor-ref>
 				<interceptor-ref name="jsonValidation" />
 				<interceptor-ref name="workflow">
-                    <param name="excludeMethods">input,back,cancel,browse</param>
-                </interceptor-ref>
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
 
 		<global-results>
-			<result name="exception" type="thymeleaf-spring">error</result>
+			<result name="exception" type="thymeleaf-spring">/WEB-INF/content/error</result>
 		</global-results>
 		<global-exception-mappings>
 			<exception-mapping result="exception" exception="java.lang.Exception"></exception-mapping>
 		</global-exception-mappings>
+
 	</package>
 </struts>
