@@ -38,15 +38,20 @@
 $(document).ready(function() {
 	$("#login").click(function() {
 		url = /*[[ @{/j_spring_security_check} ]]*/ 'list.html';
-		$("button").attr('disabled' , 'disabled');
-		$("#form").attr('action',url);
-		$("#form").submit();
+		goSubmit(url);
 	});
 
 	$("#signup").click(function() {
-
+		url = /*[[ @{/signup/} ]]*/ 'signup.html';
+		goSubmit(url);
 	});
 });
+
+var goSubmit = function(url) {
+	$("button").attr('disabled' , 'disabled');
+	$("#form").attr('action',url);
+	$("#form").submit();
+};
 /*]]>*/
 </script>
 <style type="text/css">
@@ -102,11 +107,10 @@ $(document).ready(function() {
 				<div class="form-group">
 					<div class="col-md-3 col-md-offset-3">
 						<button id="login" type="button" class="btn btn-primary">ログイン</button>
-					</div>
-					<div class="col-md-3">
+
 						<button id="signup" type="button" class="btn btn-info">サインアップ</button>
 					</div>
-					<div class="col-md-3"><!-- NOP --></div>
+					<div class="col-md-6"><!-- NOP --></div>
 				</div>
 
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
