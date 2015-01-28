@@ -49,12 +49,18 @@
 			<if test="id != null &amp; id != 0">
 				AND task.id = #{id}
 			</if>
-			<if test="status == 'all'">
-				AND ( task.userid = #{userid} OR task.publish = 1 )
-			</if>
-			</where>
+			<choose>
+				<when test="status == 'all'">
+					AND ( task.userid = #{userid} OR task.publish = 1 )
+				</when>
+				<when test="status != null">
+					AND task.status = #{status}
+				</when>
+			</choose>
+		</where>
 		ORDER BY
 			writedate DESC
+			, task.id DESC
 	</select>
 
 
@@ -107,5 +113,31 @@
 			id = #{id}
 		AND
 			userid = #{userid}
+	</update>
+
+	<!-- ユーザの登録 -->
+	<insert id="registerUser" parameterType="lumi.vo.AccountVO">
+		INSERT INTO userlist
+			(USERNAME,PASSWORD,ACTIVATE)
+		values
+			(#{username},#{password}, #{activate})
+	</insert>
+
+	<!-- ユーザー権限の登録 -->
+	<insert id="registerUserRole" parameterType="lumi.vo.AccountVO">
+		INSERT INTO userrole
+			(USERNAME,AUTHORITY)
+		values
+			(#{username},#{userrole});
+	</insert>
+
+	<!-- ユーザの更新 -->
+	<update id="updateUser" parameterType="lumi.vo.UserVO">
+		UPDATE
+			userlist
+		SET
+			PASSWORD = #{password}
+		WHERE
+			USERNAME = #{username}
 	</update>
 </mapper>

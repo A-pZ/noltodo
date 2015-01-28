@@ -42,11 +42,9 @@ public class SearchService extends LumiService {
 		if ( vo == null ) {
 			vo = new SearchVO();
 		}
-
-		/*
 		if ( StringUtils.isBlank(vo.getStatus()) ) {
-			vo.setStatus("cl");
-		}*/
+			vo.setStatus("op");
+		}
 		if (! "all".equals(vo.getStatus())) {
 			vo.setUserid(getUserId());
 		}

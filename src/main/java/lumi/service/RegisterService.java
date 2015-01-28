@@ -69,6 +69,8 @@ public class RegisterService extends LumiService {
 			// 明細の再表示
 			SearchVO searchVO = new SearchVO();
 			searchVO.setId(vo.getId());
+			searchVO.setStatus(vo.getStatus());
+			searchService.setUserId(getUserId());
 			searchVO = searchService.detail(searchVO);
 			registerVO = new RegisterVO();
 			BeanUtils.copyProperties(registerVO, searchVO);

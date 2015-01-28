@@ -21,10 +21,6 @@
 <script src="../../../js/jquery-1.11.1.min.js"
 	th:src="@{/js/jquery-1.11.1.min.js}"></script>
 <script src="../../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
-<script src="../../../js/bootstrap-markdown.js"
-	th:src="@{/js/bootstrap-markdown.js}"></script>
-<script src="../../../js/locale/bootstrap-markdown.ja-custom.js"
-	th:src="@{/js/locale/bootstrap-markdown.ja-custom.js}"></script>
 <script src="../../../js/common.js" th:src="@{/js/common.js}"></script>
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -36,13 +32,9 @@
 <script type="text/javascript" th:inline="javascript">
 /*<![CDATA[*/
 $(document).ready(function() {
-	$("#login").click(function() {
-		url = /*[[ @{/j_spring_security_check} ]]*/ '../list.html';
-		goSubmit(url);
-	});
 
 	$("#signup").click(function() {
-		url = /*[[ @{/signup/} ]]*/ '../signup.html';
+		url = /*[[ @{/signup/register} ]]*/ 'signup.html';
 		goSubmit(url);
 	});
 });
@@ -83,32 +75,43 @@ var goSubmit = function(url) {
 	<div class="container theme-showcase" role="main">
 		<div class="messages" th:replace="templates/messages :: messages">
 			<div class="alert alert-success" role="alert">通常メッセージです。</div>
-			<div class="alert alert-danger" role="alert">エラーメッセージです。</div>
 		</div>
 
 		<div class="row">
-			<form id="form" name="form" class="form-horizontal" method="POST" action="../list.html" th:action="@{/j_spring_security_check}">
+			<form id="form" name="form" class="form-horizontal" method="POST" action="signup.html" th:action="@{/signup/register}">
 				<div class="form-group">
 					<label for="username" class="col-md-3 control-label">アカウント名</label>
 					<div class="col-md-4">
-						<input type="text" class="form-control" id="username" name="j_username" placeholder="アカウント名を半角英数で入力してください" />
+						<input type="text" class="form-control" id="username" name="vo.username" th:value="${action.vo.username}" placeholder="アカウント名を半角英数で入力してください" />
 					</div>
-					<div class="col-md-5"><!-- NOP --></div>
+					<div class="col-md-5">
+						<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(field['username'])}">[[${field['username']}]]</span>
+					</div>
 				</div>
 
 				<div class="form-group">
 					<label for="password" class="col-md-3 control-label">パスワード</label>
 					<div class="col-md-4">
-						<input type="password" class="form-control" id="password" name="j_password" placeholder="パスワードを入力してください" />
+						<input type="password" class="form-control" id="password" name="vo.password" placeholder="パスワードを入力してください" />
 					</div>
-					<div class="col-md-5"><!-- NOP --></div>
+					<div class="col-md-5">
+						<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(field['password'])}">[[${field['password']}]]</span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="password" class="col-md-3 control-label">パスワード(確認)</label>
+					<div class="col-md-4">
+						<input type="password" class="form-control" id="confirm" name="vo.confirm" placeholder="確認用パスワードを入力してください" />
+					</div>
+					<div class="col-md-5">
+						<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(field['confirm'])}">[[${field['confirm']}]]</span>
+					</div>
 				</div>
 
 				<div class="form-group">
 					<div class="col-md-3 col-md-offset-3">
-						<button id="login" type="button" class="btn btn-primary">ログイン</button>
-
-						<button id="signup" type="button" class="btn btn-info">サインアップ</button>
+						<button id="signup" type="button" class="btn btn-info">ユーザ登録する</button>
 					</div>
 					<div class="col-md-6"><!-- NOP --></div>
 				</div>
