@@ -15,20 +15,12 @@
 	th:href="@{/css/bootstrap.min.css}" />
 <link href="../../css/bootstrap-theme.min.css" rel="stylesheet"
 	th:href="@{/css/bootstrap-theme.min.css}" />
-<link href="../../css/bootstrap-markdown.min.css" rel="stylesheet"
-	th:href="@{/css/bootstrap-markdown.min.css}" />
 <link href="../../css/custom.css" rel="stylesheet"
 	th:href="@{/css/custom.css}" />
 
 <script src="../../js/jquery-1.11.1.min.js"
 	th:src="@{/js/jquery-1.11.1.min.js}"></script>
 <script src="../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
-<script src="../../js/bootstrap-markdown.js"
-	th:src="@{/js/bootstrap-markdown.js}"></script>
-<script src="../../js/locale/bootstrap-markdown.ja-custom.js"
-	th:src="@{/js/locale/bootstrap-markdown.ja-custom.js}"></script>
-<script src="../../js/markdown.js" th:src="@{/js/markdown.js}"></script>
-<script src="../../js/to-markdown.js" th:src="@{/js/to-markdown.js}"></script>
 <script src="../../js/common.js" th:src="@{/js/common.js}"></script>
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -39,14 +31,32 @@
 </head>
 <script type="text/javascript" th:inline="javascript">
 /*<![CDATA[*/
+$(document).ready(function() {
+	$("#list").bind("click" , function() {
+		url = /*[[ @{/list} ]]*/ 'list.html';
+		goSubmit(url);
+	});
 
+	$("#allSearch").bind("click" , function() {
+		$("#status").val("all");
+		url = /*[[ @{/list} ]]*/ 'list.html';
+		goSubmit(url);
+	});
+});
+
+var goSubmit = function(url) {
+	$("button").attr('disabled' , 'disabled');
+	//$("#loading").css('display' , 'block');
+	$("#form").attr('action', url);
+	$("#form").submit();
+};
 /*]]>*/
 </script>
 <style type="text/css">
 </style>
 <body role="document">
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
-		<div class="container" th:replace="templates/loginheader :: header">
+		<div class="container" th:replace="templates/header :: header">
 			<!-- この中身はtemplates/headerのheaderスニペットに切り替わる -->
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -73,21 +83,24 @@
 			<div class="alert alert-success" role="alert">通常メッセージです。</div>
 			<div class="alert alert-danger" role="alert">エラーメッセージです。</div>
 		</div>
-		システムエラーが発生しました。
-		<hr style="border-style: dotted; border-color: #36A;" />
-		<pre th:inline="text" th:text="${#httpServletRequest.getAttribute('javax.servlet.error.status_code')}"></pre>
-		<pre th:inline="text" th:text="${#httpServletRequest.getAttribute('javax.servlet.error.exception')}"></pre>
-		<pre th:inline="text" th:text="${#httpServletRequest.getAttribute('javax.servlet.error.message')}"></pre>
-		HttpServletRequest :
-		<pre th:inline="text" th:text="${#httpServletRequest}"></pre>
-		HttpSession :
-		<pre th:inline="text" th:text="${#httpSession}"></pre>
-		Request Parameters :
-		<pre th:inline="text" th:text="${param}"></pre>
-		HttpSession - thymeleaf :
-		<pre th:inline="text" th:text="${session}"></pre>
-		ApplicationContext :
-		<pre th:inline="text" th:text="${application}"></pre>
+
+		<form class="form-horizontal" role="form" method="POST" name="form" id="form">
+			<div class="row">
+				<div class="col-md-10 col-md-offset-2">
+					<button type="button" id="list" class="btn btn-info">
+						<span class="glyphicon glyphicon-th-list"></span> タスク一覧検索
+					</button>
+
+					<button type="button" id="allSearch" class="btn btn-info">
+						<span class="glyphicon glyphicon-share-alt"></span> すべてのタスクを表示
+					</button>
+				</div>
+
+				<input type="hidden" name="vo.status" id="status" value="op" />
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+			</div>
+		</form>
 	</div>
 
 	<div th:replace="templates/request :: request"></div>

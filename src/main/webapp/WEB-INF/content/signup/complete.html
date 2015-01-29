@@ -33,7 +33,7 @@
 /*<![CDATA[*/
 $(document).ready(function() {
 
-	$("#submit").click(function() {
+	$("#login").click(function() {
 		url = /*[[ @{/} ]]*/ '../login/login.html';
 		goSubmit(url);
 	});
@@ -85,7 +85,7 @@ var goSubmit = function(url) {
 			<h4>ログイン画面にて、登録したユーザー名＆パスワードでログインしてください</h4>
 
 			<form id="form" name="form" class="form-horizontal" method="POST" action="../login/login.html">
-				<button type="button" id="submit" class="btn btn-primary">ログイン画面を表示</button>
+				<button type="button" id="login" class="btn btn-primary">ログイン画面を表示</button>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 			</form>
 		</div>

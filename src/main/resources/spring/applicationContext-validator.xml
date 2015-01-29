@@ -11,10 +11,6 @@ default-autowire="byName"
 		Struts2のvalidatorクラス内でServiceクラスを適用するものを自動スキャンする。
 		StereoTypeがControllerで、パッケージがbase-packageのものが対象である。
 	 -->
-    <context:component-scan base-package="lumi.validator" use-default-filters ="false" >
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
-	</context:component-scan>
-
 	<context:component-scan base-package="lumi.validator" use-default-filters ="false" >
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
 	</context:component-scan>

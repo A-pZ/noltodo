@@ -67,7 +67,7 @@ public class UserRegisterService extends LumiService {
 	 * @param vo
 	 * @throws Exception
 	 */
-	public void Update(UserVO vo) throws Exception {
+	public void update(UserVO vo) throws Exception {
 		int count =  dao.update(Query.updateUser.name(), vo);
 		if ( count == 1 ) {
 			result = true;
@@ -76,6 +76,16 @@ public class UserRegisterService extends LumiService {
 			result = false;
 			addErrorMessage("account.update.failure");
 		}
+	}
+
+	/**
+	 *
+	 * @param username
+	 * @return
+	 * @throws Exception
+	 */
+	public Integer existUserSearch(String username) throws Exception {
+		return (Integer)dao.selectObject(Query.existUser.name(), username);
 	}
 
 	/**
@@ -90,7 +100,7 @@ public class UserRegisterService extends LumiService {
 	 *
 	 */
 	public enum Query {
-		registerUser , registerUserRole ,updateUser
+		registerUser , registerUserRole ,updateUser, existUser
 	}
 
 	@Setter @Getter

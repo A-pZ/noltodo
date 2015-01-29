@@ -45,9 +45,11 @@ public class SearchService extends LumiService {
 		if ( StringUtils.isBlank(vo.getStatus()) ) {
 			vo.setStatus("op");
 		}
+		/*
 		if (! "all".equals(vo.getStatus())) {
 			vo.setUserid(getUserId());
-		}
+		}*/
+		vo.setUserid(getUserId());
 
 		// 検索を行う。
 		List<SearchVO> resultList = dao.select(Query.searchTask.name(), vo);

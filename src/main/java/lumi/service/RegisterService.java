@@ -85,6 +85,28 @@ public class RegisterService extends LumiService {
 	}
 
 	/**
+	 * タスクの削除Service。
+	 * @param vo リクエストパラメータVO
+	 * @throws Exception 発生する例外すべて
+	 */
+	public void delete(RegisterVO vo) throws Exception {
+		int count = 0;
+		vo.setUserid(getUserId());
+
+		// 削除
+		count = dao.delete(Query.deleteTask.name(), vo);
+
+		String[] msg = { String.valueOf(vo.getId())};
+		if ( count != 1 ) {
+			addErrorMessage("delete.failure" , msg);
+			setResult(false);
+		} else {
+			addInfoMessage("delete.success",msg);
+			setResult(true);
+		}
+	}
+
+	/**
 	 * 発行した最新タスク番号を取得
 	 * @param vo 登録時VO
 	 * @return 発行したタスク番号
@@ -106,7 +128,7 @@ public class RegisterService extends LumiService {
 	 *
 	 */
 	public enum Query {
-		insertTask , updateTask , selectMaxId
+		insertTask , updateTask , deleteTask , selectMaxId
 	}
 
 	@Setter @Getter

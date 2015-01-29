@@ -5,6 +5,7 @@ package lumi.vo;
 
 import lombok.Data;
 
+import com.opensymphony.xwork2.validator.annotations.CustomValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
@@ -29,6 +30,7 @@ import com.opensymphony.xwork2.validator.annotations.Validations;
 
 	customValidators={
 		// TODO ユーザIDとパスワードの一致チェック
+		@CustomValidator(type="signup")
 		// TODO パスワードの複雑性チェック
 	}
 )
