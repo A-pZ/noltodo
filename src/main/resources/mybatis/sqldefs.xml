@@ -40,9 +40,6 @@
 			task , m_job
 		<where>
 			task.jobid = m_job.id
-			<if test="userid != null">
-				AND userid = #{userid}
-			</if>
 			<if test="jobid != null">
 				AND jobid = #{jobid}
 			</if>
@@ -53,8 +50,8 @@
 				<when test="status == 'all'">
 					AND ( task.userid = #{userid} OR task.publish = 1 )
 				</when>
-				<when test="status != null">
-					AND task.status = #{status}
+				<when test="userid != null">
+					AND userid = #{userid}
 				</when>
 			</choose>
 		</where>
@@ -114,6 +111,16 @@
 		AND
 			userid = #{userid}
 	</update>
+
+	<!-- タスクの削除 -->
+	<delete id="deleteTask" parameterType="lumi.vo.RegisterVO">
+		DELETE FROM
+			task
+		WHERE
+			userid = #{userid}
+		AND
+			id = #{id}
+	</delete>
 
 	<!-- ユーザの登録 -->
 	<insert id="registerUser" parameterType="lumi.vo.AccountVO">

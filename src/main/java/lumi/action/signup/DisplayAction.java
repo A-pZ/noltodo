@@ -45,4 +45,10 @@ public class DisplayAction extends LumiActionSupport {
 
 	@Getter @Setter
 	private UserVO vo;
+
+	@Getter @Setter
+	private String j_username;
+
+	@Getter @Setter
+	private String j_password;
 }
