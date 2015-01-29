@@ -8,7 +8,7 @@
 		SELECT
 			TRIM(STOREVAL)
 		FROM
-			SRPJAVALIB.STOREMAP
+			STOREMAP
 		WHERE
 			TRIM(SEQ) = #{value}
 	</select>
@@ -147,4 +147,14 @@
 		WHERE
 			USERNAME = #{username}
 	</update>
+
+	<!-- すでに登録済みのユーザ名であるかを件数で取得する -->
+	<select id="existUser" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT
+			COUNT(username)
+		FROM
+			userlist
+		WHERE
+			username = #{value}
+	</select>
 </mapper>

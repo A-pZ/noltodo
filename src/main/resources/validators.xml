@@ -9,6 +9,8 @@
  -->
 <validators>
 	<!-- lumi -->
-	<validator name="visitor"
-		class="lumi.validator.VisitorFieldValidator" />
+	<validator name="visitor" class="lumi.validator.VisitorFieldValidator" />
+
+	<!-- noltodo -->
+	<validator name="signup" class="lumi.validator.PasswordVerifyValidator" />
 </validators>
