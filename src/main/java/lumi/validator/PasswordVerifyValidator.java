@@ -3,7 +3,6 @@
  */
 package lumi.validator;
 
-import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lumi.action.LumiActionSupport;
@@ -78,7 +77,7 @@ public class PasswordVerifyValidator extends FieldValidatorSupport {
 	}
 
 	@Autowired
-	@Getter @Setter
+	@Setter
 	private UserRegisterService userRegisterService;
 
 	public enum Query {
