@@ -92,7 +92,7 @@ $(document).ready(function() {
 		goSubmit(url);
 	});
 
-	$("#limitdate").datepicker({
+	$("#limitdate-container input").datepicker({
 		format: 'yyyy/mm/dd' ,
 		language: 'ja',
 		autoclose: true,
@@ -143,7 +143,7 @@ var showPreview = function(e) {
 		</div>
 	</div>
 
-	<div class="container theme-showcase" role="main">
+	<div class="container" role="main">
 		<div class="messages" th:replace="templates/messages :: messages">
 			<div class="alert alert-success" role="alert">通常メッセージです。</div>
 			<div class="alert alert-danger" role="alert">エラーメッセージです。</div>
@@ -192,7 +192,7 @@ var showPreview = function(e) {
 
 			<div class="row">
 				<div class="col-md-4">
-					<div class="input-group">
+					<div class="input-group" id="limitdate-container">
 						<div class="input-group-addon inputaddon-width">期限</div>
 						<input type="text" class="form-control" id="limitdate" name="vo.limitdate" value="2015/01/12" th:value="${action.vo.limitdate != null} ? ${#dates.format(action.vo.limitdate,'yyyy/MM/dd')} :''" placeholder="日付を選択してください" th:readonly="${action.vo.status == 'read'}"/>
 					</div>
