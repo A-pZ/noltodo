@@ -16,8 +16,8 @@
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="list.html" th:href="@{/list}">一覧</a></li>
-				<li><a href="register.html" th:href="@{/display}">登録</a></li>
+				<li><a href="list.html" th:href="@{/list}"><span class="glyphicon glyphicon-th-list"></span> 一覧</a></li>
+				<li><a href="register.html" th:href="@{/display}"><span class="glyphicon glyphicon-pencil"></span> 登録</a></li>
 			</ul>
 			<ul class="nav navbar-nav pull-right">
 				<li>
@@ -25,7 +25,16 @@
 						ユーザ名
 					</p>
 				</li>
-				<li><a href="#" onclick="logout();">ログアウト</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span>アカウント
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#">アカウント操作</a></li>
+						<li class="divider"></li>
+						<li><a href="#" onclick="logout();">ログアウト</a></li>
+					</ul>
+				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">外部リンク
 						<span class="caret"></span>

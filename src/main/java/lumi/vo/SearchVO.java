@@ -37,4 +37,6 @@ public class SearchVO {
 	private boolean update;
 	/** 公開/非公開フラグ */
 	private int publish;
+	/** 優先度 */
+	private String priority;
 }

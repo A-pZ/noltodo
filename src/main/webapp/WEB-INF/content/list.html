@@ -37,6 +37,8 @@ $(document).ready(function() {
 		url = /*[[ @{/list} ]]*/ 'list.html';
 		goSubmit(url);
 	});
+
+	$('[data-toggle="tooltip"]').tooltip();
 });
 
 var goSubmit = function(url) {
@@ -81,8 +83,8 @@ var goSubmit = function(url) {
 
 		<div class="row">
 			<div class="col-md-3">
-				<button type="button" id="allSearch" name="allSearch" class="btn btn-info">
-					<span class="glyphicon glyphicon-share-alt"></span>すべてのタスクを表示
+				<button type="button" id="allSearch" name="allSearch" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="他の方の公開タスクも表示します">
+					<span class="glyphicon glyphicon-share-alt"></span>公開タスクも表示する
 				</button>
 			</div>
 			<div class="col-md-9">
@@ -116,35 +118,39 @@ var goSubmit = function(url) {
 					<th>#</th>
 					<th>タスク名</th>
 					<th>職業・特化</th>
-					<th>登録日</th>
-					<th>有効期限</th>
+					<th>優先度</th>
+					<th>期限</th>
 					<th>ステータス</th>
+					<th>登録日</th>
 				</tr>
 			</thead>
-			<tbody th:remove="all-but-first" th:each="result : ${action.resultList}">
-				<tr th:class="${result['limitdate']} &lt; ${action.systemDate} ? 'danger' : ''">
+			<tbody th:remove="all-but-first" th:each="result : ${resultList}">
+				<tr th:class="${result['limitdate']} &lt; ${systemDate} ? 'danger' : ''">
 					<td th:text="${result['id']}">1</td>
 					<td><a href="update.html" th:href="@{display(vo.id=${result['id']})}" th:text="${result['name']}">タスク1</a></td>
 					<td th:text="${result['jobname']}">侍</td>
-					<td th:text="${#dates.format(result['writedate'], 'yyyy/MM/dd')}">3/5</td>
-					<td th:text="${#dates.format(result['limitdate'], 'yyyy/MM/dd')}">3/20</td>
+					<td th:text="${beans.master.getValue('priority',result['priority'])}">High</td>
+					<td th:text="${#dates.format(result['limitdate'], 'yy/MM/dd')}">3/20</td>
 					<td th:text="${beans.master.getValue('status',result['status'])}">Open</td>
+					<td th:text="${#dates.format(result['writedate'], 'yy/MM/dd')}">3/05</td>
 				</tr>
 				<tr>
 					<td>2</td>
 					<td>タスク2</td>
 					<td>忍者</td>
-					<td>3/7</td>
+					<td>高</td>
 					<td>3/9</td>
 					<td>Close</td>
+					<td>3/7</td>
 				</tr>
 				<tr>
 					<td>3</td>
 					<td>タスク3</td>
 					<td>鎧</td>
-					<td>1/9</td>
+					<td></td>
 					<td>2/9</td>
 					<td>NotOpen</td>
+					<td>1/9</td>
 				</tr>
 			</tbody>
 		</table>
