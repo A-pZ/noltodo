@@ -36,6 +36,7 @@
 			, limitdate
 			, status
 			, publish
+			, priority
 		FROM
 			task , m_job
 		<where>
@@ -73,6 +74,7 @@
 			, limitdate
 			, status
 			, publish
+			, priority
 		) VALUES (
 			  #{name}
 			, #{task}
@@ -106,6 +108,7 @@
 			, limitdate = #{limitdate}
 			, status = #{status}
 			, publish = #{publish}
+			, priority = #{priority}
 		WHERE
 			id = #{id}
 		AND

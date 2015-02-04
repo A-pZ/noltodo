@@ -5,6 +5,7 @@ package lumi.service;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,9 +75,10 @@ public class JsonDataService {
 				recordMap.put(vo.getCode(), vo.getValue());
 			} else {
 				log.debug("    + category add:" + category);
-				Map<String, String> recordMap = new HashMap<String, String>();
+				Map<String, String> recordMap = new LinkedHashMap<String, String>();
 				master.put(category, recordMap);
 				recordMap.put(vo.getCode(), vo.getValue());
+				log.debug("    -- code :".concat(vo.getCode()).concat(" value :").concat(vo.getValue()));
 			}
 		}
 
@@ -101,6 +103,19 @@ public class JsonDataService {
 			return "no-hit code:" + code;
 		}
 		return value;
+	}
+
+	/**
+	 * 指定したカテゴリーのkey/value一覧Mapを取得する。
+	 * @param category
+	 * @return
+	 */
+	public Map<String, String> getValues(String category) {
+		Map<String, String> map = masterMap.get(category);
+		if (map == null ) {
+			throw new IllegalArgumentException("category[".concat(category).concat("] not found.") );
+		}
+		return map;
 	}
 
 	private static final String JSON_FILE_NAME = "master.json";
