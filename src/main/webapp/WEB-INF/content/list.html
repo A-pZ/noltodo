@@ -37,6 +37,8 @@ $(document).ready(function() {
 		url = /*[[ @{/list} ]]*/ 'list.html';
 		goSubmit(url);
 	});
+
+	$('[data-toggle="tooltip"]').tooltip();
 });
 
 var goSubmit = function(url) {
@@ -81,8 +83,8 @@ var goSubmit = function(url) {
 
 		<div class="row">
 			<div class="col-md-3">
-				<button type="button" id="allSearch" name="allSearch" class="btn btn-info">
-					<span class="glyphicon glyphicon-share-alt"></span>すべてのタスクを表示
+				<button type="button" id="allSearch" name="allSearch" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="他の方の公開タスクも表示します">
+					<span class="glyphicon glyphicon-share-alt"></span>公開タスクも表示する
 				</button>
 			</div>
 			<div class="col-md-9">

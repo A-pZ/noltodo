@@ -99,6 +99,8 @@ $(document).ready(function() {
 		clearBtn: true,
 		startDate: '+1',
 	});
+
+	$('[data-toggle="tooltip"]').tooltip();
 });
 
 var goSubmit = function(url) {
@@ -153,7 +155,9 @@ var showPreview = function(e) {
 			<div class="row">
 				<div class="col-md-4">
 					<div class="input-group">
-						<div class="input-group-addon inputaddon-width">タスクのタイトル</div>
+						<span class="input-group-addon inputaddon-width">
+							<span class="glyphicon glyphicon-tags"></span> タイトル
+						</span>
 						<input name="vo.name" class="form-control col-lg" type="text" placeholder="タイトルをどうぞ" value="" th:value="${vo.name}" th:readonly="${vo.status == 'read'}"/>
 					</div>
 				</div>
@@ -184,7 +188,7 @@ var showPreview = function(e) {
 				<div class="col-md-4">
 					<div class="input-group">
 						<span class="input-group-addon inputaddon-width">
-							<span class="glyphicon glyphicon-user"></span> 重要度
+							<span class="glyphicon glyphicon-tasks"></span> 重要度
 						</span>
 						<select id="priority" class="form-control" name="vo.priority" th:remove="all-but-first" th:disabled="${vo.status == 'read'}">
 							<option th:each="priorities : ${beans.master.getValues('priority')}" th:value="${priorities.key}" th:selected="${priorities.key == vo.priority}" th:inline="text">[[${priorities.value}]]</option>
@@ -201,7 +205,9 @@ var showPreview = function(e) {
 			<div class="row">
 				<div class="col-md-12">
 					<div class="input-group">
-						<div class="input-group-addon inputaddon-width">本文</div>
+						<span class="input-group-addon inputaddon-width">
+							<span class="glyphicon glyphicon-pencil"></span> 本文
+						</span>
 						<textarea id="content" name="vo.task" class="form-control" th:text="${vo.task}" th:readonly="${vo.status == 'read'}"></textarea>
 					</div>
 				</div>
@@ -210,7 +216,9 @@ var showPreview = function(e) {
 			<div class="row">
 				<div class="col-md-4">
 					<div class="input-group" id="limitdate-container">
-						<div class="input-group-addon inputaddon-width">期限</div>
+						<span class="input-group-addon inputaddon-width">
+							<span class="glyphicon glyphicon-calendar"></span> 期限
+						</span>
 						<input type="text" class="form-control" id="limitdate" name="vo.limitdate" value="2015/01/12" th:value="${vo.limitdate != null} ? ${#dates.format(vo.limitdate,'yyyy/MM/dd')} :''" placeholder="日付を選択してください" th:readonly="${vo.status == 'read'}"/>
 					</div>
 				</div>
@@ -218,7 +226,7 @@ var showPreview = function(e) {
 				<div class="col-md-2">
 					<div class="input-group">
 						<span class="input-group-addon">
-							<input type="checkbox" id="publish" aria-label="pub" name="vo.publish" th:checked="${vo.publish == 1}" value="1" th:readonly="${vo.status == 'read'}"/>
+							<input type="checkbox" id="publish" aria-label="pub" name="vo.publish" th:checked="${vo.publish == 1}" value="1" th:readonly="${vo.status == 'read'}" data-toggle="tooltip" data-placement="top" title="チェックすると公開タスクになります"/>
 						</span>
 						<span class="form-control" aria-label="pub">公開</span>
 					</div>
