@@ -28,6 +28,7 @@ import com.opensymphony.xwork2.interceptor.annotations.Blocked;
 @Results({
 	// location属性に指定したhtmlファイル名は、/WEB-INF/content 以下からの相対パス。
 	@Result(name = ActionSupport.SUCCESS, location = "register" , type="thymeleaf-spring"),
+	@Result(name = ActionSupport.ERROR, location = "application_error" , type="thymeleaf-spring"),
 })
 @Controller
 @Scope("prototype")
@@ -38,12 +39,19 @@ public class DisplayAction extends LumiActionSupport {
 	 * デフォルトアクション。
 	 */
 	@Action("display")
-	public String start() throws Exception {
+	public String display() throws Exception {
 
 		if ( vo != null && vo.getId() > 0 ) {
 			// Serviceクラスの呼び出し
 			vo = service.detail(vo);
-			log.debug(" - getting vo.id=" + vo.getId());
+
+			if ( vo == null ) {
+				log.warn(" - fail to getting vo.");
+				return ERROR;
+			} else {
+				log.debug(" - getting vo.id=" + vo.getId());
+			}
+
 		} else {
 			// ない場合はブランク作成
 			vo = service.blank();

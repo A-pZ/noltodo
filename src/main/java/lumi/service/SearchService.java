@@ -45,10 +45,7 @@ public class SearchService extends LumiService {
 		if ( StringUtils.isBlank(vo.getStatus()) ) {
 			vo.setStatus("op");
 		}
-		/*
-		if (! "all".equals(vo.getStatus())) {
-			vo.setUserid(getUserId());
-		}*/
+
 		vo.setUserid(getUserId());
 
 		// 検索を行う。
@@ -74,6 +71,7 @@ public class SearchService extends LumiService {
 	 * @throws Exception
 	 */
 	public SearchVO detail(SearchVO vo) throws Exception {
+
 		// 検索を行う。
 		List<SearchVO> resultList = dao.select(Query.searchTask.name(), vo);
 
@@ -84,16 +82,24 @@ public class SearchService extends LumiService {
 
 		if ( resultList.size() > 2) {
 			addErrorMessage("detail.record.toomatch");
-			return vo;
-		} else {
-			addInfoMessage("detail.display");
+			return null;
 		}
+
 		SearchVO returnVo = resultList.get(0);
 
+		// タスクのユーザIDとログインユーザIDとの比較
 		if (!StringUtils.equals(returnVo.getUserid(), getUserId()) ) {
+			// もし公開フラグがついてなかった場合は表示できない。
+			if ( returnVo.getPublish() != 1 ) {
+				addErrorMessage("detail.record.invalid");
+				return null;
+			}
+
 			returnVo.setStatus("read");
 		}
 		returnVo.setUpdate(true);
+
+		addInfoMessage("detail.display");
 
 		return returnVo;
 	}
