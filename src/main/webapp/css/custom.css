@@ -3,6 +3,10 @@ body {
   padding-bottom: 30px;
 }
 
+.container {
+	background-color: rgba(10, 25, 150, 0.02);
+}
+
 .inputaddon-width {
 	width: 120px;
 	text-align: center;
