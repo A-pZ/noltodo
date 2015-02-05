@@ -84,6 +84,7 @@
 			, #{limitdate}
 			, 'op'
 			, #{publish}
+			, #{priority}
 		)
 	</insert>
 
