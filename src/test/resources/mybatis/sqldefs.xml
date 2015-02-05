@@ -8,7 +8,7 @@
 		SELECT
 			TRIM(STOREVAL)
 		FROM
-			SRPJAVALIB.STOREMAP
+			STOREMAP
 		WHERE
 			TRIM(SEQ) = #{value}
 	</select>
@@ -23,21 +23,141 @@
 		)
 	</insert>
 
+	<!-- タスクの検索 -->
+	<select id="searchTask" parameterType="lumi.vo.SearchVO" resultType="lumi.vo.SearchVO">
+		SELECT
+			  task.id	id
+			, task.name	name
+			, task
+			, writedate
+			, userid
+			, jobid
+			, m_job.name jobname
+			, limitdate
+			, status
+			, publish
+			, priority
+		FROM
+			task , m_job
+		<where>
+			task.jobid = m_job.id
+			<if test="jobid != null">
+				AND jobid = #{jobid}
+			</if>
+			<if test="id != null &amp; id != 0">
+				AND task.id = #{id}
+			</if>
+			<choose>
+				<when test="status == 'all'">
+					AND ( task.userid = #{userid} OR task.publish = 1 )
+				</when>
+				<when test="userid != null">
+					AND userid = #{userid}
+				</when>
+			</choose>
+		</where>
+		ORDER BY
+			writedate DESC
+			, task.id DESC
+	</select>
+
+
 	<!-- タスクの登録 -->
 	<insert id="insertTask" parameterType="lumi.vo.RegisterVO">
-	INSERT INTO
-		task (
-		  name
-		, task
-		, writedate
-		, userid
-		, jobid
-	) VALUES (
-		  #{name}
-		, #{task}
-		, now()
-		, #{userid}
-		, #{jobid}
-	)
+		INSERT INTO
+			task (
+			  name
+			, task
+			, writedate
+			, userid
+			, jobid
+			, limitdate
+			, status
+			, publish
+			, priority
+		) VALUES (
+			  #{name}
+			, #{task}
+			, now()
+			, #{userid}
+			, #{jobid}
+			, #{limitdate}
+			, 'op'
+			, #{publish}
+		)
 	</insert>
+
+	<!-- 最新のタスク番号を取得 -->
+	<select id="selectMaxId" parameterType="lumi.vo.RegisterVO" resultType="int">
+		SELECT
+			max(id) as id
+		FROM
+			task
+	</select>
+
+	<!-- タスクの更新 -->
+	<update id="updateTask" parameterType="lumi.vo.RegisterVO">
+		UPDATE
+			task
+		SET
+			  name = #{name}
+			, task = #{task}
+			, writedate = now()
+			, userid = #{userid}
+			, jobid = #{jobid}
+			, limitdate = #{limitdate}
+			, status = #{status}
+			, publish = #{publish}
+			, priority = #{priority}
+		WHERE
+			id = #{id}
+		AND
+			userid = #{userid}
+	</update>
+
+	<!-- タスクの削除 -->
+	<delete id="deleteTask" parameterType="lumi.vo.RegisterVO">
+		DELETE FROM
+			task
+		WHERE
+			userid = #{userid}
+		AND
+			id = #{id}
+	</delete>
+
+	<!-- ユーザの登録 -->
+	<insert id="registerUser" parameterType="lumi.vo.AccountVO">
+		INSERT INTO userlist
+			(USERNAME,PASSWORD,ACTIVATE)
+		values
+			(#{username},#{password}, #{activate})
+	</insert>
+
+	<!-- ユーザー権限の登録 -->
+	<insert id="registerUserRole" parameterType="lumi.vo.AccountVO">
+		INSERT INTO userrole
+			(USERNAME,AUTHORITY)
+		values
+			(#{username},#{userrole});
+	</insert>
+
+	<!-- ユーザの更新 -->
+	<update id="updateUser" parameterType="lumi.vo.UserVO">
+		UPDATE
+			userlist
+		SET
+			PASSWORD = #{password}
+		WHERE
+			USERNAME = #{username}
+	</update>
+
+	<!-- すでに登録済みのユーザ名であるかを件数で取得する -->
+	<select id="existUser" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT
+			COUNT(username)
+		FROM
+			userlist
+		WHERE
+			username = #{value}
+	</select>
 </mapper>

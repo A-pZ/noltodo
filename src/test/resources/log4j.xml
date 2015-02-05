@@ -94,7 +94,7 @@
 	</logger>
 
 	<logger name="org.thymeleaf" additivity="false">
-		<level value="debug" />
+		<level value="info" />
 		<appender-ref ref="stdout" />
 		<appender-ref ref="file" />
 	</logger>

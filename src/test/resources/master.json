@@ -1,0 +1,37 @@
+[
+	{
+		"category": "status",
+		"code": "op",
+		"value": "編集中"
+	},
+	{
+		"category": "status",
+		"code": "cl",
+		"value": "クローズ"
+	},
+	{
+		"category": "status",
+		"code": "dl",
+		"value": "削除"
+	},
+	{
+		"category": "priority",
+		"code": "primary",
+		"value": "重要"
+	},
+	{
+		"category": "priority",
+		"code": "high",
+		"value": "高"
+	},
+	{
+		"category": "priority",
+		"code": "mid",
+		"value": "中"
+	},
+	{
+		"category": "priority",
+		"code": "low",
+		"value": "低"
+	}
+]
