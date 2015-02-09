@@ -7,7 +7,7 @@
         <dependent-module archiveName="lumi-core-3.0.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/lumi-core/lumi-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="struts2-thymeleaf-plugin-2.3.20.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/struts2-thymeleaf-plugin/struts2-thymeleaf-plugin">
+        <dependent-module archiveName="struts2-thymeleaf-plugin-2.3.21-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/struts2-thymeleaf-plugin/struts2-thymeleaf-plugin">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="noltodo"/>
