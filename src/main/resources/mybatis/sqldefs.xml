@@ -57,8 +57,12 @@
 			</choose>
 		</where>
 		ORDER BY
+			<if test="priority != null &amp; priority == 'high'">
+			priority DESC ,
+			</if>
 			writedate DESC
 			, task.id DESC
+
 	</select>
 
 
