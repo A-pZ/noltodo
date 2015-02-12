@@ -3,10 +3,19 @@ body {
   padding-bottom: 30px;
 }
 
+.container {
+	background-color: rgba(10, 25, 150, 0.02);
+}
+
 .inputaddon-width {
 	width: 120px;
 	text-align: center;
 	background-color: #f2f5f7;
+}
+
+.jobModal {
+	background-color: #f2f6dd;
+	border-radius: 6px 6px 0 0;
 }
 
 .jobHover {

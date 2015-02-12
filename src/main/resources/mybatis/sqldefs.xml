@@ -41,7 +41,7 @@
 			task , m_job
 		<where>
 			task.jobid = m_job.id
-			<if test="jobid != null">
+			<if test="jobid != null &amp; jobid != ''">
 				AND jobid = #{jobid}
 			</if>
 			<if test="id != null &amp; id != 0">
@@ -57,8 +57,12 @@
 			</choose>
 		</where>
 		ORDER BY
+			<if test="priority != null &amp; priority == 'high'">
+			priority DESC ,
+			</if>
 			writedate DESC
 			, task.id DESC
+
 	</select>
 
 

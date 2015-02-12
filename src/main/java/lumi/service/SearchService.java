@@ -125,7 +125,7 @@ public class SearchService extends LumiService {
 		vo.setLimitdate( new Timestamp(calendar.getTimeInMillis()));
 
 		// タスクの重要度を中に。
-		vo.setPriority("mid");
+		vo.setPriority("200");
 
 		return vo;
 	}
