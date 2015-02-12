@@ -41,7 +41,7 @@
 			task , m_job
 		<where>
 			task.jobid = m_job.id
-			<if test="jobid != null">
+			<if test="jobid != null &amp; jobid != ''">
 				AND jobid = #{jobid}
 			</if>
 			<if test="id != null &amp; id != 0">
