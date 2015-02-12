@@ -39,6 +39,29 @@ $(document).ready(function() {
 	});
 
 	$('[data-toggle="tooltip"]').tooltip();
+
+
+	//職業・特化の処理
+	$("#job_select").bind("click" , function() {
+		$("#myModal").modal('show');
+	});
+
+	$("[data-job]").bind("click", function() {
+		var id = $(this).attr("data-job")
+		$("#jobid").val(id);
+		// モーダルを閉じる
+		$("#closeModal").click();
+
+		url = /*[[ @{/list} ]]*/ 'list.html';
+		goSubmit(url);
+	});
+
+	$("[data-job]").bind("mouseover", function() {
+		$(this).addClass("jobHover");
+	});
+	$("[data-job]").bind("mouseout", function() {
+		$(this).removeClass("jobHover");
+	});
 });
 
 var goSubmit = function(url) {
@@ -117,7 +140,9 @@ var goSubmit = function(url) {
 				<tr>
 					<th>#</th>
 					<th>タスク名</th>
-					<th>職業・特化</th>
+					<th>
+						<a href="#" id="job_select" data-toggle="tooltip" data-placement="top" title="職業・特化を選択して再表示します">職業・特化</a>
+					</th>
 					<th>優先度</th>
 					<th>期限</th>
 					<th>ステータス</th>
@@ -158,9 +183,12 @@ var goSubmit = function(url) {
 
 	<form id="form" name="form" method="POST">
 		<input type="hidden" name="vo.status" id="status" value="op" />
+		<input type="hidden" name="vo.jobid" id="jobid" />
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 	</form>
 
+	<!-- 職業＆特化選択モーダル -->
+	<div th:replace="templates/job :: job"></div>
 	<div th:replace="templates/request :: request"></div>
 </body>
 </html>

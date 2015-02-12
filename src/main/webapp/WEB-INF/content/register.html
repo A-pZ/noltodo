@@ -268,78 +268,7 @@ var showPreview = function(e) {
 	</div>
 
 	<!-- 職業＆特化選択モーダル -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" id="closeModal" class="close"
-						data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title">職業・特化選択</h4>
-				</div>
-				<div class="modal-body">
-					<table class="table table-bordered table-condensed">
-						<tbody>
-							<tr>
-								<td data-job="sam">侍</td>
-								<td data-job="bug">武芸</td>
-								<td data-job="gun">軍学</td>
-								<td data-job="bus">武士道</td>
-							</tr>
-							<tr>
-								<td data-job="sou">僧</td>
-								<td data-job="hei">僧兵</td>
-								<td data-job="fut">仏門</td>
-								<td data-job="mik">密教</td>
-							</tr>
-							<tr>
-								<td data-job="onm">陰陽師</td>
-								<td data-job="dou">陰陽道</td>
-								<td data-job="sen">仙論</td>
-								<td data-job="sho">召喚</td>
-							</tr>
-							<tr>
-								<td data-job="kam">神職</td>
-								<td data-job="sin">神道</td>
-								<td data-job="kos">古神</td>
-								<td data-job="gag">雅楽</td>
-							</tr>
-							<tr>
-								<td data-job="nin">忍者</td>
-								<td data-job="pou">忍法</td>
-								<td data-job="ans">暗殺</td>
-								<td data-job="jyu">忍術</td>
-							</tr>
-							<tr>
-								<td data-job="kaj">鍛冶屋</td>
-								<td data-job="kat">刀</td>
-								<td data-job="yor">鎧</td>
-								<td data-job="tep">鉄砲</td>
-							</tr>
-							<tr>
-								<td data-job="yak">薬師</td>
-								<td data-job="iga">医学</td>
-								<td data-job="jin">神通力</td>
-								<td data-job="shu">修験</td>
-							</tr>
-							<tr>
-								<td data-job="kab">傾奇者</td>
-								<td data-job="tat">殺陣</td>
-								<td data-job="enb">四象</td>
-								<td data-job="nou">能楽</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="modal-footer"></div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
-	<!-- /.modal -->
+	<div th:replace="templates/job :: job"></div>
 
 	<div th:replace="templates/request :: request"></div>
 </body>
