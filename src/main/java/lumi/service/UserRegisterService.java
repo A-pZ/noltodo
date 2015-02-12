@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lumi.dao.DAO;
-import lumi.vo.AccountVO;
+import lumi.vo.UserRegisterVO;
 import lumi.vo.UserVO;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -39,7 +39,7 @@ public class UserRegisterService extends LumiService {
 	 */
 	public void register(UserVO vo) throws Exception {
 
-		AccountVO account = new AccountVO();
+		UserRegisterVO account = new UserRegisterVO();
 		BeanUtils.copyProperties(account, vo);
 		account.setActivate(1);
 		account.setUserrole("ROLE_ADMIN");

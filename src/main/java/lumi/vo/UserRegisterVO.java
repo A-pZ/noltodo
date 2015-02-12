@@ -13,7 +13,10 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper=false)
-public class AccountVO extends UserVO {
+public class UserRegisterVO extends UserVO {
 	private int activate;
 	private String userrole;
+
+	/** 表示名 */
+	private String displayName;
 }
