@@ -4,16 +4,21 @@
 package lumi.vo;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
- * アカウント情報を管理するVO。UserVOを継承する。
+ * アカウント管理用の抽象クラス。
+ * アカウント管理画面でのValidationはこのクラスを継承して実装する。
  * @author A-pZ
  *
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
-public class AccountVO extends UserVO {
-	private int activate;
-	private String userrole;
+public abstract class AccountVO {
+	private String username;
+	private String oldPassword;
+	private String password;
+	private String confirm;
+
+	private String displayName;
+	private String twitterId;
+
 }

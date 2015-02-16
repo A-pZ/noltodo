@@ -1,10 +1,7 @@
-package lumi.action.signup;
+package lumi.action.account;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lumi.action.LumiActionSupport;
-import lumi.vo.UserVO;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -17,15 +14,15 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
- * 1レコードの表示Actionクラス。
+ * アカウント管理の表示Actionクラス。
  *
  * @author A-pZ ( Serendipity 3 ./ as sundome goes by. )
  */
-@Namespace("/signup")
+@Namespace("/account")
 @ParentPackage("lumi-default")
 @Results({
 	// location属性に指定したhtmlファイル名は、/WEB-INF/content 以下からの相対パス。
-	@Result(name = ActionSupport.SUCCESS, location = "signup/signup" , type="thymeleaf-spring"),
+	@Result(name = ActionSupport.SUCCESS, location = "account/menu" , type="thymeleaf-spring"),
 })
 @Controller
 @Scope("prototype")
@@ -37,20 +34,9 @@ public class DisplayAction extends LumiActionSupport {
 	 */
 	@Action("")
 	public String start() throws Exception {
-		vo = new UserVO();
 
-		addActionMessage(getText("signup.display"));
-		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
-		// この値は@Resultで指定したname値となる。
+		addActionMessage(getText("account.menu.display"));
+
 		return SUCCESS;
 	}
-
-	@Getter @Setter
-	private UserVO vo;
-
-	@Getter @Setter
-	private String j_username;
-
-	@Getter @Setter
-	private String j_password;
 }

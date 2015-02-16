@@ -11,8 +11,6 @@
 	<!-- アプリケーション共通プロパティファイル名。拡張子は不要。 -->
 	<constant name="struts.custom.i18n.resources" value="commons,message" />
 
-	<bean type="org.codework.struts.plugins.thymeleaf.spi.TemplateEngineProvider" name="lumi" class="org.codework.struts.plugins.thymeleaf.spi.Struts2SpringTemplateEngineProvider" />
-
 	<package name="lumi-default" abstract="true" extends="struts-thymeleaf">
 		<result-types>
 			<result-type name="thymeleaf"

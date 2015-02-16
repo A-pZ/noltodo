@@ -74,6 +74,7 @@ $(document).ready(function() {
 
 var goSubmit = function(url) {
 	$("button").attr('disabled' , 'disabled');
+	$("th > a").addClass('disabled').addClass('anchor-disabled');
 	//$("#loading").css('display' , 'block');
 	$("#form").attr('action', url);
 	$("#form").submit();
@@ -155,7 +156,7 @@ var goSubmit = function(url) {
 					</th>
 					<th>
 						<a href="#" id="priority_sort" data-toggle="tooltip" data-placement="top" title="優先度が高い順に再表示します">
-							<span class="glyphicon glyphicon-arrow-up"></span> 優先度
+							<span class="glyphicon glyphicon-sort-by-attributes-alt"></span> 優先度
 						</a>
 					</th>
 					<th>期限</th>

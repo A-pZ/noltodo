@@ -1,56 +1,56 @@
-package lumi.action.signup;
+package lumi.action.account;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lumi.action.LumiActionSupport;
-import lumi.vo.UserVO;
+import lumi.service.AccountService;
+import lumi.vo.AccountVO;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.interceptor.annotations.Blocked;
 
 /**
- * 1レコードの表示Actionクラス。
+ * アカウント管理の表示Actionクラス。
  *
  * @author A-pZ ( Serendipity 3 ./ as sundome goes by. )
  */
-@Namespace("/signup")
+@Namespace("/account")
 @ParentPackage("lumi-default")
 @Results({
 	// location属性に指定したhtmlファイル名は、/WEB-INF/content 以下からの相対パス。
-	@Result(name = ActionSupport.SUCCESS, location = "signup/signup" , type="thymeleaf-spring"),
+	@Result(name = ActionSupport.SUCCESS, location = "account/passwordChange" , type="thymeleaf-spring"),
 })
 @Controller
 @Scope("prototype")
 @Slf4j
-public class DisplayAction extends LumiActionSupport {
+public class DisplayChangeAction extends LumiActionSupport {
 
 	/**
-	 * デフォルトアクション。
+	 * アカウント情報（パスワード）変更の表示アクション。
 	 */
-	@Action("")
+	@Action("displayChange")
 	public String start() throws Exception {
-		vo = new UserVO();
 
-		addActionMessage(getText("signup.display"));
-		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
-		// この値は@Resultで指定したname値となる。
+		addActionMessage(getText("account.password.display"));
+
 		return SUCCESS;
 	}
 
+	@Blocked
+	@Autowired
 	@Getter @Setter
-	private UserVO vo;
+	private AccountService account;
 
 	@Getter @Setter
-	private String j_username;
-
-	@Getter @Setter
-	private String j_password;
+	private AccountVO vo;
 }
