@@ -73,19 +73,17 @@ var goSubmit = function(url) {
 	</div>
 
 	<div class="container theme-showcase" role="main">
+		<div class="page-header">
+			<h2>ユーザ登録が完了しました。<small>d(・ω・)</small></h2>
+		</div>
+
 		<div class="messages" th:replace="templates/messages :: messages">
 			<div class="alert alert-success" role="alert">通常メッセージです。</div>
 		</div>
 
-		<div class="page-header">
-			<h1>登録が完了しました。<small></small></h1>
-		</div>
-
 		<div class="row">
-			<h4>ログイン画面にて、登録したユーザー名＆パスワードでログインしてください</h4>
-
 			<form id="form" name="form" class="form-horizontal" method="POST" action="../login/login.html">
-				<button type="button" id="login" class="btn btn-primary">ログイン画面を表示</button>
+				<button type="button" id="login" class="btn btn-primary">ログイン画面へ</button>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 			</form>
 		</div>
