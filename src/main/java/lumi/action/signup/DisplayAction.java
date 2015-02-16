@@ -38,6 +38,8 @@ public class DisplayAction extends LumiActionSupport {
 	@Action("")
 	public String start() throws Exception {
 		vo = new UserVO();
+
+		addActionMessage(getText("signup.display"));
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
 		// この値は@Resultで指定したname値となる。
 		return SUCCESS;
