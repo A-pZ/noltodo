@@ -133,9 +133,9 @@
 	<!-- ユーザの登録 -->
 	<insert id="registerUser" parameterType="lumi.vo.UserRegisterVO">
 		INSERT INTO userlist
-			(USERNAME,PASSWORD,ACTIVATE)
+			(username,password,activate,displayname)
 		values
-			(#{username},#{password}, #{activate})
+			(#{username},#{password}, #{activate},#{username})
 	</insert>
 
 	<!-- ユーザー権限の登録 -->
@@ -165,4 +165,16 @@
 		WHERE
 			username = #{value}
 	</select>
+
+	<!-- パスワードの更新 -->
+	<update id="updatePassword" parameterType="lumi.vo.AccountVO">
+		UPDATE
+			userlist
+		SET
+			password = #{password}
+		WHERE
+			username = #{username}
+		AND
+			password = #{oldPassword}
+	</update>
 </mapper>

@@ -39,19 +39,19 @@ public class UserRegisterService extends LumiService {
 	 */
 	public void register(UserVO vo) throws Exception {
 
-		UserRegisterVO account = new UserRegisterVO();
-		BeanUtils.copyProperties(account, vo);
-		account.setActivate(1);
-		account.setUserrole("ROLE_ADMIN");
+		UserRegisterVO registerVO = new UserRegisterVO();
+		BeanUtils.copyProperties(registerVO, vo);
+		registerVO.setActivate(1);
+		registerVO.setUserrole("ROLE_ADMIN");
 
 		// 登録する
-		int count =  dao.insert(Query.registerUser.name(), account);
+		int count =  dao.insert(Query.registerUser.name(), registerVO);
 		if ( count == 0 ) {
 			result = false;
 			addErrorMessage("signup.failure");
 		} else {
 			// ロールの更新
-			int roleCount = dao.insert(Query.registerUserRole.name(), account);
+			int roleCount = dao.insert(Query.registerUserRole.name(), registerVO);
 			if ( roleCount == 0 ) {
 				result = false;
 				addErrorMessage("signup.role.failure");
@@ -79,10 +79,10 @@ public class UserRegisterService extends LumiService {
 	}
 
 	/**
-	 *
-	 * @param username
-	 * @return
-	 * @throws Exception
+	 * すでに存在しているユーザであるかを検索する。
+	 * @param username ユーザID
+	 * @return ヒット件数
+	 * @throws Exception 発生した例外
 	 */
 	public Integer existUserSearch(String username) throws Exception {
 		return (Integer)dao.selectObject(Query.existUser.name(), username);
