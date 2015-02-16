@@ -27,22 +27,6 @@ body {
 	color: #D53;
 }
 
-/*
- * placeholder style. Original written cxnu (http://qiita.com/cxnu)
- */
-
-// Google Chrome, Safari, Opera 15+, Android, iOS
-::-webkit-input-placeholder {
-    color: red; }
-
-// Firefox 18-
-:-moz-placeholder {
-    color: red; opacity: 1; }
-
-// Firefox 19+
-::-moz-placeholder {
-    color: red; opacity: 1; }
-
-// IE 10+
-:-ms-input-placeholder {
-    color: red; }
+.anchor-disabled {
+	color: #CCC;
+}

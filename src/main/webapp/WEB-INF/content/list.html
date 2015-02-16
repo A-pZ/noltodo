@@ -74,6 +74,7 @@ $(document).ready(function() {
 
 var goSubmit = function(url) {
 	$("button").attr('disabled' , 'disabled');
+	$("th > a").addClass('disabled').addClass('anchor-disabled');
 	//$("#loading").css('display' , 'block');
 	$("#form").attr('action', url);
 	$("#form").submit();
