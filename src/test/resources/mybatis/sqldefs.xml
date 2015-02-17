@@ -41,7 +41,7 @@
 			task , m_job
 		<where>
 			task.jobid = m_job.id
-			<if test="jobid != null">
+			<if test="jobid != null &amp; jobid != ''">
 				AND jobid = #{jobid}
 			</if>
 			<if test="id != null &amp; id != 0">
@@ -57,6 +57,9 @@
 			</choose>
 		</where>
 		ORDER BY
+			<if test="priority != null &amp; priority == 'high'">
+			priority DESC ,
+			</if>
 			writedate DESC
 			, task.id DESC
 	</select>
@@ -84,6 +87,7 @@
 			, #{limitdate}
 			, 'op'
 			, #{publish}
+			, #{priority}
 		)
 	</insert>
 
@@ -128,9 +132,9 @@
 	<!-- ユーザの登録 -->
 	<insert id="registerUser" parameterType="lumi.vo.UserRegisterVO">
 		INSERT INTO userlist
-			(USERNAME,PASSWORD,ACTIVATE)
+			(username,password,activate,displayname)
 		values
-			(#{username},#{password}, #{activate})
+			(#{username},#{password}, #{activate},#{username})
 	</insert>
 
 	<!-- ユーザー権限の登録 -->
@@ -160,4 +164,16 @@
 		WHERE
 			username = #{value}
 	</select>
+
+	<!-- パスワードの更新 -->
+	<update id="updatePassword" parameterType="lumi.vo.AccountVO">
+		UPDATE
+			userlist
+		SET
+			password = #{password}
+		WHERE
+			username = #{username}
+		AND
+			password = #{oldPassword}
+	</update>
 </mapper>
