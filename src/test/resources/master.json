@@ -16,22 +16,22 @@
 	},
 	{
 		"category": "priority",
-		"code": "primary",
+		"code": "400",
 		"value": "重要"
 	},
 	{
 		"category": "priority",
-		"code": "high",
+		"code": "300",
 		"value": "高"
 	},
 	{
 		"category": "priority",
-		"code": "mid",
+		"code": "200",
 		"value": "中"
 	},
 	{
 		"category": "priority",
-		"code": "low",
+		"code": "100",
 		"value": "低"
 	}
 ]
