@@ -14,9 +14,6 @@
 			<div class="alert alert-danger" role="alert" th:inline="text" th:if="${not #lists.isEmpty(action.actionErrors)}">
 			[[${action.actionErrors[0]}]]
 			</div>
-			<div class="alert alert-warning" role="alert" th:inline="text" th:if="${not #maps.isEmpty(action.fieldErrors)}">
-			[[${action.fieldErrors}]]
-			</div>
 		</div>
 	</body>
 </html>
