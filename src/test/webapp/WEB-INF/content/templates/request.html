@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<!-- システム共通リクエストパラメータ -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="ja">
+	<body>
+		<div th:fragment="request" id="request">
+			<!-- ログアウト -->
+			<form id="logout" action="logout.html" method="POST" th:action="@{/logout}">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+			</form>
+		</div>
+	</body>
+</html>

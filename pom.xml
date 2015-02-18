@@ -5,7 +5,7 @@
 	<groupId>lumi</groupId>
 	<artifactId>noltodo</artifactId>
 	<packaging>war</packaging>
-	<version>0.3.0-SNAPSHOT</version>
+	<version>0.4.0-SNAPSHOT</version>
 	<properties>
 		<java.version>1.7</java.version>
 		<lumi.version>3.0.0</lumi.version>
@@ -69,6 +69,12 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.10.19</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

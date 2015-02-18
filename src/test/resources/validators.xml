@@ -13,4 +13,5 @@
 
 	<!-- noltodo -->
 	<validator name="signup" class="lumi.validator.PasswordVerifyValidator" />
+	<validator name="passwordChange" class="lumi.validator.PasswordChangeValidator" />
 </validators>
