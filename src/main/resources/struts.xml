@@ -12,8 +12,17 @@
 	<constant name="struts.custom.i18n.resources" value="commons,message" />
 
 	<package name="lumi-default" abstract="true" extends="struts-thymeleaf">
+		<result-types>
+			<result-type name="json" class="org.apache.struts2.json.JSONResult" />
+		</result-types>
 
 		<interceptors>
+			<interceptor name="json"
+				class="org.apache.struts2.json.JSONInterceptor" />
+			<interceptor name="jsonValidation"
+				class="org.apache.struts2.json.JSONValidationInterceptor" />
+
+
 			<interceptor-stack name="lumiStack">
 				<interceptor-ref name="exception" />
 				<interceptor-ref name="servletConfig" />
