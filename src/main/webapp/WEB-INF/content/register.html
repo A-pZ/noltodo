@@ -9,7 +9,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 <meta name="description" content="のぼんのタスクをmarkdownで管理しようプロジェクト"></meta>
 <meta name="author" content="A-pZ(ぢつにんさん)"></meta>
-
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 <title>のるとど！</title>
 <link href="../../css/bootstrap.min.css" rel="stylesheet"
 	th:href="@{/css/bootstrap.min.css}" />
@@ -19,7 +20,8 @@
 	th:href="@{/css/bootstrap-markdown.min.css}" />
 <link href="../../css/custom.css" rel="stylesheet"
 	th:href="@{/css/custom.css}" />
-<link href="../../css/datepicker3.css" type="text/css" rel="stylesheet" th:href="@{/css/datepicker3.css}" />
+<link href="../../css/datepicker3.css" type="text/css" rel="stylesheet"
+	th:href="@{/css/datepicker3.css}" />
 
 <script src="../../js/jquery-1.11.1.min.js"
 	th:src="@{/js/jquery-1.11.1.min.js}"></script>
@@ -30,8 +32,10 @@
 	th:src="@{/js/locale/bootstrap-markdown.ja-custom.js}"></script>
 <script src="../../js/markdown.js" th:src="@{/js/markdown.js}"></script>
 <script src="../../js/to-markdown.js" th:src="@{/js/to-markdown.js}"></script>
-<script src="../../js/bootstrap-datepicker.js" th:src="@{/js/bootstrap-datepicker.js}"></script>
-<script src="../../js/locales/bootstrap-datepicker.ja.js" th:src="@{/js/locales/bootstrap-datepicker.ja.js}"></script>
+<script src="../../js/bootstrap-datepicker.js"
+	th:src="@{/js/bootstrap-datepicker.js}"></script>
+<script src="../../js/locales/bootstrap-datepicker.ja.js"
+	th:src="@{/js/locales/bootstrap-datepicker.ja.js}"></script>
 <script src="../../js/common.js" th:src="@{/js/common.js}"></script>
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -43,6 +47,12 @@
 <script type="text/javascript" th:inline="javascript">
 /*<![CDATA[*/
 $(document).ready(function() {
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(header, token);
+	});
 
 	// マークダウンのテキストエリア
 	$("#content").markdown({
@@ -177,9 +187,11 @@ var addTag = function(taskid , display) {
  */
 var tagUpdate = function(url,datas) {
 	$.ajax({
-		type: "GET" ,
+		type: "POST" ,
 		url: url ,
 		data: datas ,
+		cache: false ,
+
 		success:function(result , dataType) {
 			// タグの領域を再読み込みする。
 			if ( result === true ) {
@@ -229,48 +241,52 @@ var tagUpdate = function(url,datas) {
 			<div class="alert alert-danger" role="alert">エラーメッセージです。</div>
 		</div>
 
-		<form class="form-horizontal" role="form" method="POST" name="form" id="form">
+		<form class="form-horizontal" role="form" method="POST" name="form"
+			id="form">
 			<div class="row">
 				<div class="col-md-4">
 					<div class="input-group">
-						<span class="input-group-addon inputaddon-width">
-							<span class="glyphicon glyphicon-file"></span> タイトル
-						</span>
-						<input name="vo.name" class="form-control col-lg" type="text" placeholder="タイトルをどうぞ" value="" th:value="${vo.name}" th:readonly="${vo.status == 'read'}"/>
+						<span class="input-group-addon inputaddon-width"> <span
+							class="glyphicon glyphicon-file"></span> タイトル
+						</span> <input name="vo.name" class="form-control col-lg" type="text"
+							placeholder="タイトルをどうぞ" value="" th:value="${vo.name}"
+							th:readonly="${vo.status == 'read'}" />
 					</div>
 				</div>
 				<div class="col-md-8">
-					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(field['name'])}">[[${field['name']}]]</span>
+					<span class="field-error" th:inline="text"
+						th:if="${not #lists.isEmpty(field['name'])}">[[${field['name']}]]</span>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
 					<div class="input-group">
-						<span class="input-group-addon inputaddon-width">
-							<span class="glyphicon glyphicon-user"></span> 職業・特化
-						</span>
-						<input type="text" class="form-control" id="jobname" name="vo.jobname" value="" th:value="${vo.jobname}" readonly="readonly" />
-						<span class="input-group-btn">
+						<span class="input-group-addon inputaddon-width"> <span
+							class="glyphicon glyphicon-user"></span> 職業・特化
+						</span> <input type="text" class="form-control" id="jobname"
+							name="vo.jobname" value="" th:value="${vo.jobname}"
+							readonly="readonly" /> <span class="input-group-btn">
 							<button id="departureList" type="button" class="btn btn-info"
-									data-toggle="modal" data-target="#myModal" th:disabled="${vo.status == 'read'}">選択する</button>
-						</span>
-						<input type="hidden" id="jobid" name="vo.jobid" value="" th:value="${vo.jobid}"/>
+								data-toggle="modal" data-target="#myModal"
+								th:disabled="${vo.status == 'read'}">選択する</button>
+						</span> <input type="hidden" id="jobid" name="vo.jobid" value=""
+							th:value="${vo.jobid}" />
 					</div>
 				</div>
 				<div class="col-md-8">
-					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(field['jobid'])}">[[${field['jobid']}]]</span>
+					<span class="field-error" th:inline="text"
+						th:if="${not #lists.isEmpty(field['jobid'])}">[[${field['jobid']}]]</span>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon inputaddon-width">
-							<span class="glyphicon glyphicon-tags"></span> タグ
-						</span>
-
-						<span class="form-control" id="tagarea">
-							<span>読み込み中…<img src="./images/loadinfo.net.gif" th:src="@{/images/loadinfo.net.gif}"/></span>
+						<span class="input-group-addon inputaddon-width"> <span
+							class="glyphicon glyphicon-tags"></span> タグ
+						</span> <span class="form-control" id="tagarea"> <span>読み込み中…<img
+								src="./images/loadinfo.net.gif"
+								th:src="@{/images/loadinfo.net.gif}" /></span>
 						</span>
 					</div>
 				</div>
@@ -279,11 +295,14 @@ var tagUpdate = function(url,datas) {
 			<div class="row">
 				<div class="col-md-4">
 					<div class="input-group">
-						<span class="input-group-addon inputaddon-width">
-							<span class="glyphicon glyphicon-tasks"></span> 重要度
-						</span>
-						<select id="priority" class="form-control" name="vo.priority" th:remove="all-but-first" th:disabled="${vo.status == 'read'}">
-							<option th:each="priorities : ${beans.master.getValues('priority')}" th:value="${priorities.key}" th:selected="${priorities.key == vo.priority}" th:inline="text">[[${priorities.value}]]</option>
+						<span class="input-group-addon inputaddon-width"> <span
+							class="glyphicon glyphicon-tasks"></span> 重要度
+						</span> <select id="priority" class="form-control" name="vo.priority"
+							th:remove="all-but-first" th:disabled="${vo.status == 'read'}">
+							<option
+								th:each="priorities : ${beans.master.getValues('priority')}"
+								th:value="${priorities.key}"
+								th:selected="${priorities.key == vo.priority}" th:inline="text">[[${priorities.value}]]</option>
 							<option value="primary">重要</option>
 							<option value="high">高</option>
 							<option value="mid">中</option>
@@ -291,16 +310,20 @@ var tagUpdate = function(url,datas) {
 						</select>
 					</div>
 				</div>
-				<div class="col-md-8"><span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(field['task'])}">[[${field['task']}]]</span></div>
+				<div class="col-md-8">
+					<span class="field-error" th:inline="text"
+						th:if="${not #lists.isEmpty(field['task'])}">[[${field['task']}]]</span>
+				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-12">
 					<div class="input-group">
-						<span class="input-group-addon inputaddon-width">
-							<span class="glyphicon glyphicon-pencil"></span> 本文
+						<span class="input-group-addon inputaddon-width"> <span
+							class="glyphicon glyphicon-pencil"></span> 本文
 						</span>
-						<textarea id="content" name="vo.task" class="form-control" th:text="${vo.task}" th:readonly="${vo.status == 'read'}"></textarea>
+						<textarea id="content" name="vo.task" class="form-control"
+							th:text="${vo.task}" th:readonly="${vo.status == 'read'}"></textarea>
 					</div>
 				</div>
 			</div>
@@ -308,54 +331,65 @@ var tagUpdate = function(url,datas) {
 			<div class="row">
 				<div class="col-md-4">
 					<div class="input-group" id="limitdate-container">
-						<span class="input-group-addon inputaddon-width">
-							<span class="glyphicon glyphicon-calendar"></span> 期限
-						</span>
-						<input type="text" class="form-control" id="limitdate" name="vo.limitdate" value="2015/01/12" th:value="${vo.limitdate != null} ? ${#dates.format(vo.limitdate,'yyyy/MM/dd')} :''" placeholder="日付を選択してください" th:readonly="${vo.status == 'read'}"/>
+						<span class="input-group-addon inputaddon-width"> <span
+							class="glyphicon glyphicon-calendar"></span> 期限
+						</span> <input type="text" class="form-control" id="limitdate"
+							name="vo.limitdate" value="2015/01/12"
+							th:value="${vo.limitdate != null} ? ${#dates.format(vo.limitdate,'yyyy/MM/dd')} :''"
+							placeholder="日付を選択してください" th:readonly="${vo.status == 'read'}" />
 					</div>
 				</div>
 
 				<div class="col-md-2">
 					<div class="input-group">
-						<span class="input-group-addon">
-							<input type="checkbox" id="publish" aria-label="pub" name="vo.publish" th:checked="${vo.publish == 1}" value="1" th:readonly="${vo.status == 'read'}" data-toggle="tooltip" data-placement="top" title="チェックすると公開タスクになります"/>
-						</span>
-						<span class="form-control" aria-label="pub">公開</span>
+						<span class="input-group-addon"> <input type="checkbox"
+							id="publish" aria-label="pub" name="vo.publish"
+							th:checked="${vo.publish == 1}" value="1"
+							th:readonly="${vo.status == 'read'}" data-toggle="tooltip"
+							data-placement="top" title="チェックすると公開タスクになります" />
+						</span> <span class="form-control" aria-label="pub">公開</span>
 					</div>
 				</div>
 
 				<div class="col-md-6">
-					<span class="field-error" th:inline="text" th:if="${not #lists.isEmpty(field['limitdate'])}">[[${field['limitdate']}]]</span>
+					<span class="field-error" th:inline="text"
+						th:if="${not #lists.isEmpty(field['limitdate'])}">[[${field['limitdate']}]]</span>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-12">
-					<input type="hidden" id="status" name="vo.status" th:value="${vo.status}" />
-					<input type="hidden" id="id" name="vo.id" th:value="${vo.id}" />
+					<input type="hidden" id="status" name="vo.status"
+						th:value="${vo.status}" /> <input type="hidden" id="id"
+						name="vo.id" th:value="${vo.id}" />
 				</div>
 			</div>
 
 			<div class="row" th:unless="${vo.status == 'read'}">
 				<div class="col-md-12">
 					<div class="input-group">
-						<button type="button" class="btn btn-success" id="writeButtn" name="writeButton">
+						<button type="button" class="btn btn-success" id="writeButtn"
+							name="writeButton">
 							<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>タスクを書きこむ
 						</button>
 
 						<span th:if="${vo.id != 0}">
-							<button type="button" class="btn btn-warning" id="taskCloseButtn" name="taskCloseButton">
+							<button type="button" class="btn btn-warning" id="taskCloseButtn"
+								name="taskCloseButton">
 								<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>タスクを閉じる
 							</button>
 
-							<button type="button" class="btn btn-danger" id="taskDeleteButtn" name="taskDeleteButtn">
+							<button type="button" class="btn btn-danger" id="taskDeleteButtn"
+								name="taskDeleteButtn">
 								<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>タスクを消す
 							</button>
 						</span>
 					</div>
 				</div>
 			</div>
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+			<input type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" th:name="${_csrf.parameterName}"
+				th:value="${_csrf.token}" />
 		</form>
 	</div>
 
