@@ -3,7 +3,6 @@ package lumi.action.tag;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import lumi.action.LumiActionSupport;
 import lumi.service.TagService;
 import lumi.vo.TagVO;
 
@@ -29,17 +28,23 @@ import com.opensymphony.xwork2.interceptor.annotations.Blocked;
 @Results({
 	// location属性に指定したhtmlファイル名は、/WEB-INF/content 以下からの相対パス。
 	@Result(name = ActionSupport.SUCCESS, location = "register" , type="json" , params={"root","result"}),
+	@Result(name=BaseTagAction.ACL_ERROR_RESULT , type="thymeleaf-spring" , location="application_error"),
+	@Result(name=BaseTagAction.ACL_ERROR_AJAX_RESULT, type="json" , params={"root","message"})
 })
 @Controller
 @Scope("prototype")
 @Slf4j
-public class LinkTagForTaskAction extends LumiActionSupport {
+public class LinkTagForTaskAction extends BaseTagAction {
 
 	/**
 	 * デフォルトアクション。
 	 */
 	@Action("linkTag")
 	public String newTag() throws Exception {
+
+		if (! isAccessibleTask(vo)) {
+			return accessControlErrorResult();
+		}
 
 		service.linkTagForTask(vo);
 
