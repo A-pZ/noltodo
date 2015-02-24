@@ -54,8 +54,9 @@ public class TagService extends LumiService {
 	 * @throws Exception
 	 */
 	public boolean registerTag(TagVO vo) throws Exception {
-		// 表示名のトリム実施
-		vo.setDisplay(vo.getDisplay().trim());
+		// 表示名のトリム、スペース除去を実施
+		String display = vo.getDisplay().replace(" ", "").replace("　", "");
+		vo.setDisplay(display);
 
 		// 既存のタグであるか判定する。存在しない場合は新規作成。
 		String existTagid = (String) dao.selectObject(Query.existTag.name(), vo);
