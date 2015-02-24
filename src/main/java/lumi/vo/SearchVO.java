@@ -39,4 +39,6 @@ public class SearchVO {
 	private int publish;
 	/** 優先度 */
 	private String priority;
+	/** タグID */
+	private String tagid;
 }

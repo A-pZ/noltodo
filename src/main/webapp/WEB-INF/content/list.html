@@ -108,6 +108,17 @@ var loadTags = function() {
 	var url = /*[[ @{/tag/displayAll} ]]*/ 'tag/taglist.html';
 	$("#tagarea").load(url+" #taglist");
 }
+
+/**
+ * クリックしたタグで再検索する。
+ */
+var searchTag = function(target) {
+	var tagid = $(target).attr('data-tagid');
+	var url = /*[[@{/list}]]*/ './list.html';
+	$("#tagid").val(tagid);
+
+	goSubmit(url);
+};
 /*]]>*/
 </script>
 <style type="text/css">
@@ -239,6 +250,7 @@ var loadTags = function() {
 		<input type="hidden" name="vo.status" id="status" value="op" />
 		<input type="hidden" name="vo.jobid" id="jobid" />
 		<input type="hidden" name="vo.priority" id="priority" />
+		<input type="hidden" name="vo.tagid" id="tagid" />
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 	</form>
 

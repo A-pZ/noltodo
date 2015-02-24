@@ -39,6 +39,9 @@
 			, priority
 		FROM
 			task , m_job
+			<if test="tagid != null &amp; tagid != ''">
+			, tag , tasktag
+			</if>
 		<where>
 			task.jobid = m_job.id
 			<if test="jobid != null &amp; jobid != ''">
@@ -46,6 +49,11 @@
 			</if>
 			<if test="id != null &amp; id != 0">
 				AND task.id = #{id}
+			</if>
+			<if test="tagid != null &amp; tagid != ''">
+				AND task.id = tasktag.taskid
+				AND tag.tagid = tasktag.tagid
+				AND tasktag.tagid = #{tagid}
 			</if>
 			<choose>
 				<when test="status == 'all'">
