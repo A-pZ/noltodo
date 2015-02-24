@@ -18,4 +18,6 @@ public class TagVO {
 	private String display;
 	/** タスクのID */
 	private String taskid;
+	/** タグの件数 */
+	private int mark;
 }
