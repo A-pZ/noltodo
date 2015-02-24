@@ -9,6 +9,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 <meta name="description" content="のぼんのタスクをmarkdownで管理しようプロジェクト"></meta>
 <meta name="author" content="A-pZ(ぢつにんさん)"></meta>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 
 <title>のるとど！</title>
 <link href="../../css/bootstrap.min.css" rel="stylesheet"
@@ -32,6 +34,13 @@
 <script type="text/javascript" th:inline="javascript">
 /*<![CDATA[*/
 $(document).ready(function() {
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(header, token);
+	});
+
 	$("#allSearch").bind("click" , function() {
 		$("#status").val("all");
 		url = /*[[ @{/list} ]]*/ 'list.html';
@@ -70,6 +79,11 @@ $(document).ready(function() {
 		url = /*[[ @{/list} ]]*/ 'list.html';
 		goSubmit(url);
 	});
+
+	var tagarea = $('#tagarea');
+	tagarea.ready(function() {
+		renderTagarea();
+	});
 });
 
 var goSubmit = function(url) {
@@ -79,6 +93,21 @@ var goSubmit = function(url) {
 	$("#form").attr('action', url);
 	$("#form").submit();
 };
+
+/**
+ * タグの領域をAjaxで読み込み、イベントをバインドする。
+ */
+var renderTagarea = function() {
+	loadTags();
+}
+
+/**
+ * タグの検索結果を表示する。
+ */
+var loadTags = function() {
+	var url = /*[[ @{/tag/displayAll} ]]*/ 'tag/taglist.html';
+	$("#tagarea").load(url+" #taglist");
+}
 /*]]>*/
 </script>
 <style type="text/css">
@@ -120,6 +149,15 @@ var goSubmit = function(url) {
 				</button>
 			</div>
 			<div class="col-md-9">
+				<div class="input-group">
+					<span class="input-group-addon inputaddon-width">
+						<span class="glyphicon glyphicon-tags"></span> タグ一覧
+					</span>
+					<span class="form-control" id="tagarea">
+						<span>タグ一覧を読み込み中…
+							<img src="./images/loadinfo.net.gif" th:src="@{/images/loadinfo.net.gif}" />
+						</span>
+					</span>
 				<!-- pagination
 				<nav>
 					<ul class="pagination">
@@ -140,6 +178,7 @@ var goSubmit = function(url) {
 						</li>
 					</ul>
 				</nav> -->
+				</div>
 			</div>
 		</div>
 

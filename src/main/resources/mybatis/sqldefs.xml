@@ -275,4 +275,21 @@
 			userid = #{username}
 	</select>
 
+	<!-- 有効なタグとその件数を取得する -->
+	<select id="tagAllList" parameterType="lumi.vo.AccessControlDTO" resultType="lumi.vo.TagVO">
+		SELECT
+			tag.tagid tagid,
+			display ,
+			count(display) mark
+		FROM
+			task , tag , tasktag
+		WHERE
+			task.id = tasktag.taskid
+		AND
+			tag.tagid = tasktag.tagid
+		GROUP BY
+			display
+		ORDER BY
+			mark DESC
+	</select>
 </mapper>

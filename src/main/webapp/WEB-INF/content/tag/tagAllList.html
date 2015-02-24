@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<!-- システム共通リクエストパラメータ -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="ja">
+	<body>
+		<div id="taglist">
+			<span th:each="result : ${resultList}">
+				<span class="label label-info" th:text="${result['display']} +'(' + ${result['mark']} +')'">タグ(2)</span>
+			</span>
+		</div>
+	</body>
+</html>

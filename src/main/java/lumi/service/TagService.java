@@ -47,6 +47,17 @@ public class TagService extends LumiService {
 	}
 
 	/**
+	 * タスクに登録されている有効なタグ一覧を返す。
+	 * @return 検索結果のList
+	 * @throws Exception
+	 */
+	public List<TagVO> getTagAllList() throws Exception {
+		List<TagVO> result = dao.select(Query.tagAllList.name(), null);
+
+		return result;
+	}
+
+	/**
 	 * 新しいタグを登録する。
 	 * もし既存と同じ名前のタグの場合は、既存のタグIDからタスクにタグを関連付けるのみ。
 	 * @param vo 新しいタグ情報(表示名のみ)
@@ -160,7 +171,7 @@ public class TagService extends LumiService {
 	 *
 	 */
 	public enum Query {
-		getTagInTask , registerTag , registerTagForTask , removeTagForTask , existTag ,
+		getTagInTask , registerTag , registerTagForTask , removeTagForTask , existTag , tagAllList ,
 	}
 
 	@Autowired

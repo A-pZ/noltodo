@@ -323,10 +323,10 @@ var handlingValidationError = function(result) {
 			<div class="row">
 				<div class="col-md-4">
 					<div class="input-group">
-						<span class="input-group-addon inputaddon-width"> <span
-							class="glyphicon glyphicon-tasks"></span> 重要度
-						</span> <select id="priority" class="form-control" name="vo.priority"
-							th:remove="all-but-first" th:disabled="${vo.status == 'read'}">
+						<span class="input-group-addon inputaddon-width">
+							<span class="glyphicon glyphicon-tasks"></span> 重要度
+						</span>
+						<select id="priority" class="form-control" name="vo.priority" th:remove="all-but-first" th:disabled="${vo.status == 'read'}">
 							<option
 								th:each="priorities : ${beans.master.getValues('priority')}"
 								th:value="${priorities.key}"
