@@ -44,9 +44,8 @@ public class AccessControlService extends LumiService {
 	 * 作成したユーザと同じユーザIDであればtrue
 	 * @param dto アクセス制御用のDTO
 	 * @return 同じユーザならtrue
-	 * @throws Exception
 	 */
-	public boolean isTaskOwner(AccessControlDTO dto) throws Exception {
+	public boolean isTaskOwner(AccessControlDTO dto) {
 		int count = (Integer)dao.selectObject(Query.isTaskOwner.name(), dto);
 
 		return isSingleRow(count);

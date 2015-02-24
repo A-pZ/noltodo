@@ -75,9 +75,8 @@
 		</div>
 		システムエラーが発生しました。
 		<hr style="border-style: dotted; border-color: #36A;" />
-		<pre th:inline="text" th:text="${#httpServletRequest.getAttribute('javax.servlet.error.status_code')}"></pre>
-		<pre th:inline="text" th:text="${#httpServletRequest.getAttribute('javax.servlet.error.exception')}"></pre>
-		<pre th:inline="text" th:text="${#httpServletRequest.getAttribute('javax.servlet.error.message')}"></pre>
+		<pre th:inline="text" th:text="${exception.message}"></pre>
+		<pre th:inline="text" th:text="${exceptionStack}"></pre>
 		HttpServletRequest :
 		<pre th:inline="text" th:text="${#httpServletRequest}"></pre>
 		HttpSession :

@@ -41,9 +41,8 @@
 				<interceptor-ref name="validation">
 					<param name="excludeMethods">input,back,cancel,browse</param>
 				</interceptor-ref>
-				<interceptor-ref name="workflow">
-					<param name="excludeMethods">input,back,cancel,browse</param>
-				</interceptor-ref>
+				<interceptor-ref name="jsonValidation" />
+				<interceptor-ref name="workflow" />
 			</interceptor-stack>
 		</interceptors>
 
@@ -53,6 +52,5 @@
 		<global-exception-mappings>
 			<exception-mapping result="exception" exception="java.lang.Exception"></exception-mapping>
 		</global-exception-mappings>
-
-	</package>
+		</package>
 </struts>

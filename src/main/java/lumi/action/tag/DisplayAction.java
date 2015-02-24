@@ -5,10 +5,7 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import lumi.action.LumiActionSupport;
-import lumi.service.AccessControlService;
 import lumi.service.TagService;
-import lumi.vo.AccessControlDTO;
 import lumi.vo.TagVO;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -37,7 +34,7 @@ import com.opensymphony.xwork2.interceptor.annotations.Blocked;
 @Controller
 @Scope("prototype")
 @Slf4j
-public class DisplayAction extends LumiActionSupport {
+public class DisplayAction extends BaseTagAction {
 
 	/**
 	 * デフォルトアクション。
@@ -45,11 +42,8 @@ public class DisplayAction extends LumiActionSupport {
 	@Action("display")
 	public String display() throws Exception {
 
-		AccessControlDTO dto = new AccessControlDTO();
-		dto.setTaskid(vo.getTaskid());
-		dto.setUsername(getLoginUsername());
 		// タスクの所有者であるかを判定
-		taskOwner = acs.isTaskOwner(dto);
+		taskOwner = isAccessibleTask(vo);
 
 		// タグ検索結果
 		resultList = service.getTaglistOfTask(vo);
@@ -66,9 +60,6 @@ public class DisplayAction extends LumiActionSupport {
 	@Autowired
 	@Getter @Setter
 	private TagService service;
-
-	@Autowired
-	private AccessControlService acs;
 
 	@Getter @Setter
 	private TagVO vo;

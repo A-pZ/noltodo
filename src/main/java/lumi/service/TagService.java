@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import lumi.dao.DAO;
 import lumi.vo.TagVO;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -47,21 +48,28 @@ public class TagService extends LumiService {
 
 	/**
 	 * 新しいタグを登録する。
+	 * もし既存と同じ名前のタグの場合は、既存のタグIDからタスクにタグを関連付けるのみ。
 	 * @param vo 新しいタグ情報(表示名のみ)
 	 * @return 登録成否のboolean
 	 * @throws Exception
 	 */
 	public boolean registerTag(TagVO vo) throws Exception {
+		// 表示名のトリム、スペース除去を実施
+		String display = vo.getDisplay().replace(" ", "").replace("　", "");
+		vo.setDisplay(display);
 
-		// タグIDの生成
-		vo.setTagid( generateNewTagId() );
+		// 既存のタグであるか判定する。存在しない場合は新規作成。
+		String existTagid = (String) dao.selectObject(Query.existTag.name(), vo);
+		if ( StringUtils.isBlank(existTagid)) {
+			// タグIDの生成
+			vo.setTagid( generateNewTagId() );
+			int count = dao.insert(Query.registerTag.name(), vo);
+		} else {
+			// タグIDの設定
+			vo.setTagid(existTagid);
+		}
 
-		int count = dao.insert(Query.registerTag.name(), vo);
-
-		//
-		linkTagForTask(vo);
-
-		return isSingleRow(count);
+		return linkTagForTask(vo);
 	}
 
 	/**
@@ -126,9 +134,9 @@ public class TagService extends LumiService {
 		TagVO vo = new TagVO();
 		vo.setTagid(genId);
 
-		int exist = (Integer)dao.selectObject(Query.existTag.name(), vo);
+		String exist = (String)dao.selectObject(Query.existTag.name(), vo);
 
-		return ( exist != 0 ) ? generateNewTagId() : genId;
+		return ( StringUtils.isNotBlank(exist) ) ? generateNewTagId() : genId;
 	}
 
 	/**

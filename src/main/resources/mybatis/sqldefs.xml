@@ -236,13 +236,13 @@
 	</insert>
 
 	<!-- 存在するタグであるかを検索する -->
-	<select id="existTag" parameterType="lumi.vo.TagVO" resultType="int">
+	<select id="existTag" parameterType="lumi.vo.TagVO" resultType="string">
 		SELECT
-			COUNT(tagid)
+			tagid
 		FROM
 			tag
 		WHERE
-			tagid = #{tagid}
+			display = #{display}
 	</select>
 
 	<insert id="registerTagForTask" parameterType="lumi.vo.TagVO">

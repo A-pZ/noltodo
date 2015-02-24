@@ -169,7 +169,7 @@ var dropTag = function(target) {
 	var url = /*[[@{/tag/drop}]]*/ '.';
 	var datas = { "vo.taskid": /*[[${vo.id}]]*/ , "vo.tagid":tagid };
 
-	tagUpdate(url , datas);
+	ajaxValidatePost(url , datas,true);
 };
 
 /**
@@ -177,15 +177,18 @@ var dropTag = function(target) {
  */
 var addTag = function(taskid , display) {
 	var url = /*[[@{/tag/add}]]*/ '.';
+	//var datas = { "vo.taskid":taskid , "vo.display":display , "struts.validateOnly":true , "struts.enableJSONValidation":true };
 	var datas = { "vo.taskid":taskid , "vo.display":display };
-
-	tagUpdate(url , datas);
+	ajaxValidatePost(url,datas,true);
 };
 
 /**
- * タグを更新し、再表示する。
+ * AjaxValidationを含めた送信処理。
  */
-var tagUpdate = function(url,datas) {
+var ajaxValidatePost = function(url , datas , validateOnly) {
+	datas["struts.enableJSONValidation"] = true;
+	datas['struts.validateOnly'] = validateOnly;
+
 	$.ajax({
 		type: "POST" ,
 		url: url ,
@@ -194,16 +197,41 @@ var tagUpdate = function(url,datas) {
 
 		success:function(result , dataType) {
 			// タグの領域を再読み込みする。
-			if ( result === true ) {
-				$("#tagModal").modal('hide');
-				loadTags();
+			if ( result.fieldErrors === undefined ) {
+				if ( validateOnly === true ) {
+					// もしValidationのみであれば再送。
+					ajaxValidatePost(url , datas, false);
+				} else {
+					successHandling();
+				}
 			} else {
-				alert("failed tag loading. @ " + url);
+				handlingValidationError(result);
 			}
 		} ,
 		failure:function() {
 			alert("failed response : tag loading. @" + url);
 		}
+	});
+}
+
+/**
+ * AjaxValidation成功後に再送する。
+ */
+var successHandling = function() {
+	$("#tagModal").modal('hide');
+	$("#display").val("");
+	$("#displayError").text("");
+
+	loadTags();
+};
+
+var handlingValidationError = function(result) {
+	// { "fieldErrors": {"display":["tag.display.required"]}}
+	var fieldErrors = result.fieldErrors;
+
+	// エラーテキストの更新
+	$.each(fieldErrors , function(i , v) {
+		$("#" + i + "Error").text(v[0]);
 	});
 };
 
