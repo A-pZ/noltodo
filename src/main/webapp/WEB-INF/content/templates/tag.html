@@ -27,10 +27,13 @@
 					<h4 class="modal-title">タグ選択</h4>
 				</div>
 				<div class="modal-body">
-					追加するタグの名前を入力
-					<form id="tagform" name="tagform" method="GET" class="form-inline">
+					追加するタグの名前を入力。重複した場合は無視します。
+					<form id="tagform" name="tagform" method="POST" action="javascript:void(0)" class="form-inline">
 						<input type="text" class="form-control" name="vo.display" id="display"/>
-						<button type="button" id="addTagButton" class="btn btn-primary">追加</button>
+						<button type="button" id="addTagButton" class="btn btn-success">
+							<span class="glyphicon glyphicon-tag"></span> 追加する
+						</button>
+						<span id="displayError" class="field-error"></span>
 					</form>
 				</div>
 				<div class="modal-footer"></div>

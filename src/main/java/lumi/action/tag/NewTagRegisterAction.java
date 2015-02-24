@@ -4,9 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lumi.service.TagService;
-import lumi.vo.TagVO;
+import lumi.vo.RegisterTagVO;
 
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.interceptor.annotations.Blocked;
+import com.opensymphony.xwork2.validator.annotations.Validations;
+import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 
 /**
  * タグを新規登録する。
@@ -25,21 +28,28 @@ import com.opensymphony.xwork2.interceptor.annotations.Blocked;
  */
 @Namespace("/tag")
 @ParentPackage("lumi-default")
+@InterceptorRef("lumiStack")
 @Results({
 	// location属性に指定したhtmlファイル名は、/WEB-INF/content 以下からの相対パス。
 	@Result(name = ActionSupport.SUCCESS, type="json" , params={"root","result"}),
 	@Result(name=BaseTagAction.ACL_ERROR_RESULT , type="thymeleaf-spring" , location="application_error"),
-	@Result(name=BaseTagAction.ACL_ERROR_AJAX_RESULT, type="json" , params={"root","message"})
+	@Result(name=BaseTagAction.ACL_ERROR_AJAX_RESULT, type="json" , params={"root","message"}),
+	@Result(name=ActionSupport.INPUT , type="dispatcher", location="none"),
 })
 @Controller
 @Scope("prototype")
 @Slf4j
+@Validations(
+	visitorFields={
+		@VisitorFieldValidator(appendPrefix=false,fieldName="vo")
+	}
+)
 public class NewTagRegisterAction extends BaseTagAction {
 
 	/**
 	 * デフォルトアクション。
 	 */
-	@Action("add")
+	@Action(value="add" , interceptorRefs={@InterceptorRef("lumiStack")})
 	public String addTag() throws Exception {
 		if (! isAccessibleTask(vo)) {
 			return accessControlErrorResult();
@@ -61,7 +71,7 @@ public class NewTagRegisterAction extends BaseTagAction {
 	private TagService service;
 
 	@Getter @Setter
-	private TagVO vo;
+	private RegisterTagVO vo;
 
 	@Getter @Setter
 	private boolean result;
