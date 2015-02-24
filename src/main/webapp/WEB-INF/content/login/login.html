@@ -82,7 +82,7 @@ var goSubmit = function(url) {
 
 	<div class="container theme-showcase" role="main">
 		<div class="page-header">
-			<h2>のるとど！ <small>のぼんのタスクを管理しましょうプロジェクト</small></h2>
+			<h2>のるとど！ <small>のぼんのタスクを 管理しましょうプロジェクト</small></h2>
 		</div>
 
 		<div class="messages" th:replace="templates/messages :: messages">
@@ -119,6 +119,9 @@ var goSubmit = function(url) {
 
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 			</form>
+			<hr />
+			Version : <span th:text="${action.getText('noltodo.version')}">0.0.1-SNAPSHOT</span>
+			/ last-update : <span th:text="${action.getText('noltodo.date')}">2014/12/31</span>
 		</div>
 	</div>
 
