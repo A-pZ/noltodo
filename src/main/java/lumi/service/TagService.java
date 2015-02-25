@@ -6,6 +6,7 @@ import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 import lumi.dao.DAO;
+import lumi.vo.AccessControlDTO;
 import lumi.vo.TagVO;
 
 import org.apache.commons.lang3.StringUtils;
@@ -51,8 +52,8 @@ public class TagService extends LumiService {
 	 * @return 検索結果のList
 	 * @throws Exception
 	 */
-	public List<TagVO> getTagAllList() throws Exception {
-		List<TagVO> result = dao.select(Query.tagAllList.name(), null);
+	public List<TagVO> getTagAllList(AccessControlDTO dto) throws Exception {
+		List<TagVO> result = dao.select(Query.tagAllList.name(), dto);
 
 		return result;
 	}

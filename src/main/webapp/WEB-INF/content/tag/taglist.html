@@ -3,15 +3,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" lang="ja">
 	<body>
-		<div id="taglist" >
+		<span id="taglist" >
 			<span th:each="result : ${resultList}">
-				<span class="label label-info" th:text="${result['display']}">倉庫</span
+				<span class="tag tag-left" th:text="${result['display']}">タグ名</span
 				><span th:if="${taskOwner}"
-				><span class="label label-default" th:attr="data-drop-tagid=${result.tagid}" onclick="dropTag(this);">X</span></span>
+				><span class="tag tag-close" th:attr="data-drop-tagid=${result.tagid}" onclick="dropTag(this);">x</span>
+				</span>
 			</span>
 			<span th:if="${taskOwner}">
-				<span class="label label-success" id="newtag" data-toggle="modal" data-target="#tagModal">+ タグを追加する</span>
+				<span class="tag tag-new" id="newtag" data-toggle="modal" data-target="#tagModal">+ タグを追加する</span>
 			</span>
-		</div>
+		</span>
 	</body>
 </html>

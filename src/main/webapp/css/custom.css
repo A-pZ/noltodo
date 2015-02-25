@@ -1,32 +1,72 @@
+/** body要素の設定。bootstrap3の定義に従いpaddingを指定 */
 body {
   padding-top: 70px;
   padding-bottom: 30px;
 }
 
+/** メインコンテンツの基本設定 */
 .container {
-	background-color: rgba(10, 25, 150, 0.02);
+	background-color: rgba(10, 25, 150, 0.05);
 }
 
+/** 登録画面の入力項目説明欄 */
 .inputaddon-width {
 	width: 120px;
 	text-align: center;
 	background-color: #f2f5f7;
 }
 
+/** 職モーダルのヘッダ色＆枠線 */
 .jobModal {
 	background-color: #f2f6dd;
 	border-radius: 6px 6px 0 0;
 }
 
+/** 職選択モーダル＞職ホバー */
 .jobHover {
 	background-color: #48a;
 	color: #f9f9fb;
 }
 
+/** 項目エラー色 */
 .field-error {
 	color: #D53;
 }
 
+/** submit時のアンカー背景色 */
 .anchor-disabled {
 	color: #CCC;
+}
+
+/** 検索タグの表示スタイル。背景色＆枠線。 */
+.tag {
+	padding: 3px 6px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #6d7;
+}
+.tag-display {
+	background-color: #bec;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.tag-new {
+	color: #d0f4ff;
+	background-color: #269;
+	border-color: #369;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.tag-left {
+	background-color: #bec;
+	border-radius: 4px 0 0 4px;
+}
+
+.tag-close {
+	background-color: #aaa;
+	border-radius: 0 4px 4px 0;
+	border-width: 1px 1px 1px 0;
+	cursor: pointer;
 }
