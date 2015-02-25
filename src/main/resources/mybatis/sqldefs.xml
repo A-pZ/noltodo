@@ -295,6 +295,8 @@
 			task.id = tasktag.taskid
 		AND
 			tag.tagid = tasktag.tagid
+		AND
+			task.userid = #{username}
 		GROUP BY
 			display
 		ORDER BY

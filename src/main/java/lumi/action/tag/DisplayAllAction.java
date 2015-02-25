@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lumi.service.TagService;
+import lumi.vo.AccessControlDTO;
 import lumi.vo.TagVO;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -41,8 +42,12 @@ public class DisplayAllAction extends BaseTagAction {
 	 */
 	@Action("displayAll")
 	public String displayAll() throws Exception {
+
+		AccessControlDTO dto = new AccessControlDTO();
+		dto.setUsername(getLoginUsername());
+
 		// タグ検索結果
-		resultList = service.getTagAllList();
+		resultList = service.getTagAllList(dto);
 
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
 		// この値は@Resultで指定したname値となる。
