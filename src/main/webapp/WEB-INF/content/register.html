@@ -271,6 +271,17 @@ var handlingValidationError = function(result) {
 
 		<form class="form-horizontal" role="form" method="POST" name="form"
 			id="form">
+
+			<div class="row">
+				<div class="col-md-12" style="height:36px;">
+					<span class="glyphicon glyphicon-tags"></span> タグ
+					<span id="tagarea">
+						<span>読み込み中…</span>
+						<img src="./images/loadinfo.net.gif" th:src="@{/images/loadinfo.net.gif}" />
+					</span>
+				</div>
+			</div>
+
 			<div class="row">
 				<div class="col-md-4">
 					<div class="input-group">
@@ -307,18 +318,21 @@ var handlingValidationError = function(result) {
 				</div>
 			</div>
 
+			<!--
 			<div class="row">
 				<div class="col-md-12">
 					<div class="input-group">
 						<span class="input-group-addon inputaddon-width"> <span
 							class="glyphicon glyphicon-tags"></span> タグ
-						</span> <span class="form-control" id="tagarea"> <span>読み込み中…<img
+						</span>
+						<span id="tagarea"> <span class="form-control">読み込み中…<img
 								src="./images/loadinfo.net.gif"
 								th:src="@{/images/loadinfo.net.gif}" /></span>
 						</span>
 					</div>
 				</div>
 			</div>
+			 -->
 
 			<div class="row">
 				<div class="col-md-4">
