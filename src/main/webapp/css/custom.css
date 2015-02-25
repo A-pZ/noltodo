@@ -48,6 +48,7 @@ body {
 .tag-display {
 	background-color: #bec;
 	border-radius: 4px;
+	cursor: pointer;
 }
 
 .tag-new {

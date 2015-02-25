@@ -160,15 +160,12 @@ var searchTag = function(target) {
 				</button>
 			</div>
 			<div class="col-md-9">
-				<div class="input-group">
-					<span class="input-group-addon inputaddon-width">
-						<span class="glyphicon glyphicon-tags"></span> タグ一覧
+				<span class="glyphicon glyphicon-tags"></span> タグ一覧
+				<span id="tagarea">
+					<span>タグ一覧を読み込み中…
+						<img src="./images/loadinfo.net.gif" th:src="@{/images/loadinfo.net.gif}" />
 					</span>
-					<span class="form-control" id="tagarea">
-						<span>タグ一覧を読み込み中…
-							<img src="./images/loadinfo.net.gif" th:src="@{/images/loadinfo.net.gif}" />
-						</span>
-					</span>
+				</span>
 				<!-- pagination
 				<nav>
 					<ul class="pagination">
@@ -189,7 +186,6 @@ var searchTag = function(target) {
 						</li>
 					</ul>
 				</nav> -->
-				</div>
 			</div>
 		</div>
 
