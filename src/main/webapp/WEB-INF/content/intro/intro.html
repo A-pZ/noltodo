@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"></meta>
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<meta name="description" content="のぼんのタスクをmarkdownで管理しようプロジェクト"></meta>
+<meta name="author" content="A-pZ(ぢつにんさん)"></meta>
+
+<title>のるとど！</title>
+<link href="../../../css/bootstrap.min.css" rel="stylesheet"
+	th:href="@{/css/bootstrap.min.css}" />
+<link href="../../../css/bootstrap-theme.min.css" rel="stylesheet"
+	th:href="@{/css/bootstrap-theme.min.css}" />
+<link href="../../../css/custom.css" rel="stylesheet"
+	th:href="@{/css/custom.css}" />
+
+<script src="../../../js/jquery-1.11.1.min.js"
+	th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script src="../../../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="../../../js/bootstrap-markdown.js"
+	th:src="@{/js/bootstrap-markdown.js}"></script>
+<script src="../../../js/locale/bootstrap-markdown.ja-custom.js"
+	th:src="@{/js/locale/bootstrap-markdown.ja-custom.js}"></script>
+<script src="../../../js/common.js" th:src="@{/js/common.js}"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+$(document).ready(function() {
+
+});
+
+var goSubmit = function(url) {
+};
+/*]]>*/
+</script>
+<style type="text/css">
+</style>
+<body role="document">
+	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<div class="container" th:replace="templates/loginheader :: header">
+			<!-- この中身はtemplates/headerのheaderスニペットに切り替わる -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Bootstrap theme</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#about">About</a></li>
+					<li><a href="#contact">Contact</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+
+	<div class="container theme-showcase" role="main">
+		<div class="messages" th:replace="templates/messages :: messages">
+			<div class="alert alert-success" role="alert">通常メッセージです。</div>
+			<div class="alert alert-danger" role="alert">エラーメッセージです。</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<h3 class="intro">のるとど！とは <small> - introduction</small></h3>
+				<p>「のるとど！」とは、信長の野望Onlineに特化したタスク管理アプリです。
+				使い方は <b>自由度無限大</b> ですが、特に次の用途で使えると思います。</p>
+				<ul>
+					<li>集めたアイテムの備忘録 ----- 改装具、昇進アイテム、研磨石…</li>
+					<li>クリアに時間のかかるクエスト ----- イザナギ、イザナミなど時間がかかるもの</li>
+					<li>アイテムの生産に ----- 入魂まで終わったアイテムや、製作依頼、</li>
+					<li>神秘石のストック状況</li>
+					<li>攻城戦の進み具合、九州クエストの進み具合</li>
+				</ul>
+
+				<h3 class="intro">タスクの登録 <small> - how to register</small></h3>
+				<p>タスクの登録は、次の項目を入力してください。これを管理します。</p>
+				<ul>
+					<li>タスクの名前</li>
+					<li>職業または特化</li>
+					<li>タスクの内容</li>
+					<li>タスクの重要度（デフォルトは中）</li>
+					<li>完了目標とする期限（デフォルトは次の水曜日）</li>
+				</ul>
+				<p>以上を入力して、
+				<button type="button" class="btn btn-success" id="writeButtn" name="writeButton">
+					<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>タスクを書きこむ
+				</button> を押すと、タスクの登録をします。<br/>
+				※もし入力項目に不備がある場合は、エラーメッセージでお知らせします。</p>
+				これ以外にも、タスクに<b>検索用タグ</b>をつけることで、一覧画面からタグで絞り込みも行えます。
+
+				<h3 class="intro">タスクのクローズと削除 <small> - close and delete</small></h3>
+				<p>完了したタスクは、<button type="button" class="btn btn-warning" id="taskCloseButtn" name="taskCloseButton">
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>タスクを閉じる
+				</button>で、ステータスを「クローズ」に、</p>
+				<p>もう参照する必要のないタスクは
+				<button type="button" class="btn btn-danger" id="taskDeleteButtn" name="taskDeleteButtn">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>タスクを消す
+				</button>
+				でタスクを消せます。</p>
+				<p>終わったら <b>ひとまずクローズ</b>、その後、<b>定期的にクローズしたタスクの削除</b>をしましょう。
+				クローズしたタスクでも再編集は可能です。</p>
+
+				<h3 class="intro">タスク一覧 <small> - task list</small></h3>
+				<p>一覧画面では、登録したタスクの一覧を、最近編集した順に表示します。<br />
+				それ以外にも、以下の絞り込みも行えます。</p>
+				<ul>
+					<li>タスクに登録した <a href="javascript:none(0);"><span class="glyphicon glyphicon-search"></span> 職業・特化</a> で。</li>
+					<li>タスクに登録した <a href="javascript:none(0);"><span class="glyphicon glyphicon-sort-by-attributes-alt"></span> 優先度</a> の高い順。</li>
+					<li>タスクに登録した タグ</li>
+				</ul>
+
+				<h3 class="intro">タスク管理のコツ <small> - tecnique</small></h3>
+				<p>タスク管理の基本は色々ありますが、のるとど！での基本は…</p>
+				<ol>
+					<li>できるかぎりわかりやすく書く</li>
+					<li>小さい内容で書く</li>
+					<li>定期的に「タスクのふりかえり」をして、クローズ or 消去</li>
+				</ol>
+				を <b>繰り返すこと</b> です。<br />
+				ますは登録してみましょう！
+
+				<h3 class="intro">このサイトについて <small> - about this site</small></h3>
+				<p>このサイトならびにアプリケーションは <a href="https://twitter.com/alpha_pz" target="_blank">&quot;ぢつにんさん&quot;</a> ( Wired name : A-pZ ) が作りました。<br />
+				質問や要望、不具合報告は上記Twitterからお願いします。
+				</p>
+
+				<h3 class="intro">免責事項 <small> - disclaimer</small></h3>
+				以下に本サイトでの免責事項を記します。あらかじめご了承ください。
+				<ol>
+					<li>本サイトに登録・管理しているすべてのデータは営利・非営利問わず無断で第三者へ開示することはありません。</li>
+					<li>本サイトを利用したうえでの損害、不利益、その他あらゆる事項に対しての法的責任や民事責任は負いません。</li>
+					<li>管理人ならびに第三者が本サイトに登録されたデータを無断で参照・改ざんすることはありません。<br /></li>
+					<li>本サイトに登録されたデータにおいて、本サイトまたは信長の野望Onlineのサービスならびに製造メーカーに対して誹謗中傷、サービス妨害、他不利益となる情報が存在したと判断した場合は、断りなく該当データを削除することがあります。</li>
+					<li>予期せぬハードウェア障害ならびにアプリケーション障害で、本サービスは停止することがあります。</li>
+					<li>上記免責事項に変更が発生する場合は本ページにて事前通告をします。</li>
+				</ol>
+				記：2015/2/27 ver 1.0.0<br/>
+				以上。<br />
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

@@ -117,6 +117,13 @@ var goSubmit = function(url) {
 					<div class="col-md-6"><!-- NOP --></div>
 				</div>
 
+				<div class="col-md-12">
+					<h3>
+						<a href="../intro/intro.html" th:href="@{/intro/}">のるとど！について</a>
+						<small> - 初めてご利用になる場合は必ずお読みください</small>
+					</h3>
+				</div>
+
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 			</form>
 			<hr />
@@ -124,7 +131,6 @@ var goSubmit = function(url) {
 			/ last-update : <span th:text="${action.getText('noltodo.date')}">2014/12/31</span>
 		</div>
 	</div>
-
 
 </body>
 </html>
