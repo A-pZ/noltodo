@@ -39,6 +39,9 @@
 			, priority
 		FROM
 			task , m_job
+			<if test="tagid != null &amp; tagid != ''">
+			, tag , tasktag
+			</if>
 		<where>
 			task.jobid = m_job.id
 			<if test="jobid != null &amp; jobid != ''">
@@ -46,6 +49,11 @@
 			</if>
 			<if test="id != null &amp; id != 0">
 				AND task.id = #{id}
+			</if>
+			<if test="tagid != null &amp; tagid != ''">
+				AND task.id = tasktag.taskid
+				AND tag.tagid = tasktag.tagid
+				AND tasktag.tagid = #{tagid}
 			</if>
 			<choose>
 				<when test="status == 'all'">
@@ -64,6 +72,39 @@
 			, task.id DESC
 	</select>
 
+	<!-- タスクに紐づいたタグの抽出 -->
+	<select id="searchTaskTag" parameterType="lumi.vo.SearchVO" resultType="lumi.vo.TagVO">
+		SELECT
+			tag.tagid
+			, display
+		FROM
+			task , tag , tasktag
+		WHERE
+			task.id = tasktag.taskid
+		AND
+			task.id = #{id}
+		AND
+			tag.tagid = tasktag.tagid
+	</select>
+
+	<!-- タスクに紐づくタグを1つ登録する -->
+	<insert id="insertTaskTag" parameterType="lumi.vo.TagVO">
+		INSERT INTO
+			tasktag
+		( taskid , tagid )
+		VALUES
+		( #{taskid} , #{tagid})
+	</insert>
+
+	<!-- タスクに紐づくタグを削除する -->
+	<delete id="deleteTaskTag" parameterType="lumi.vo.TagVO">
+		DELETE FROM
+			tasktag
+		WHERE
+			taskid = #{taskid}
+		AND
+			tagid = #{tagid}
+	</delete>
 
 	<!-- タスクの登録 -->
 	<insert id="insertTask" parameterType="lumi.vo.RegisterVO">
@@ -176,4 +217,89 @@
 		AND
 			password = #{oldPassword}
 	</update>
+
+	<!-- タスクに登録されているタグ一覧 -->
+	<select id="getTagInTask" parameterType="lumi.vo.TagVO" resultType="lumi.vo.TagVO">
+		SELECT
+			tag.tagid tagid
+			, tag.display display
+		FROM
+			tag , tasktag
+		<where>
+			tag.tagid = tasktag.tagid
+			<if test="taskid != null &amp; taskid != ''">
+			AND
+				tasktag.taskid = #{taskid}
+			</if>
+		</where>
+	</select>
+
+	<!-- タグを新規登録する -->
+	<insert id="registerTag" parameterType="lumi.vo.TagVO">
+		INSERT INTO
+			tag
+		( tagid , display )
+		VALUES
+		( #{tagid} , #{display})
+	</insert>
+
+	<!-- 存在するタグであるかを検索する -->
+	<select id="existTag" parameterType="lumi.vo.TagVO" resultType="string">
+		SELECT
+			tagid
+		FROM
+			tag
+		WHERE
+			display = #{display}
+	</select>
+
+	<insert id="registerTagForTask" parameterType="lumi.vo.TagVO">
+		INSERT INTO
+			tasktag
+		( taskid , tagid )
+		VALUES
+		( #{taskid} , #{tagid} )
+	</insert>
+
+	<!-- タスクからタグを削除する -->
+	<delete id="removeTagForTask" parameterType="lumi.vo.TagVO">
+		DELETE FROM
+			tasktag
+		WHERE
+			taskid = #{taskid}
+		AND
+			tagid = #{tagid}
+	</delete>
+
+	<!-- 編集可能なタスクであるかを判定する -->
+	<select id="isTaskOwner" parameterType="lumi.vo.AccessControlDTO" resultType="int">
+		SELECT
+			count(id)
+		FROM
+			task
+		WHERE
+			id = #{taskid}
+		AND
+			userid = #{username}
+	</select>
+
+	<!-- 有効なタグとその件数を取得する -->
+	<select id="tagAllList" parameterType="lumi.vo.AccessControlDTO" resultType="lumi.vo.TagVO">
+		SELECT
+			tag.tagid tagid,
+			display ,
+			count(display) mark
+		FROM
+			task , tag , tasktag
+		WHERE
+			task.id = tasktag.taskid
+		AND
+			tag.tagid = tasktag.tagid
+		AND
+			task.userid = #{username}
+		GROUP BY
+			display
+		ORDER BY
+			mark DESC
+	</select>
 </mapper>

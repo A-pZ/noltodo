@@ -67,11 +67,7 @@ public class RegisterService extends LumiService {
 			addInfoMessage("register.complete");
 
 			// 明細の再表示
-			SearchVO searchVO = new SearchVO();
-			searchVO.setId(vo.getId());
-			searchVO.setStatus(vo.getStatus());
-			searchService.setUserId(getUserId());
-			searchVO = searchService.detail(searchVO);
+			SearchVO searchVO = reSearchDetail(vo);
 			registerVO = new RegisterVO();
 			BeanUtils.copyProperties(registerVO, searchVO);
 
@@ -82,6 +78,22 @@ public class RegisterService extends LumiService {
 
 		// 登録したタスク番号を返す。
 		return vo.getId();
+	}
+
+	/**
+	 * 登録情報で再検索する。
+	 * @param vo 登録情報VO
+	 * @return 検索結果VO
+	 * @throws Exception
+	 */
+	SearchVO reSearchDetail(RegisterVO vo) throws Exception {
+		SearchVO searchVO = new SearchVO();
+		searchVO.setId(vo.getId());
+		searchVO.setStatus(vo.getStatus());
+		searchService.setUserId(getUserId());
+		searchVO = searchService.detail(searchVO);
+
+		return searchVO;
 	}
 
 	/**

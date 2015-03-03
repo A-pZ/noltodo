@@ -55,6 +55,7 @@ public class RegisterActionTest extends
 		assertEquals(ActionSupport.INPUT, result);
 	}
 
+	@Test
 	public void test登録失敗_タスクなし() throws Exception {
 		request.addParameter("vo.name", "taskname");
 		request.addParameter("vo.task", "");
@@ -70,6 +71,7 @@ public class RegisterActionTest extends
 		assertEquals(ActionSupport.INPUT, result);
 	}
 
+	@Test
 	public void test登録失敗_特化なし() throws Exception {
 		request.addParameter("vo.name", "taskname");
 		request.addParameter("vo.task", "## h2");
@@ -85,6 +87,7 @@ public class RegisterActionTest extends
 		assertEquals(ActionSupport.INPUT, result);
 	}
 
+	@Test
 	public void test登録失敗_タスク名が65文字() throws Exception {
 		StringBuilder sbBuilder = new StringBuilder();
 		for ( int i=0;i<65;i++ ) { sbBuilder.append("*"); }
@@ -103,6 +106,7 @@ public class RegisterActionTest extends
 		assertEquals(ActionSupport.INPUT, result);
 	}
 
+	@Test
 	public void test登録失敗_タスクが2049文字() throws Exception {
 		StringBuilder sbBuilder = new StringBuilder();
 		for ( int i=0;i<2049;i++ ) { sbBuilder.append("a"); }
@@ -121,6 +125,7 @@ public class RegisterActionTest extends
 		assertEquals(ActionSupport.INPUT, result);
 	}
 
+	@Test
 	public void test登録成功() throws Exception {
 		StringBuilder sbBuilder = new StringBuilder();
 		for ( int i=0;i<2048;i++ ) { sbBuilder.append("@"); }
