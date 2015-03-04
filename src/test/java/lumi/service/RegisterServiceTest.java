@@ -73,12 +73,20 @@ public class RegisterServiceTest {
 	}
 
 	/**
-	 * {@link lumi.service.RegisterService#reSearchDetail(lumi.vo.RegisterVO)} のためのテスト・メソッド。
+	 * {@link lumi.service.RegisterService#execute(lumi.vo.RegisterVO)} のためのテスト・メソッド。
+	 * @throws Exception
 	 */
-	//@Test
-	public void testReSearchDetail() {
-		fail("まだ実装されていません"); // TODO
+	@Test
+	public void testタスク削除() throws Exception {
+		RegisterVO vo = new RegisterVO();
+		vo.setId(200);
+		when(dao.delete(Query.deleteTask.name(), vo)).thenReturn(1);
+		service.delete(vo);
+
+		assertTrue(service.isResult());
 	}
+
+
 
 	@Mock
 	DAO dao = new DAOImpl();
