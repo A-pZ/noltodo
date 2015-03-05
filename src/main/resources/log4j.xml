@@ -11,7 +11,7 @@
 	</appender>
 
 	<appender name="file" class="org.apache.log4j.RollingFileAppender">
-		<param name="File" value="lumi.log" />
+		<param name="File" value="./logs/noltodo.log" />
 		<param name="Append" value="true" />
 		<param name="Encoding" value="utf-8" />
 		<param name="MaxFileSize" value="100KB" />
@@ -110,5 +110,6 @@
 	<root>
 		<level value="debug" />
 		<appender-ref ref="stdout" />
+		<appender-ref ref="file" />
 	</root>
 </log4j:configuration>
