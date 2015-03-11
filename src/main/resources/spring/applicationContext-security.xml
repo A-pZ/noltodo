@@ -15,6 +15,7 @@
 
 	<sec:intercept-url pattern="/login*" access="permitAll"/>
 	<sec:intercept-url pattern="/intro*" access="permitAll"/>
+	<sec:intercept-url pattern="/twitter*" access="permitAll"/>
 	<sec:intercept-url pattern="/signup*" access="permitAll"/>
 	<sec:intercept-url pattern="/logout*" access="permitAll"/>
     <sec:intercept-url pattern="/css/**" access="permitAll" />
@@ -33,7 +34,9 @@
         username-parameter="j_username"
         password-parameter="j_password"
         default-target-url="/list"
-        authentication-failure-url="/login/failure" />
+        authentication-failure-url="/login/failure"
+        authentication-success-handler-ref="successHandler"
+        />
 
     <!-- ログアウト時の振る舞い -->
     <sec:logout
@@ -72,5 +75,6 @@
     </sec:authentication-provider>
   </sec:authentication-manager>
 
+  <beans:bean id="successHandler" class="lumi.spring.SuccessHandler" />
   <beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
 </beans:beans>
