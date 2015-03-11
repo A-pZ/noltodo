@@ -136,6 +136,12 @@ var showPreview = function(e) {
  * タグの領域をAjaxで読み込み、イベントをバインドする。
  */
 var renderTagarea = function() {
+	var taskid = /*[[ ${vo.id} ]]*/ 'taskid';
+	if ( taskid ===0 ) {
+		$("#tagarea").text($("#tagForNewTask").text());
+		return;
+	}
+
 	loadTags();
 
 	//タグ追加モーダルの処理
@@ -145,7 +151,7 @@ var renderTagarea = function() {
 
 	// タグ登録ボタンを押したときの処理
 	$("#addTagButton").bind("click" , function() {
-		var taskid = /*[[ ${vo.id} ]]*/ 'taskid';
+		//var taskid = /*[[ ${vo.id} ]]*/ 'taskid';
 		var display = $("#display").val();
 
 		addTag(taskid,display);
@@ -434,6 +440,8 @@ var handlingValidationError = function(result) {
 				th:value="${_csrf.token}" />
 		</form>
 	</div>
+
+	<div style="display:none" id="tagForNewTask">* タスク登録後に編集できます *</div>
 
 	<!-- 職業＆特化選択モーダル -->
 	<div th:replace="templates/job :: job"></div>

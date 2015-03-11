@@ -43,6 +43,7 @@ public class UserRegisterService extends LumiService {
 		BeanUtils.copyProperties(registerVO, vo);
 		registerVO.setActivate(1);
 		registerVO.setUserrole("ROLE_ADMIN");
+		registerVO.setDisplayName(vo.getUsername());
 
 		// 登録する
 		int count =  dao.insert(Query.registerUser.name(), registerVO);
