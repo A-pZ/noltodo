@@ -1,3 +1,7 @@
 /target/
 /lumi.log
 /.springBeans
+.settings/org.eclipse.wst.common.component
+src/main/webapp/META-INF/context_release.xml
+src/main/webapp/META-INF/context.xml
+*.component
