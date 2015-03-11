@@ -9,7 +9,7 @@
 	<constant name="struts.devMode" value="true" />
 
 	<!-- アプリケーション共通プロパティファイル名。拡張子は不要。 -->
-	<constant name="struts.custom.i18n.resources" value="commons,message" />
+	<constant name="struts.custom.i18n.resources" value="commons,message,twitter" />
 
 	<package name="lumi-default" abstract="true" extends="struts-thymeleaf">
 		<result-types>

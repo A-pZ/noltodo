@@ -175,7 +175,7 @@
 		INSERT INTO userlist
 			(username,password,activate,displayname)
 		values
-			(#{username},#{password}, #{activate},#{username})
+			(#{username},#{password}, #{activate},#{displayName})
 	</insert>
 
 	<!-- ユーザー権限の登録 -->
@@ -217,6 +217,17 @@
 		AND
 			password = #{oldPassword}
 	</update>
+
+	<!-- ユーザの検索 -->
+	<select id="selectUser" parameterType="java.lang.String" resultType="lumi.vo.AccountSearchVO">
+		SELECT
+			username
+			, displayname displayName
+		FROM
+			userlist
+		WHERE
+			username = #{value}
+	</select>
 
 	<!-- タスクに登録されているタグ一覧 -->
 	<select id="getTagInTask" parameterType="lumi.vo.TagVO" resultType="lumi.vo.TagVO">
@@ -301,5 +312,59 @@
 			display
 		ORDER BY
 			mark DESC
+	</select>
+
+	<!-- Twitter認証連携済みであるかを検索する -->
+	<select id="searchTwitterChain" parameterType="lumi.vo.AuthChainDTO" resultType="lumi.vo.AuthChainDTO">
+		SELECT
+			twit.twitterid	twitterId
+			, user.username	username
+			, user.password	password
+		FROM
+			userlist user
+			, twitter_chain twit
+		WHERE
+			twit.username = user.username
+		AND
+			twit.twitterid = #{twitterId}
+	</select>
+
+	<!-- ユーザの表示名のみ更新する -->
+	<update id="updateDisplayName" parameterType="lumi.vo.AuthChainDTO">
+		UPDATE
+			userlist
+		SET
+			displayName = #{displayName}
+		WHERE
+			username = #{twitterId}
+	</update>
+
+	<!-- Twitter連携テーブルにユーザ情報を登録する -->
+	<insert id="registerNewTwitterChain" parameterType="lumi.vo.AuthChainDTO">
+		INSERT INTO
+			twitter_chain
+		( twitterid , username , last_chain_time )
+		VALUES
+		( #{twitterId} ,#{username} , now())
+	</insert>
+
+	<!-- Twitter連携済みであればユーザIDのみ更新する -->
+	<update id="chainingTwitterId" parameterType="lumi.vo.AuthChainDTO">
+		UPDATE
+			username = #{username}
+		SET
+			twitter_chain
+		WHERE
+			twitterid = #{twitterId}
+	</update>
+
+	<!-- 登録済みTwitterIdであるかを検索する -->
+	<select id="searchAlreadyRegisterTwitterId" parameterType="lumi.vo.AuthChainDTO" resultType="lumi.vo.AuthChainDTO">
+		SELECT
+			twitterid	twitterId
+		FROM
+			twitter_chain
+		WHERE
+			twitterid = #{twitterId}
 	</select>
 </mapper>
