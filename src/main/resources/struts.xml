@@ -21,8 +21,10 @@
 				class="org.apache.struts2.json.JSONInterceptor" />
 			<interceptor name="jsonValidation"
 				class="org.apache.struts2.json.JSONValidationInterceptor" />
-
-
+			<!--
+			<interceptor name="lumiException"
+				class="lumi.struts2.LumiExceptionMappingInterceptor" />
+			 -->
 			<interceptor-stack name="lumiStack">
 				<interceptor-ref name="exception" />
 				<interceptor-ref name="servletConfig" />
@@ -32,7 +34,9 @@
 				<interceptor-ref name="modelDriven" />
 				<interceptor-ref name="fileUpload" />
 				<interceptor-ref name="checkbox" />
-				<interceptor-ref name="multiselect" />
+				<interceptor-ref name="datetime"/>
+                <interceptor-ref name="multiselect"/>
+                <interceptor-ref name="staticParams"/>
 				<interceptor-ref name="actionMappingParams" />
 				<interceptor-ref name="params">
 					<param name="excludeParams">^action:.*,^method:.*</param>
@@ -45,6 +49,7 @@
 				<interceptor-ref name="workflow" />
 			</interceptor-stack>
 		</interceptors>
+		<default-interceptor-ref name="lumiStack" />
 
 		<global-results>
 			<result name="exception" type="thymeleaf-spring">error</result>
@@ -52,5 +57,6 @@
 		<global-exception-mappings>
 			<exception-mapping result="exception" exception="java.lang.Exception"></exception-mapping>
 		</global-exception-mappings>
-		</package>
+
+	</package>
 </struts>

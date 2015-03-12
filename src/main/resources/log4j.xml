@@ -11,7 +11,7 @@
 	</appender>
 
 	<appender name="file" class="org.apache.log4j.RollingFileAppender">
-		<param name="File" value="./logs/noltodo.log" />
+		<param name="File" value="noltodo.log" />
 		<param name="Append" value="true" />
 		<param name="Encoding" value="utf-8" />
 		<param name="MaxFileSize" value="100KB" />
@@ -22,13 +22,13 @@
 	</appender>
 
 	<logger name="org.apache.struts2" additivity="false">
-		<level value="info" />
+		<level value="debug" />
 		<appender-ref ref="stdout" />
 		<appender-ref ref="file" />
 	</logger>
 
 	<logger name="com.opensymphony.xwork2" additivity="false">
-		<level value="info" />
+		<level value="debug" />
 		<appender-ref ref="stdout" />
 	</logger>
 

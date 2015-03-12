@@ -3,6 +3,7 @@
 	<name>noltodo</name>
 	<comment></comment>
 	<projects>
+		<project>struts2-spring-plugin</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
