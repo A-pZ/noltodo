@@ -37,6 +37,11 @@ $(document).ready(function() {
 		url = /*[[ @{/account/displayChange} ]]*/ './passwordChange.html';
 		goSubmit(url);
 	});
+
+	$("#accountChain").click(function() {
+		url = /*[[ @{/account/twitterChain} ]]*/ './accountChain';
+		goSubmit(url);
+	});
 });
 
 var goSubmit = function(url) {
@@ -81,12 +86,36 @@ var goSubmit = function(url) {
 			<div class="alert alert-success" role="alert">通常メッセージです。</div>
 		</div>
 
-		<div class="row">
-			<form id="form" name="form" class="form-horizontal" method="POST" action="./passwordChange.html">
-				<button type="button" id="passwordChange" class="btn btn-primary">パスワード変更</button>
-				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-			</form>
-		</div>
+		<form id="form" name="form" class="form-horizontal" method="POST" action="./passwordChange.html">
+			<div class="row">
+				<div class="col-md-3 text-right">
+					<button type="button" id="passwordChange" class="btn btn-success" th:disabled="${session.account.activate != 1}">パスワード変更</button>
+				</div>
+				<div class="col-md-9">
+					<blockquote>パスワードの変更をします。
+					<footer>Twitterからログインした場合は利用できません。</footer>
+					</blockquote>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-3 text-right">
+					<button type="button" id="accountChain" class="btn btn-success" th:disabled="${session.account.activate != 1}">Twitterアカウント連携</button>
+				</div>
+				<div class="col-md-9">
+					<blockquote th:switch="${session.account.activate}">
+					お使いのTwitterアカウントと連携します。
+						<footer th:case="1">
+							Twitterアカウント連携をすることで、Twitterからログインしても同じタスクを扱えます。
+						</footer>
+						<footer th:case="2">
+							Twitterアカウントと連携済みです。
+						</footer>
+					</blockquote>
+				</div>
+			</div>
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+		</form>
 	</div>
 
 	<div th:replace="templates/request :: request"></div>

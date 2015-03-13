@@ -79,3 +79,7 @@ body {
 	background-image: url("../images/loadinfo.net.gif");
 	background-repeat: no-repeat;
 }
+
+blockquote {
+	border-color: #8B8DA6;
+}

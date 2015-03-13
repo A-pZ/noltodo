@@ -7,8 +7,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.OperationNotSupportedException;
-
 import lombok.extern.slf4j.Slf4j;
 import lumi.dao.DAO;
 import lumi.misc.CredentialDigester;
@@ -200,7 +198,15 @@ public class TwitterChainService extends LumiService {
 	 * @throws Exception
 	 */
 	public boolean chainingTwitterId(Twitter twitter, String username) throws Exception {
-		throw new OperationNotSupportedException("未実装");
+		AuthChainDTO param = new AuthChainDTO(Long.toString(twitter.getId()) );
+
+		int count = dao.update(Query.chainingTwitterId.name(), param);
+
+		if (! isSingleRecord(count)) {
+			throw new Exception("failure chaining TwitterId");
+		}
+
+		return true;
 	}
 
 	/**

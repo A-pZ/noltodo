@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lumi.action.LumiActionSupport;
+import lumi.misc.SessionKeys;
 import lumi.service.AccountService;
 import lumi.service.TwitterChainService;
 import lumi.vo.AccountVO;
@@ -36,6 +37,7 @@ import com.opensymphony.xwork2.ActionSupport;
 @Results({
 	@Result(name=ActionSupport.SUCCESS , location="/list" , type="redirect") ,
 	@Result(name=ActionSupport.ERROR , location = "/login/login" , type="thymeleaf-spring"),
+	@Result(name=AuthenticationChainAction.TWITTER_CHAIN_STRING , location="/account/afterChain" , type="redirect" )
 })
 @Controller
 @Scope("prototype")
@@ -47,8 +49,9 @@ public class AuthenticationChainAction extends LumiActionSupport {
 	 */
 	@Action("callback")
 	public String calback() throws Exception {
+
 		// Twitter4jのインスタンスをセッションから取得する。
-		Twitter twitter = (Twitter) getSession().get("twitter");
+		Twitter twitter = (Twitter) getSession().get(SessionKeys.TWITTER4J_INSTANCE.name());
 		if ( twitter == null ) {
 			// もしインスタンスがない場合は警告メッセージ＋ログイン画面
 			log.warn("twitter instance is null.");
@@ -57,7 +60,7 @@ public class AuthenticationChainAction extends LumiActionSupport {
 		}
 
 		// セッションからOAuthリクエストトークンを取得
-		RequestToken reqToken = (RequestToken)getSession().get("requestToken");
+		RequestToken reqToken = (RequestToken)getSession().get(SessionKeys.REQUEST_TOKEN.name());
 		if ( reqToken == null ) {
 			// もしリクエストトークンが取得できない場合は警告メッセージ＋ログイン画面
 			log.warn("request token is null.");
@@ -74,6 +77,15 @@ public class AuthenticationChainAction extends LumiActionSupport {
 		// TwitterのユーザID(数値)を取得
 		long twitterId = twitter.getId();
 		log.debug("-- twitterId:" + twitterId);
+
+		// セッションからTwitterChainの要求であったかを判定する
+		Object requestKeyFlag = getSession().get(SessionKeys.TWITTER_ACCOUNT_CHAIN_REQUEST_KEY.name());
+		if ( requestKeyFlag != null ) {
+			if ((Boolean)requestKeyFlag) {
+				log.info(" - twitter account chain request -> redirect to afterChain.");
+				return TWITTER_CHAIN_STRING;
+			}
+		}
 
 		// Twitter認証連携を登録する
 		boolean isChain = service.chainSpringSecurity(twitter);
@@ -100,7 +112,7 @@ public class AuthenticationChainAction extends LumiActionSupport {
 		accountService.setUserId(userId);
 		AccountVO vo = accountService.getAccountInfo();
 
-		getSession().put("displayName", vo.getDisplayName());
+		getSession().put(SessionKeys.ACCOUNT.name(),vo);
 
 		return SUCCESS;
 	}
@@ -112,4 +124,7 @@ public class AuthenticationChainAction extends LumiActionSupport {
 	AccountService accountService;
 	@Getter @Setter
 	private String oauth_verifier;
+
+	/** アカウント管理からツイッター連携をした場合のRESULT値 */
+	public static final String TWITTER_CHAIN_STRING = "twitterChain";
 }

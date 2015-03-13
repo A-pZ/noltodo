@@ -223,6 +223,7 @@
 		SELECT
 			username
 			, displayname displayName
+			, activate
 		FROM
 			userlist
 		WHERE
