@@ -89,7 +89,7 @@ var goSubmit = function(url) {
 		<form id="form" name="form" class="form-horizontal" method="POST" action="./passwordChange.html">
 			<div class="row">
 				<div class="col-md-3 text-right">
-					<button type="button" id="passwordChange" class="btn btn-success" th:disabled="${session.account.activate != 1}">パスワード変更</button>
+					<button type="button" id="passwordChange" class="btn btn-success" th:disabled="${session.ACCOUNT.activate != 1}">パスワード変更</button>
 				</div>
 				<div class="col-md-9">
 					<blockquote>パスワードの変更をします。
@@ -100,10 +100,10 @@ var goSubmit = function(url) {
 
 			<div class="row">
 				<div class="col-md-3 text-right">
-					<button type="button" id="accountChain" class="btn btn-success" th:disabled="${session.account.activate != 1}">Twitterアカウント連携</button>
+					<button type="button" id="accountChain" class="btn btn-success" th:disabled="${session.ACCOUNT.activate != 1}">Twitterアカウント連携</button>
 				</div>
 				<div class="col-md-9">
-					<blockquote th:switch="${session.account.activate}">
+					<blockquote th:switch="${session.ACCOUNT.activate}">
 					お使いのTwitterアカウントと連携します。
 						<footer th:case="1">
 							Twitterアカウント連携をすることで、Twitterからログインしても同じタスクを扱えます。

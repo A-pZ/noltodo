@@ -22,13 +22,13 @@
 	</appender>
 
 	<logger name="org.apache.struts2" additivity="false">
-		<level value="debug" />
+		<level value="info" />
 		<appender-ref ref="stdout" />
 		<appender-ref ref="file" />
 	</logger>
 
 	<logger name="com.opensymphony.xwork2" additivity="false">
-		<level value="debug" />
+		<level value="info" />
 		<appender-ref ref="stdout" />
 	</logger>
 
