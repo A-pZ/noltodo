@@ -15,14 +15,17 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author A-pZ
  *
  */
+@RunWith(MockitoJUnitRunner.class)
 public class UserRegisterServiceTest {
 
 	/**
@@ -63,6 +66,7 @@ public class UserRegisterServiceTest {
 		user.setPassword("password");
 		user.setActivate(1);
 		user.setUserrole("ROLE_ADMIN");
+		user.setDisplayName("test");
 
 		when(dao.insert(Query.registerUser.name(), user)).thenReturn(1);
 		when(dao.insert(Query.registerUserRole.name(), user)).thenReturn(1);
