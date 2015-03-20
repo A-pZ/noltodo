@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import lombok.extern.slf4j.Slf4j;
+import lumi.misc.SessionKeys;
 import lumi.service.AccountService;
 import lumi.vo.AccountVO;
 
@@ -53,7 +54,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
 			throw new ServletException("HttpSession is null.");
 		}
 
-		session.setAttribute("displayName", vo.getDisplayName());
+		session.setAttribute(SessionKeys.ACCOUNT.name(), vo);
 
 		response.sendRedirect(request.getContextPath().concat("/list"));
 	}

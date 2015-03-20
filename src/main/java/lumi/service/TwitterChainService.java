@@ -7,8 +7,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.OperationNotSupportedException;
-
 import lombok.extern.slf4j.Slf4j;
 import lumi.dao.DAO;
 import lumi.misc.CredentialDigester;
@@ -172,6 +170,107 @@ public class TwitterChainService extends LumiService {
 	}
 
 	/**
+	 * ログイン済みユーザがTwitter連携を許可したときに連携する。
+	 * @param twitter Twitter4j認証情報インスタンス
+	 * @param username 連携するログインユーザ名
+	 * @throws Exception
+	 */
+	public void registerExistUserFromTwitter(Twitter twitter , String username) throws Exception {
+
+		// もし既にTwitterIDが登録済みであればいったん削除する。
+		if ( existTwitterChainUser(twitter)) {
+			log.info(" - delete exists username(twitterId) {}" , twitter.getId());
+			if ( !deleteTwitterChainInfo(twitter)) {
+				throw new Exception("failure delete twitter chain.");
+			}
+		}
+
+		// Twitter連携情報の登録
+		if (!registerTwitterChain(twitter,username)) {
+			throw new Exception("failure register twitter chain.");
+		}
+
+		// ユーザ情報にTwitterユーザ情報を登録する
+		if (!registerLoginAccountForTwitterChain(twitter)) {
+			throw new Exception("failure register user.");
+		}
+
+		// ロールの登録
+		if (!registerUserRole(twitter)) {
+			throw new Exception("failure register role.");
+		}
+
+		if (!updateUsernameToTwitterDisplayName(twitter , username)) {
+			throw new Exception("failure chaining exist account.");
+		}
+	}
+
+	/**
+	 * Twitter連携でユーザ登録しているかを検索する。
+	 * @param twitter Twitter4j認証情報インスタンス
+	 * @return 登録済みであればtrue
+	 * @throws Exception
+	 */
+	boolean existTwitterChainUser(Twitter twitter) throws Exception {
+
+		long id = twitter.getId();
+
+		// TwitterIDで登録されているユーザの件数を取得
+		Integer count = (Integer)dao.selectObject(Query.existUser.name(), Long.toString(id));
+
+		return isSingleRecord(count);
+	}
+
+	/**
+	 * 認証テーブル(userlist,userrole,twitter_chain)から連携したTwitterIDのデータを削除する。
+	 * @param twitter Twitter4j認証情報インスタンス
+	 * @return 削除完了したらtrue
+	 * @throws Exception
+	 */
+	boolean deleteTwitterChainInfo(Twitter twitter) throws Exception {
+		String username = Long.toString(twitter.getId());
+
+		deleteUsername(username);
+		deleteUserrole(username);
+		deleteTwitterChain(username);
+
+		return true;
+	}
+
+	/**
+	 * 指定したユーザをユーザテーブルから除去する。
+	 * @param username ユーザ名
+	 * @return 削除結果。削除件数が0でもtrue。
+	 * @throws Exception
+	 */
+	boolean deleteUsername(String username) throws Exception {
+		Integer count = dao.delete(Query.deleteUsername.name(), username);
+		return true;
+	}
+
+	/**
+	 * 指定したユーザをユーザロールテーブルから除去する。
+	 * @param username ユーザ名
+	 * @return 削除結果。削除件数が0でもtrue。
+	 * @throws Exception
+	 */
+	boolean deleteUserrole(String username) throws Exception {
+		Integer count = dao.delete(Query.deleteUserrole.name(), username);
+		return true;
+	}
+
+	/**
+	 * 指定したユーザをツイッター連携テーブルから除去する。
+	 * @param username ユーザ名
+	 * @return 削除結果。削除件数が0でもtrue。
+	 * @throws Exception
+	 */
+	boolean deleteTwitterChain(String username) throws Exception {
+		Integer count = dao.delete(Query.deleteTwitterChain.name(), username);
+		return true;
+	}
+
+	/**
 	 * Twitter認証情報から、表示名を取得して更新する。
 	 * @param twitter Twitter4j認証情報インスタンス
 	 * @return 更新が成功したらtrue
@@ -200,7 +299,16 @@ public class TwitterChainService extends LumiService {
 	 * @throws Exception
 	 */
 	public boolean chainingTwitterId(Twitter twitter, String username) throws Exception {
-		throw new OperationNotSupportedException("未実装");
+		AuthChainDTO param = new AuthChainDTO(Long.toString(twitter.getId()) );
+		param.setUsername(username);
+
+		int count = dao.update(Query.chainingTwitterId.name(), param);
+
+		if (! isSingleRecord(count)) {
+			throw new Exception("failure chaining TwitterId");
+		}
+
+		return true;
 	}
 
 	/**
@@ -214,7 +322,37 @@ public class TwitterChainService extends LumiService {
 		param.setTwitterId(Long.toString(twitter.getId()));
 		param.setUsername(Long.toString(twitter.getId()));
 
-		int count = dao.insert(Query.registerNewTwitterChain.name(), param);
+		int count = dao.insert(Query.registerTwitterChain.name(), param);
+		return isSingleRecord(count);
+	}
+
+	/**
+	 * Twitter認証連携の情報を、ログインユーザIDと関連付けして追加する。
+	 * @param twitter Twitter4j認証情報インスタンス
+	 * @param username システムログインユーザID
+	 * @return 登録成功時はtrue
+	 * @throws Exception
+	 */
+	boolean registerTwitterChain(Twitter twitter , String username) throws Exception {
+		AuthChainDTO param = new AuthChainDTO();
+		param.setTwitterId(Long.toString(twitter.getId()));
+		param.setUsername(username);
+
+		int count = dao.insert(Query.registerTwitterChain.name(), param);
+		return isSingleRecord(count);
+	}
+
+	/**
+	 * 登録済みログイン情報の表示名をTwitterの表示名に切り替える。
+	 * @param twitter Twitter4j認証情報インスタンス
+	 * @param username システムログインユーザID
+	 * @return 登録成功時はtrue
+	 * @throws Exception
+	 */
+	boolean updateUsernameToTwitterDisplayName(Twitter twitter , String username) throws Exception {
+		UserRegisterVO userVO = generateUserRegisterVO(twitter , username);
+
+		int count = dao.update(Query.updateUserFromTwitter.name(), userVO);
 		return isSingleRecord(count);
 	}
 
@@ -226,9 +364,33 @@ public class TwitterChainService extends LumiService {
 	 */
 	boolean registerLoginAccountForTwitterChain(Twitter twitter) throws Exception {
 		UserRegisterVO user = generateUserRegisterVO(twitter);
+
+		return registerLoginAccountForTwitterChain(user,twitter);
+	}
+
+	/**
+	 * Twitterアカウント情報から登録済みユーザ情報を登録する。
+	 * @param twitter Twitter4j認証情報インスタンス
+	 * @param username ログインユーザ名
+	 * @return 登録成功時はtrue
+	 * @throws Exception
+	 */
+	boolean registerLoginAccountForTwitterChain(Twitter twitter,String username) throws Exception {
+		UserRegisterVO user = generateUserRegisterVO(twitter,username);
+
+		return registerLoginAccountForTwitterChain(user,twitter);
+	}
+
+	/**
+	 * ユーザテーブルにユーザ情報を登録する。
+	 * @param user UserRegisterVO
+	 * @param twitter Twitter4j認証情報インスタンス
+	 * @return 登録成功時はtrue
+	 * @throws Exception
+	 */
+	boolean registerLoginAccountForTwitterChain(UserRegisterVO user , Twitter twitter) throws Exception {
 		String digestTarget = twitter.getScreenName().concat(Long.toString(System.currentTimeMillis()));
 		user.setPassword(CredentialDigester.generate(digestTarget));
-
 		int registerCount = dao.insert(Query.registerUser.name(), user);
 		return isSingleRecord(registerCount);
 	}
@@ -265,6 +427,25 @@ public class TwitterChainService extends LumiService {
 	}
 
 	/**
+	 * 登録ユーザのデータ更新用VOを生成する。
+	 * @param twitter Twitter認証情報
+	 * @param username ログインユーザID
+	 * @return ユーザVO。
+	 */
+	UserRegisterVO generateUserRegisterVO(Twitter twitter,String username) throws TwitterException {
+		User twitUser = twitter.verifyCredentials();
+
+		// ユーザ情報の作成
+		UserRegisterVO user = new UserRegisterVO();
+		user.setActivate(1);
+		user.setUsername(username);
+		user.setDisplayName(twitUser.getName());
+		user.setUserrole("ROLE_ADMIN");
+
+		return user;
+	}
+
+	/**
 	 * 登録・更新件数が1の場合はtrueを返す。
 	 * @param count 登録件数
 	 * @return 件数が1の場合のみtrue
@@ -282,6 +463,8 @@ public class TwitterChainService extends LumiService {
 	private AuthChainDTO authChain;
 
 	enum Query {
-		searchTwitterChain, updateDisplayName , registerNewTwitterChain, chainingTwitterId, searchAlreadyRegisterTwitterId, registerUser, registerUserRole
+		searchTwitterChain, updateDisplayName , registerTwitterChain, chainingTwitterId,
+		searchAlreadyRegisterTwitterId, registerUser, registerUserRole , updateUserFromTwitter,
+		existUser , deleteUsername , deleteUserrole , deleteTwitterChain
 	}
 }

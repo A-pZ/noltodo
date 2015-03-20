@@ -71,7 +71,7 @@ public class AccountService extends LumiService {
 	 *
 	 */
 	public enum Query {
-		selectUser , updatePassword ,
+		selectUser , updatePassword
 	}
 
 	@Setter @Getter

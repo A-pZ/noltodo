@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lumi.action.LumiActionSupport;
+import lumi.misc.SessionKeys;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -49,7 +50,7 @@ public class SigninAction extends LumiActionSupport {
 		Twitter twitter = new TwitterFactory(config.build()).getInstance();
 
 		log.debug("tw4j.getInstance ->");
-		getSession().put("twitter", twitter );
+		getSession().put(SessionKeys.TWITTER4J_INSTANCE.name(), twitter );
 
 		StringBuffer callbackUrl = servletRequest.getRequestURL();
 		int idx = callbackUrl.lastIndexOf("/");
@@ -57,7 +58,7 @@ public class SigninAction extends LumiActionSupport {
 		log.debug(" - callbackUrl : " + callbackUrl);
 
 		RequestToken reqToken = twitter.getOAuthRequestToken(callbackUrl.toString());
-		getSession().put("requestToken", reqToken );
+		getSession().put(SessionKeys.REQUEST_TOKEN.name(), reqToken );
 		log.debug(" - requestToken: " + reqToken);
 
 		authenticationUrl = reqToken.getAuthenticationURL();

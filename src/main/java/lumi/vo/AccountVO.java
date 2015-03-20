@@ -20,5 +20,6 @@ public abstract class AccountVO {
 
 	private String displayName;
 	private String twitterId;
+	private int activate;
 
 }
