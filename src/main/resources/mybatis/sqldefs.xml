@@ -341,7 +341,7 @@
 	</update>
 
 	<!-- Twitter連携テーブルにユーザ情報を登録する -->
-	<insert id="registerNewTwitterChain" parameterType="lumi.vo.AuthChainDTO">
+	<insert id="registerTwitterChain" parameterType="lumi.vo.AuthChainDTO">
 		INSERT INTO
 			twitter_chain
 		( twitterid , username , last_chain_time )
@@ -352,9 +352,9 @@
 	<!-- Twitter連携済みであればユーザIDのみ更新する -->
 	<update id="chainingTwitterId" parameterType="lumi.vo.AuthChainDTO">
 		UPDATE
-			username = #{username}
-		SET
 			twitter_chain
+		SET
+			username = #{username}
 		WHERE
 			twitterid = #{twitterId}
 	</update>
@@ -368,4 +368,39 @@
 		WHERE
 			twitterid = #{twitterId}
 	</select>
+
+	<!-- 登録済みユーザの表示名をTwitterの表示名に変え、 -->
+	<update id="updateUserFromTwitter" parameterType="lumi.vo.UserRegisterVO">
+		UPDATE
+			userlist
+		SET
+			displayname = #{displayName}
+			, activate = #{activate}
+		WHERE
+			username = #{username}
+	</update>
+
+	<!-- ユーザテーブルから指定したtwitterIdのデータを削除する -->
+	<delete id="deleteUsername" parameterType="java.lang.String">
+		DELETE FROM
+			userlist
+		WHERE
+			username = #{value}
+	</delete>
+
+	<!-- ユーザロールテーブルから指定したtwitterIdのデータを削除する -->
+	<delete id="deleteUserrole" parameterType="java.lang.String">
+		DELETE FROM
+			userrole
+		WHERE
+			username = #{value}
+	</delete>
+
+	<!-- Twitter連携テーブルから指定したtwitterIdのデータを削除する -->
+	<delete id="deleteTwitterChain" parameterType="java.lang.String">
+		DELETE FROM
+			twitter_chain
+		WHERE
+			username = #{value}
+	</delete>
 </mapper>

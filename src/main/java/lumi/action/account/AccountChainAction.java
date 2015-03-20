@@ -3,14 +3,20 @@ package lumi.action.account;
 import lombok.extern.slf4j.Slf4j;
 import lumi.action.LumiActionSupport;
 import lumi.misc.SessionKeys;
+import lumi.service.AccountService;
+import lumi.service.TwitterChainService;
+import lumi.vo.AccountVO;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+
+import twitter4j.Twitter;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -59,9 +65,32 @@ public class AccountChainAction extends LumiActionSupport {
 
 		getSession().remove(SessionKeys.TWITTER_ACCOUNT_CHAIN_REQUEST_KEY.name());
 
+		// Twitterインスタンスの取得
+		Twitter twitter = (Twitter) getSession().get(SessionKeys.TWITTER4J_INSTANCE.name());
+		if ( twitter == null ) {
+			addActionError(getText("twitter.chain.no.twitter.instance"));
+			return ERROR;
+		}
+
+		// Twitter認証情報の登録
+		service.registerExistUserFromTwitter(twitter, getLoginUsername());
+
+		//
+		accountService.setUserId(getLoginUsername());
+		AccountVO vo = accountService.getAccountInfo();
+		vo.setActivate(2);
+
+		getSession().put(SessionKeys.ACCOUNT.name(),vo);
+
 		addActionMessage(getText("twitter.chain.success"));
 		return SUCCESS;
 	}
 
 	public static final String REDIRECT_STRING = "redirect";
+
+	@Autowired
+	TwitterChainService service;
+
+	@Autowired
+	AccountService accountService;
 }

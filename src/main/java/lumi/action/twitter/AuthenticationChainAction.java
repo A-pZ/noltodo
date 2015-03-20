@@ -111,6 +111,7 @@ public class AuthenticationChainAction extends LumiActionSupport {
 
 		accountService.setUserId(userId);
 		AccountVO vo = accountService.getAccountInfo();
+		vo.setActivate(2);
 
 		getSession().put(SessionKeys.ACCOUNT.name(),vo);
 
