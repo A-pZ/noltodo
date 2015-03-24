@@ -40,7 +40,7 @@ $(document).ready(function() {
 	$(document).ajaxSend(function(e, xhr, options) {
 		xhr.setRequestHeader(header, token);
 	});
-
+	// 公開タスク表示
 	$("#allSearch").bind("click" , function() {
 		$("#status").val("all");
 		url = /*[[ @{/list} ]]*/ 'list.html';
@@ -244,7 +244,7 @@ var searchTag = function(target) {
 	</div>
 
 	<form id="form" name="form" method="POST">
-		<input type="hidden" name="vo.status" id="status" value="op" />
+		<input type="hidden" name="vo.status" id="status" value="op" th:value="${#objects.nullSafe(vo.status,'op')}"/>
 		<input type="hidden" name="vo.jobid" id="jobid" />
 		<input type="hidden" name="vo.priority" id="priority" />
 		<input type="hidden" name="vo.tagid" id="tagid" />
