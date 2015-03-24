@@ -20,6 +20,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.interceptor.annotations.Blocked;
 
 /**
@@ -36,7 +37,17 @@ import com.opensymphony.xwork2.interceptor.annotations.Blocked;
 @Controller
 @Scope("prototype")
 @Slf4j
-public class ListAction extends LumiActionSupport {
+public class ListAction extends LumiActionSupport implements Preparable {
+
+	/**
+	 * 前処理。
+	 */
+	@Override
+	public void prepare() throws Exception {
+		if ( vo == null ) {
+			this.vo = new SearchVO();
+		}
+	}
 
 	/**
 	 * デフォルトアクション。
