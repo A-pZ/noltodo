@@ -47,8 +47,23 @@ $(document).ready(function() {
 		goSubmit(url);
 	});
 
+	// クローズ済みタスクの一括削除
+	$("#closeDrop").bind("click" , function() {
+		url = /*[[ @{/closeDrop} ]]*/ 'list.html';
+		goSubmit(url);
+	});
+
+	// 一括削除のモーダル表示
+	$("#closeDropConfirm").bind("click" , function() {
+		$("#closeDropModal").modal('show');
+	});
+	$("#hideCloseDrop").bind("click" , function() {
+		$("#closeDropModal").modal('hide');
+	});
+
 	// ツールチップ表示
 	$('[data-toggle="tooltip"]').tooltip();
+
 
 	//職業・特化の処理
 	$("#job_select").bind("click" , function() {
@@ -155,38 +170,20 @@ var searchTag = function(target) {
 		</div>
 
 		<div class="row">
+			<!--
 			<div class="col-md-3">
 				<button type="button" id="allSearch" name="allSearch" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="他の方の公開タスクも表示します">
 					<span class="glyphicon glyphicon-share-alt"></span>公開タスクも表示する
 				</button>
 			</div>
-			<div class="col-md-9">
+			 -->
+			<div class="col-md-12">
 				<span class="glyphicon glyphicon-tags"></span> タグ一覧
 				<span id="tagarea">
 					<span>タグ一覧を読み込み中…
 						<img src="./images/loadinfo.net.gif" th:src="@{/images/loadinfo.net.gif}" />
 					</span>
 				</span>
-				<!-- pagination
-				<nav>
-					<ul class="pagination">
-						<li>
-							<a href="#" aria-label="Previous">
-								<span aria-hidden="true">&laquo;</span>
-							</a>
-						</li>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li>
-							<a href="#" aria-label="Next">
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav> -->
 			</div>
 		</div>
 
@@ -254,5 +251,6 @@ var searchTag = function(target) {
 	<!-- 職業＆特化選択モーダル -->
 	<div th:replace="templates/job :: job"></div>
 	<div th:replace="templates/request :: request"></div>
+	<div th:replace="templates/closeDrop :: modal"></div>
 </body>
 </html>

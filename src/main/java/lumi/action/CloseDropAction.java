@@ -1,13 +1,9 @@
 package lumi.action;
 
-import java.sql.Timestamp;
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import lumi.service.SearchService;
-import lumi.service.SystemTimestampService;
+import lumi.service.CloseDropService;
 import lumi.vo.SearchVO;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -24,7 +20,7 @@ import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.interceptor.annotations.Blocked;
 
 /**
- * Actionクラスのテンプレートサンプル。
+ * クローズしたタスクの一括削除をする。
  *
  * @author A-pZ ( Serendipity 3 ./ as sundome goes by. )
  */
@@ -32,12 +28,13 @@ import com.opensymphony.xwork2.interceptor.annotations.Blocked;
 @ParentPackage("lumi-default")
 @Results({
 	// location属性に指定したhtmlファイル名は、/WEB-INF/content 以下からの相対パス。
-	@Result(name = ActionSupport.SUCCESS, location = "list" , type="thymeleaf-spring"),
+	@Result(name = ActionSupport.SUCCESS, location = "closeDrop" , type="thymeleaf-spring"),
+	@Result(name = ActionSupport.ERROR, location = "closeDrop" , type="thymeleaf-spring"),
 })
 @Controller
 @Scope("prototype")
 @Slf4j
-public class ListAction extends LumiActionSupport implements Preparable {
+public class CloseDropAction extends LumiActionSupport implements Preparable {
 
 	/**
 	 * 前処理。
@@ -52,18 +49,11 @@ public class ListAction extends LumiActionSupport implements Preparable {
 	/**
 	 * デフォルトアクション。
 	 */
-	@Action("list")
+	@Action("closeDrop")
 	public String start() throws Exception {
 
 		// Serviceクラスの呼び出し
-		resultList = service.execute(vo);
-		log.debug(" - getList.");
-
-		systemDate = timeService.getSystemTimestamp();
-
-		// メニューにタスク一括管理を追加
-		displayTaskManageListMenu = true;
-		log.debug(" -isList");
+		int count = service.execute();
 
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
 		// この値は@Resultで指定したname値となる。
@@ -76,21 +66,8 @@ public class ListAction extends LumiActionSupport implements Preparable {
 	@Blocked
 	@Autowired
 	@Getter @Setter
-	private SearchService service;
+	private CloseDropService service;
 
 	@Getter @Setter
 	private SearchVO vo;
-
-	@Autowired
-	private SystemTimestampService timeService;
-
-	@Getter @Setter
-	private List<SearchVO> resultList;
-
-	@Getter @Setter
-	private Timestamp systemDate;
-
-	/** タスク一括管理 */
-	@Getter @Setter
-	private boolean displayTaskManageListMenu;
 }

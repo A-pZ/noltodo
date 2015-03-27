@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="ja">
+
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"></meta>
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<meta name="description" content="のぼんのタスクをmarkdownで管理しようプロジェクト"></meta>
+<meta name="author" content="A-pZ(ぢつにんさん)"></meta>
+
+<title>のるとど！</title>
+</head>
+<body role="document">
+<div th:fragment="modal">
+	<!-- 一括削除確認モーダル -->
+	<div class="modal" id="closeDropModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header jobModal">
+					<button type="button" id="closeModal" class="close"
+						data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">一括削除の確認です</h4>
+				</div>
+				<div class="modal-body">
+					クローズ済みのタスクを一括削除しまか？
+					<button class="btn btn-danger" id="closeDrop"><span class="glyphicon glyphicon-remove-circle"></span> 一括削除する</button>
+					<button class="btn" id="hideCloseDrop">キャンセル</button>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+</div>
+</body>
+
+</html>
