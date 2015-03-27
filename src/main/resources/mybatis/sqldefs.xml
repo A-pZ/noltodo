@@ -403,4 +403,14 @@
 		WHERE
 			username = #{value}
 	</delete>
+
+	<!-- クローズ済みのタスクを一括削除する -->
+	<delete id="closeDrop" parameterType="java.lang.String">
+		DELETE FROM
+			task
+		WHERE
+			userid = #{value}
+		AND
+			status = 'cl'
+	</delete>
 </mapper>

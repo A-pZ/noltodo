@@ -18,10 +18,23 @@
 			<ul class="nav navbar-nav">
 				<li><a href="list.html" th:href="@{/list}"><span class="glyphicon glyphicon-th-list"></span> タスク一覧</a></li>
 				<li><a href="register.html" th:href="@{/display}"><span class="glyphicon glyphicon-pencil"></span> タスク登録</a></li>
+				<li class="dropdown" th:if="${#objects.nullSafe(displayTaskManageListMenu,false)}">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						<span class="glyphicon glyphicon-tasks"></span>
+						<span>タスク一括管理</span>
+						<span class="caret"></span>
+					</a>
+
+					<ul class="dropdown-menu" role="menu">
+						<li><a href="#" id="allSearch"><span class="glyphicon glyphicon-share-alt"></span> 公開タスクの表示</a></li>
+						<li class="divider"></li>
+						<li><a href="#" id="closeDropConfirm"><span class="glyphicon glyphicon-remove-circle"></span> クローズしたタスクの消去</a></li>
+					</ul>
+				</li>
 			</ul>
 			<ul class="nav navbar-nav pull-right" >
-				<li class="dropdown" >
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" th:object="${session.ACCOUNT}">
+				<li class="dropdown" th:if="${session.ACCOUNT} != null">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" >
 						<span class="glyphicon glyphicon-user"></span>
 						<span th:inline="text" th:text="${#objects.nullSafe(session.ACCOUNT.displayName,'')}">ユーザ名</span>
 						<span class="caret"></span>
