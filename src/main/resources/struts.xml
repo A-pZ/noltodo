@@ -6,7 +6,9 @@
 
 <struts>
 	<!-- 開発モードスイッチ -->
-	<constant name="struts.devMode" value="true" />
+	<!--
+	<constant name="struts.devMode" value="false" />
+	 -->
 
 	<!-- アプリケーション共通プロパティファイル名。拡張子は不要。 -->
 	<constant name="struts.custom.i18n.resources" value="commons,message,twitter" />
@@ -55,6 +57,7 @@
 			<result name="exception" type="thymeleaf-spring">error</result>
 		</global-results>
 		<global-exception-mappings>
+			<exception-mapping result="exception" exception="com.opensymphony.xwork2.config.ConfigurationException"></exception-mapping>
 			<exception-mapping result="exception" exception="java.lang.Exception"></exception-mapping>
 		</global-exception-mappings>
 

@@ -9,6 +9,7 @@ import lumi.dao.DAO;
 import lumi.vo.SearchVO;
 
 import org.apache.commons.lang3.StringUtils;
+import org.markdown4j.Markdown4jProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -59,6 +60,13 @@ public class SearchService extends LumiService {
 			addInfoMessage("search.result", msg);
 		}
 
+		Markdown4jProcessor processor = new Markdown4jProcessor();
+
+		// taskの内容をmarkdown変換する
+		for(SearchVO search:resultList) {
+			String html = processor.process(search.getTask());
+			search.setTask(html);
+		}
 
 		// 登録結果を返す。
 		return resultList;

@@ -4,6 +4,9 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="lumi-core-3.1.2.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/lumi-core/lumi-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="struts2-core-2.3.22-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/struts2-core/struts2-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
