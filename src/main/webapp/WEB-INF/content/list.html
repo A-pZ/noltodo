@@ -61,10 +61,6 @@ $(document).ready(function() {
 		$("#closeDropModal").modal('hide');
 	});
 
-	// ツールチップ表示
-	$('[data-toggle="tooltip"]').tooltip();
-
-
 	//職業・特化の処理
 	$("#job_select").bind("click" , function() {
 		$("#myModal").modal('show');
@@ -94,6 +90,17 @@ $(document).ready(function() {
 		url = /*[[ @{/list} ]]*/ 'list.html';
 		goSubmit(url);
 	});
+
+	// ツールチップ表示
+	$('[data-toggle="tooltip"]').tooltip();
+
+	// ポップオーバー定義
+	var popOverOptions = {
+		animation : false ,
+		trigger : 'hover' ,
+		html : true ,
+	};
+	$('[data-toggle="popover"]').popover(popOverOptions);
 
 	var tagarea = $('#tagarea');
 	tagarea.ready(function() {
@@ -134,6 +141,7 @@ var searchTag = function(target) {
 
 	goSubmit(url);
 };
+
 /*]]>*/
 </script>
 <style type="text/css">
@@ -211,7 +219,11 @@ var searchTag = function(target) {
 			<tbody th:remove="all-but-first" th:each="result : ${resultList}">
 				<tr th:class="${result['limitdate']} &lt; ${systemDate} ? 'danger' : ''">
 					<td th:text="${result['id']}">1</td>
-					<td><a href="update.html" th:href="@{display(vo.id=${result['id']})}" th:text="${result['name']}">タスク1</a></td>
+					<td><a href="register.html" data-toggle="popover" data-id='1' data-content='タスク1です'
+					       th:href="@{display(vo.id=${result['id']})}" th:text="${result['name']}"
+					       th:attr="data-id=${result['id']},data-content=${result['task']}">タスク1</a>
+						<!-- <a href="#" class="btn btn-default">タスク参照</a>  -->
+					</td>
 					<td th:text="${result['jobname']}">侍</td>
 					<td th:text="${beans.master.getValue('priority',result['priority'])}">High</td>
 					<td th:text="${#dates.format(result['limitdate'], 'yy/MM/dd')}">3/20</td>
