@@ -31,6 +31,9 @@
         <dependent-module archiveName="struts2-thymeleaf-plugin-2.3.22-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/struts2-thymeleaf-plugin/struts2-thymeleaf-plugin">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="struts2-jfreechart-plugin-2.3.22-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/struts2-jfreechart-plugin/struts2-jfreechart-plugin">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="noltodo"/>
         <property name="java-output-path" value="/noltodo/target/classes"/>
     </wb-module>
