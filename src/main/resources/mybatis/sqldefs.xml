@@ -413,17 +413,4 @@
 		AND
 			status = 'cl'
 	</delete>
-
-	<!-- タスクサマリー検索 -->
-	<select id="taskSummary" parameterType="string" resultType="lumi.vo.TaskSummaryVO">
-		SELECT
-			  username
-			, checkdate
-			, task
-			, closed
-		FROM
-			task_summary
-		WHERE
-			username = #{value}
-	</select>
 </mapper>

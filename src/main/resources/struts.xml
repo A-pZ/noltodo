@@ -16,10 +16,6 @@
 	<package name="lumi-default" abstract="true" extends="struts-thymeleaf">
 		<result-types>
 			<result-type name="json" class="org.apache.struts2.json.JSONResult" />
-			<result-type name="chart" class="org.apache.struts2.dispatcher.ChartResult">
-				<param name="height">150</param>
-    			<param name="width">200</param>
-			</result-type>
 		</result-types>
 
 		<interceptors>
@@ -61,6 +57,7 @@
 			<result name="exception" type="thymeleaf-spring">error</result>
 		</global-results>
 		<global-exception-mappings>
+			<exception-mapping result="exception" exception="com.opensymphony.xwork2.config.ConfigurationException"></exception-mapping>
 			<exception-mapping result="exception" exception="java.lang.Exception"></exception-mapping>
 		</global-exception-mappings>
 

@@ -5,7 +5,6 @@
 	<projects>
 		<project>lumi-core</project>
 		<project>struts2-spring-plugin</project>
-		<project>struts2-jfreechart-plugin</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
