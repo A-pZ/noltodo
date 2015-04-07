@@ -16,10 +16,12 @@
   <Resource name="jdbc/dbcon"
             auth="Container"
             type="javax.sql.DataSource"
-            username="root"
-            password="password"
+            username="alphapz"
+            password="Dituninsan@925"
             driverClassName="com.mysql.jdbc.Driver"
-            url="jdbc:mysql://127.0.0.1:3306/noltodo"
+            url="jdbc:mysql://127.0.0.1:3306/alphapz_kawara"
             maxActive="10"
-            maxIdle="1"/>
+            maxIdle="1"
+            validationQuery="SELECT 1"
+            />
 </Context>
