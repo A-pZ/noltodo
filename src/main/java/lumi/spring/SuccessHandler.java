@@ -49,10 +49,7 @@ public class SuccessHandler implements AuthenticationSuccessHandler {
 		log.debug(" - accountVO : " + vo);
 
 		// セッションにユーザ情報を格納する
-		HttpSession session = request.getSession(false);
-		if ( session == null) {
-			throw new ServletException("HttpSession is null.");
-		}
+		HttpSession session = request.getSession(true);
 
 		session.setAttribute(SessionKeys.ACCOUNT.name(), vo);
 

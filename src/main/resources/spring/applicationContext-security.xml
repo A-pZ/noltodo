@@ -38,6 +38,12 @@
         authentication-success-handler-ref="successHandler"
         />
 
+	<!-- Remember-Me認証 -->
+	<sec:remember-me remember-me-cookie="noltodo-rememberme-token"
+	                 remember-me-parameter="_spring_security_remember_me"
+	                 token-validity-seconds="#{7*24*60*60}"
+	                 authentication-success-handler-ref="successHandler" />
+
     <!-- ログアウト時の振る舞い -->
     <sec:logout
         logout-url="/logout"
