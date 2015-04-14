@@ -2,6 +2,7 @@ package lumi.action.signup;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 import lumi.action.LumiActionSupport;
 import lumi.service.UserRegisterService;
@@ -52,7 +53,7 @@ public class RegisterAction extends LumiActionSupport {
 
 		service.register(vo);
 
-		boolean result = service.isResult();
+		val result = service.isResult();
 
 		return ( result ) ? SUCCESS : ERROR;
 	}

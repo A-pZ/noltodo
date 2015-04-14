@@ -1,11 +1,11 @@
 package lumi.action.account;
 
+import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 import lumi.action.LumiActionSupport;
 import lumi.misc.SessionKeys;
 import lumi.service.AccountService;
 import lumi.service.TwitterChainService;
-import lumi.vo.AccountVO;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -56,7 +56,7 @@ public class AccountChainAction extends LumiActionSupport {
 	 */
 	@Action("afterChain")
 	public String afterChain() throws Exception {
-		boolean chain = (Boolean)getSession().get(SessionKeys.TWITTER_ACCOUNT_CHAIN_REQUEST_KEY.name());
+		val chain = (Boolean)getSession().get(SessionKeys.TWITTER_ACCOUNT_CHAIN_REQUEST_KEY.name());
 
 		if (! chain ) {
 			addActionError(getText("twitter.chain.error"));
@@ -77,7 +77,7 @@ public class AccountChainAction extends LumiActionSupport {
 
 		//
 		accountService.setUserId(getLoginUsername());
-		AccountVO vo = accountService.getAccountInfo();
+		val vo = accountService.getAccountInfo();
 		vo.setActivate(2);
 
 		getSession().put(SessionKeys.ACCOUNT.name(),vo);

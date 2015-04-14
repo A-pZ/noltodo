@@ -5,6 +5,7 @@ package lumi.action.tag;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 import lumi.action.LumiActionSupport;
 import lumi.exception.AccessControlException;
@@ -46,11 +47,11 @@ public class BaseTagAction extends LumiActionSupport {
 			throw new AccessControlException("acl.taskid.blank");
 		}
 
-		AccessControlDTO dto = new AccessControlDTO();
+		val dto = new AccessControlDTO();
 		dto.setTaskid(vo.getTaskid());
 		dto.setUsername(getLoginUsername());
 		// タスクの所有者であるかを判定
-		boolean taskOwner = acs.isTaskOwner(dto);
+		val taskOwner = acs.isTaskOwner(dto);
 
 		return taskOwner;
 	}
@@ -70,7 +71,7 @@ public class BaseTagAction extends LumiActionSupport {
 	 * @return jQueryのAJAXリクエストならtrue
 	 */
 	boolean isAjaxRequest() {
-		String ajaxHeader = getServletRequest().getHeader(JQUERY_AJAX_HEADER_KEY);
+		val ajaxHeader = getServletRequest().getHeader(JQUERY_AJAX_HEADER_KEY);
 		if ( StringUtils.isBlank(ajaxHeader)) return false;
 
 		return ( ajaxHeader.equals(JQUERY_AJAX_HEADER_VALUE));

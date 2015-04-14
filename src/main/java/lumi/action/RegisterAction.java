@@ -2,6 +2,7 @@ package lumi.action;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 import lumi.service.RegisterService;
 import lumi.vo.RegisterVO;
@@ -53,7 +54,7 @@ public class RegisterAction extends LumiActionSupport {
 		service.execute(vo);
 
 		// 実行結果の取得
-		boolean result = service.isResult();
+		val result = service.isResult();
 		log.debug(" - service.result:" + result);
 
 		// 登録後、再検索した値を取得
