@@ -5,11 +5,11 @@
 	<groupId>lumi</groupId>
 	<artifactId>noltodo</artifactId>
 	<packaging>war</packaging>
-	<version>1.2.0</version>
+	<version>1.3.1</version>
 	<properties>
 		<java.version>1.7</java.version>
-		<lumi.version>3.1.2</lumi.version>
-		<spring-security.version>4.0.0.RELEASE</spring-security.version>
+		<lumi.version>3.2.0</lumi.version>
+		<spring-security.version>4.0.1.RELEASE</spring-security.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -120,8 +120,8 @@
 			</resource>
 		</resources>
 	</build>
-	<name>lumi-blank</name>
-	<url>http://a-pz.jp/lumi</url>
+	<name>noltodo</name>
+	<url>http://a-pz.jp/noltodo</url>
 	<description>lumi - light unit and model intergration stacks.
 * Struts2 - Controller/ViewController
 * Spring3 - Model

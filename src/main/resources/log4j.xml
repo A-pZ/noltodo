@@ -98,6 +98,12 @@
 		<appender-ref ref="stdout" />
 		<appender-ref ref="file" />
 	</logger>
+	<!-- commons.beanutils -->
+	<logger name="org.apache.commons.beanutils.converters" additivity="false">
+		<level value="info" />
+		<appender-ref ref="stdout" />
+		<appender-ref ref="file" />
+	</logger>
 
 	<!-- Lumi -->
 	<!-- ActionBeanGenerator -->
