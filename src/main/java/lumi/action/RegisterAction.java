@@ -1,9 +1,13 @@
 package lumi.action;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 import lumi.service.RegisterService;
+import lumi.service.TagService;
 import lumi.vo.RegisterVO;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -53,11 +57,14 @@ public class RegisterAction extends LumiActionSupport {
 		service.execute(vo);
 
 		// 実行結果の取得
-		boolean result = service.isResult();
+		val result = service.isResult();
 		log.debug(" - service.result:" + result);
 
 		// 登録後、再検索した値を取得
 		vo = service.getRegisterVO();
+
+		// 1.3.0 タグ一覧の取得
+		tagList = tagService.getEffectiveTagList();
 
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
 		// この値は@Resultで指定したname値となる。
@@ -72,6 +79,13 @@ public class RegisterAction extends LumiActionSupport {
 	@Getter @Setter
 	private RegisterService service;
 
+	@Blocked
+	@Autowired
+	private TagService tagService;
+
 	@Getter @Setter
 	private RegisterVO vo;
+
+	@Getter @Setter
+	private List<String> tagList;
 }

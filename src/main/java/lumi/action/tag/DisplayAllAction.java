@@ -4,6 +4,7 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 import lumi.service.TagService;
 import lumi.vo.AccessControlDTO;
@@ -43,7 +44,7 @@ public class DisplayAllAction extends BaseTagAction {
 	@Action("displayAll")
 	public String displayAll() throws Exception {
 
-		AccessControlDTO dto = new AccessControlDTO();
+		val dto = new AccessControlDTO();
 		dto.setUsername(getLoginUsername());
 
 		// タグ検索結果

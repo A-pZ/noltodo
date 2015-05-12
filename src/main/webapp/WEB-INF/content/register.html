@@ -156,6 +156,11 @@ var renderTagarea = function() {
 
 		addTag(taskid,display);
 	});
+
+	// 有効タグのセレクトボックスを選択したときの処理
+	$("#effectTagList").bind("change" , function() {
+		$("#display").val($(this).val());
+	});
 };
 
 /**

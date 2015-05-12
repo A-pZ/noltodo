@@ -1,11 +1,10 @@
 package lumi.service;
 
-import java.security.MessageDigest;
-import java.sql.Timestamp;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 import lumi.dao.DAO;
+import lumi.misc.CredentialDigester;
 import lumi.vo.AccessControlDTO;
 import lumi.vo.TagVO;
 
@@ -18,7 +17,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * タグServiceクラス。
+ * タグServiceクラス。タグに関するデータアクセス。
  *
  * @author A-pZ ( Serendipity 3 ./ as sundome goes by. )
  *
@@ -116,22 +115,7 @@ public class TagService extends LumiService {
 	 * @throws Exception
 	 */
 	String generateTagId() throws Exception {
-
-		Timestamp ts = systemTimestampService.getSystemTimestamp();
-
-		MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-		sha256.update( ts.toString().getBytes());
-
-		byte[] digest = sha256.digest();
-
-		StringBuilder sb = new StringBuilder();
-		for ( int i=0;i<digest.length;i++ ) {
-			sb.append(String.format("%02x", digest[i]));
-		}
-
-		log.debug("- gen.:".concat(sb.toString()) );
-
-		return sb.toString();
+		return CredentialDigester.generate(systemTimestampService.getSystemTimestamp().toString());
 	}
 
 	/**
@@ -149,6 +133,20 @@ public class TagService extends LumiService {
 		String exist = (String)dao.selectObject(Query.existTag.name(), vo);
 
 		return ( StringUtils.isNotBlank(exist) ) ? generateNewTagId() : genId;
+	}
+
+	/**
+	 * 有効なタスクに登録されているタグ名称一覧を返す。
+	 * IDが不要な理由は、登録時も名称で登録→
+	 * @return
+	 * @throws Exception
+	 */
+	public List<String> getEffectiveTagList() throws Exception {
+		List<String> tagList = dao.select(Query.effectTagList.toString(), null);
+
+		tagList.add(0, "");
+
+		return tagList;
 	}
 
 	/**
@@ -172,7 +170,7 @@ public class TagService extends LumiService {
 	 *
 	 */
 	public enum Query {
-		getTagInTask , registerTag , registerTagForTask , removeTagForTask , existTag , tagAllList ,
+		getTagInTask , registerTag , registerTagForTask , removeTagForTask , existTag , tagAllList , effectTagList ,
 	}
 
 	@Autowired

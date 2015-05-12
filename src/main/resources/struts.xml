@@ -5,11 +5,6 @@
     "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-	<!-- 開発モードスイッチ -->
-	<!--
-	<constant name="struts.devMode" value="false" />
-	 -->
-
 	<!-- アプリケーション共通プロパティファイル名。拡張子は不要。 -->
 	<constant name="struts.custom.i18n.resources" value="commons,message,twitter" />
 

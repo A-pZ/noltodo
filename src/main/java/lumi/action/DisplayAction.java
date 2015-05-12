@@ -1,9 +1,12 @@
 package lumi.action;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lumi.service.SearchService;
+import lumi.service.TagService;
 import lumi.vo.SearchVO;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -58,6 +61,9 @@ public class DisplayAction extends LumiActionSupport {
 			log.debug(" - create blank.");
 		}
 
+		// 1.3.0 有効なタスクについているタグ名称一覧を取得する。
+		tagList = tagService.getEffectiveTagList();
+
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
 		// この値は@Resultで指定したname値となる。
 		return SUCCESS;
@@ -71,6 +77,13 @@ public class DisplayAction extends LumiActionSupport {
 	@Getter @Setter
 	private SearchService service;
 
+	@Blocked
+	@Autowired
+	private TagService tagService;
+
 	@Getter @Setter
 	private SearchVO vo;
+
+	@Getter @Setter
+	private List<String> tagList;
 }

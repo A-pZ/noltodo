@@ -413,4 +413,20 @@
 		AND
 			status = 'cl'
 	</delete>
+
+	<!-- 有効なタスクに登録されているタグ名称一覧 -->
+	<select id="effectTagList" parameterType="string" resultType="string">
+		SELECT
+			display
+		FROM
+			tag , task , tasktag
+		WHERE
+			task.id = tasktag.taskid
+		AND
+			tasktag.tagid = tag.tagid
+		GROUP BY
+			display
+		ORDER BY
+			taskid desc
+	</select>
 </mapper>
