@@ -1,8 +1,5 @@
 package lumi.service;
 
-import java.util.Arrays;
-import java.util.List;
-
 import lombok.extern.slf4j.Slf4j;
 import lumi.dao.DAO;
 
@@ -47,8 +44,7 @@ public class CloseDropService extends LumiService {
 		if ( count == 0 ) {
 			addWarnMessage("close.drop.failure");
 		} else {
-			List<Integer> message = Arrays.asList(count);
-			addInfoMessage("close.drop.success", message);
+			addInfoMessage("close.drop.success", String.valueOf(count));
 		}
 
 		return count;

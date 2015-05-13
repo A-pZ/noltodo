@@ -108,7 +108,7 @@ public class RegisterService extends LumiService {
 		// 削除
 		count = dao.delete(Query.deleteTask.name(), vo);
 
-		String[] msg = { String.valueOf(vo.getId())};
+		String msg = String.valueOf(vo.getId());
 		if ( count != 1 ) {
 			addErrorMessage("delete.failure" , msg);
 			setResult(false);

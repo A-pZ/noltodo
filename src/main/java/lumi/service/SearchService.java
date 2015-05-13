@@ -56,8 +56,8 @@ public class SearchService extends LumiService {
 			addWarnMessage("search.result.none");
 		} else {
 			// メッセージ
-			String[] msg = {String.valueOf(resultList.size())};
-			addInfoMessage("search.result", msg);
+			//String[] msg = {String.valueOf(resultList.size())};
+			addInfoMessage("search.result", String.valueOf(resultList.size()) );
 		}
 
 		Markdown4jProcessor processor = new Markdown4jProcessor();
