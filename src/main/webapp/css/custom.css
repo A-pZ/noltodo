@@ -33,6 +33,11 @@ body {
 	color: #D53;
 }
 
+/** 項目エラー背景色 */
+.field-error-background {
+	background-color: #fdd;
+}
+
 /** submit時のアンカー背景色 */
 .anchor-disabled {
 	color: #CCC;

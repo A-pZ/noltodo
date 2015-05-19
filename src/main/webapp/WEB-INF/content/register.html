@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org" lang="ja">
+	xmlns:th="http://www.thymeleaf.org" xmlns:sth="http://serendip.thymeleaf" lang="ja">
 
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"></meta>
@@ -298,52 +298,36 @@ var handlingValidationError = function(result) {
 					<div class="input-group">
 						<span class="input-group-addon inputaddon-width"> <span
 							class="glyphicon glyphicon-file"></span> タイトル
-						</span> <input name="vo.name" class="form-control col-lg" type="text"
-							placeholder="タイトルをどうぞ" value="" th:value="${vo.name}"
-							th:readonly="${vo.status == 'read'}" />
+						</span>
+						<input name="vo.name" class="form-control col-lg" type="text"
+							placeholder="タイトルをどうぞ" value="" sth:value="${vo.name}" sth:errorclass="field-error-background" th:readonly="${vo.status == 'read'}" />
 					</div>
 				</div>
 				<div class="col-md-8">
 					<span class="field-error" th:inline="text"
-						th:if="${not #lists.isEmpty(field['name'])}">[[${field['name']}]]</span>
+						th:if="${not #lists.isEmpty(field['vo.name'])}">[[${field['vo.name']}]]</span>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4">
 					<div class="input-group">
-						<span class="input-group-addon inputaddon-width"> <span
-							class="glyphicon glyphicon-user"></span> 職業・特化
-						</span> <input type="text" class="form-control" id="jobname"
-							name="vo.jobname" value="" th:value="${vo.jobname}"
-							readonly="readonly" /> <span class="input-group-btn">
+						<span class="input-group-addon inputaddon-width">
+							<span class="glyphicon glyphicon-user"></span> 職業・特化
+						</span>
+						<input type="text" class="form-control" id="jobname" name="vo.jobname" value="" sth:value="${vo.jobname}" sth:errorclass="field-error-background" readonly="readonly" />
+						<span class="input-group-btn">
 							<button id="departureList" type="button" class="btn btn-info"
 								data-toggle="modal" data-target="#myModal"
 								th:disabled="${vo.status == 'read'}">選択する</button>
-						</span> <input type="hidden" id="jobid" name="vo.jobid" value=""
-							th:value="${vo.jobid}" />
+						</span>
+						<input type="hidden" id="jobid" name="vo.jobid" value="" th:value="${vo.jobid}" />
 					</div>
 				</div>
 				<div class="col-md-8">
 					<span class="field-error" th:inline="text"
-						th:if="${not #lists.isEmpty(field['jobid'])}">[[${field['jobid']}]]</span>
+						th:if="${not #lists.isEmpty(field['vo.jobid'])}">[[${field['vo.jobid']}]]</span>
 				</div>
 			</div>
-
-			<!--
-			<div class="row">
-				<div class="col-md-12">
-					<div class="input-group">
-						<span class="input-group-addon inputaddon-width"> <span
-							class="glyphicon glyphicon-tags"></span> タグ
-						</span>
-						<span id="tagarea"> <span class="form-control">読み込み中…<img
-								src="./images/loadinfo.net.gif"
-								th:src="@{/images/loadinfo.net.gif}" /></span>
-						</span>
-					</div>
-				</div>
-			</div>
-			 -->
 
 			<div class="row">
 				<div class="col-md-4">
@@ -365,7 +349,7 @@ var handlingValidationError = function(result) {
 				</div>
 				<div class="col-md-8">
 					<span class="field-error" th:inline="text"
-						th:if="${not #lists.isEmpty(field['task'])}">[[${field['task']}]]</span>
+						th:if="${not #lists.isEmpty(field['vo.task'])}">[[${field['vo.task']}]]</span>
 				</div>
 			</div>
 
@@ -376,7 +360,7 @@ var handlingValidationError = function(result) {
 							class="glyphicon glyphicon-pencil"></span> 本文
 						</span>
 						<textarea id="content" name="vo.task" class="form-control"
-							th:text="${vo.task}" th:readonly="${vo.status == 'read'}"></textarea>
+							th:text="${vo.task}" sth:errorclass="field-error-background" th:readonly="${vo.status == 'read'}"></textarea>
 					</div>
 				</div>
 			</div>
@@ -388,7 +372,8 @@ var handlingValidationError = function(result) {
 							class="glyphicon glyphicon-calendar"></span> 期限
 						</span> <input type="text" class="form-control" id="limitdate"
 							name="vo.limitdate" value="2015/01/12"
-							th:value="${vo.limitdate != null} ? ${#dates.format(vo.limitdate,'yyyy/MM/dd')} :''"
+							sth:value="${vo.limitdate != null} ? ${#dates.format(vo.limitdate,'yyyy/MM/dd')} :''"
+							sth:errorclass="field-error-background"
 							placeholder="日付を選択してください" th:readonly="${vo.status == 'read'}" />
 					</div>
 				</div>
