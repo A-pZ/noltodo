@@ -6,7 +6,7 @@ package lumi.action.tag;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import lumi.action.LumiActionSupport;
 import lumi.exception.AccessControlException;
 import lumi.service.AccessControlService;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Controller;
  * @author A-pZ
  *
  */
-@Slf4j
+@Log4j2
 @Controller
 public class BaseTagAction extends LumiActionSupport {
 

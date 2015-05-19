@@ -3,7 +3,7 @@
  */
 package lumi.exception;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import lumi.action.LumiActionSupport;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -13,7 +13,7 @@ import com.opensymphony.xwork2.ActionContext;
  * @author A-pZ
  *
  */
-@Slf4j
+@Log4j2
 public class AccessControlException extends RuntimeException {
 
 	public AccessControlException() {

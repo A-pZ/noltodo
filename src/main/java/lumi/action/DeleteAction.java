@@ -3,7 +3,7 @@ package lumi.action;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import lumi.service.RegisterService;
 import lumi.vo.RegisterVO;
 
@@ -41,7 +41,7 @@ import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 )
 @Controller
 @Scope("prototype")
-@Slf4j
+@Log4j2
 public class DeleteAction extends LumiActionSupport {
 
 	/**

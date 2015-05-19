@@ -2,7 +2,7 @@ package lumi.service;
 
 import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import lumi.dao.DAO;
 import lumi.misc.CredentialDigester;
 import lumi.vo.AccessControlDTO;
@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 	    isolation = Isolation.DEFAULT,
 	    readOnly = false,
 	    rollbackFor = { RuntimeException.class, Exception.class })
-@Slf4j
+@Log4j2
 public class TagService extends LumiService {
 
 	/**

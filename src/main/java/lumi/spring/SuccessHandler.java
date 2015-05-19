@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import lumi.misc.SessionKeys;
 import lumi.service.AccountService;
 import lumi.vo.AccountVO;
@@ -24,7 +24,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
  * @author A-pZ
  *
  */
-@Slf4j
+@Log4j2
 public class SuccessHandler implements AuthenticationSuccessHandler {
 
 	/**

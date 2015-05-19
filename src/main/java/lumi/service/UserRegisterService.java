@@ -2,7 +2,7 @@ package lumi.service;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import lumi.dao.DAO;
 import lumi.vo.UserRegisterVO;
 import lumi.vo.UserVO;
@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Scope("prototype")
 @Service
-@Slf4j
+@Log4j2
 @Transactional(
 	    propagation = Propagation.REQUIRED,
 	    isolation = Isolation.DEFAULT,

@@ -6,7 +6,7 @@ package lumi.service;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Future;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Async;
@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Scope("prototype")
 @Service
-@Slf4j
+@Log4j2
 @Transactional(
 	    propagation = Propagation.REQUIRED,
 	    isolation = Isolation.DEFAULT,
