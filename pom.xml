@@ -8,7 +8,7 @@
 	<version>1.4.0-SNAPSHOT</version>
 	<properties>
 		<java.version>1.7</java.version>
-		<lumi.version>3.4.0</lumi.version>
+		<lumi.version>3.5.0</lumi.version>
 		<spring-security.version>4.0.1.RELEASE</spring-security.version>
 	</properties>
 	<repositories>
