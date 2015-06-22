@@ -5,7 +5,7 @@
 	<groupId>lumi</groupId>
 	<artifactId>noltodo</artifactId>
 	<packaging>war</packaging>
-	<version>1.4.0</version>
+	<version>1.5.0-SNAPSHOT</version>
 	<properties>
 		<java.version>1.7</java.version>
 		<lumi.version>3.5.0</lumi.version>
@@ -126,7 +126,7 @@
 	<url>http://a-pz.jp/lumi</url>
 	<description>lumi - light unit and model intergration stacks.
 * Struts2 - Controller/ViewController
-* Spring3 - Model
+* Spring4 - Model
 * Mybatis - DAO
 * AspectJ - Controller / Aspect
 * Log4j2 - Logging

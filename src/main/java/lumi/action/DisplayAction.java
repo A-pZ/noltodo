@@ -1,7 +1,5 @@
 package lumi.action;
 
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
@@ -62,7 +60,8 @@ public class DisplayAction extends LumiActionSupport {
 		}
 
 		// 1.3.0 有効なタスクについているタグ名称一覧を取得する。
-		tagList = tagService.getEffectiveTagList();
+		// 1.5.0 廃止して別ActionからTypeaheadのJSONを返すよう変更
+		//tagList = tagService.getEffectiveTagList();
 
 		// Result値。ActionSupportの定数値を返すか、別途定義した値を返すこと。
 		// この値は@Resultで指定したname値となる。
@@ -84,6 +83,8 @@ public class DisplayAction extends LumiActionSupport {
 	@Getter @Setter
 	private SearchVO vo;
 
+	/* 1.5.0 廃止して別ActionからTypeaheadのJSONを返すよう変更
 	@Getter @Setter
 	private List<String> tagList;
+	*/
 }
