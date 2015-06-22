@@ -34,9 +34,7 @@
 				<interceptor-ref name="checkbox" />
 				<interceptor-ref name="multiselect" />
 				<interceptor-ref name="actionMappingParams" />
-				<interceptor-ref name="params">
-					<param name="excludeParams">^action:.*,^method:.*</param>
-				</interceptor-ref>
+				<interceptor-ref name="params" />
 				<interceptor-ref name="conversionError" />
 				<interceptor-ref name="validation">
 					<param name="excludeMethods">input,back,cancel,browse</param>
@@ -52,5 +50,5 @@
 		<global-exception-mappings>
 			<exception-mapping result="exception" exception="java.lang.Exception"></exception-mapping>
 		</global-exception-mappings>
-		</package>
+	</package>
 </struts>

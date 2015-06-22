@@ -7,7 +7,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import lumi.dao.DAO;
 import lumi.misc.CredentialDigester;
 import lumi.vo.AuthChainDTO;
@@ -42,7 +42,7 @@ import twitter4j.User;
  */
 @Scope("prototype")
 @Service
-@Slf4j
+@Log4j2
 @Transactional(
 		propagation = Propagation.REQUIRED,
 		isolation = Isolation.DEFAULT,

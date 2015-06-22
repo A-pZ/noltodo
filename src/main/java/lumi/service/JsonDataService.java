@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import lumi.vo.MasterVO;
 import net.arnx.jsonic.JSON;
 import net.arnx.jsonic.TypeReference;
@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
  */
 @Scope("singleton")
 @Service("master")
-@Slf4j
+@Log4j2
 public class JsonDataService {
 	@PostConstruct
 	public void start() throws Exception {

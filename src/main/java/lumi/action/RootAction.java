@@ -1,6 +1,6 @@
 package lumi.action;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -25,7 +25,7 @@ import com.opensymphony.xwork2.ActionSupport;
 })
 @Controller
 @Scope("prototype")
-@Slf4j
+@Log4j2
 public class RootAction extends LumiActionSupport {
 
 	/**

@@ -16,23 +16,24 @@
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
-				<li><a href="list.html" th:href="@{/list}"><span class="glyphicon glyphicon-th-list"></span> タスク一覧</a></li>
-				<li><a href="register.html" th:href="@{/display}"><span class="glyphicon glyphicon-pencil"></span> タスク登録</a></li>
-				<li class="dropdown" th:if="${#objects.nullSafe(displayTaskManageListMenu,false)}">
+
+				<li class="dropdown" >
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 						<span class="glyphicon glyphicon-tasks"></span>
-						<span>タスク一括管理</span>
+						<span>タスク管理</span>
 						<span class="caret"></span>
 					</a>
 
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="#" id="allSearch"><span class="glyphicon glyphicon-share-alt"></span> 公開タスクの表示</a></li>
-						<li class="divider"></li>
-						<li><a href="#" id="closeDropConfirm"><span class="glyphicon glyphicon-remove-circle"></span> クローズしたタスクの消去</a></li>
+						<li><a href="list.html" th:href="@{/list}"><span class="glyphicon glyphicon-th-list"></span> タスク一覧</a></li>
+						<li th:if="${displayTaskManageListMenu}"><a href="register.html" th:href="@{/display}"><span class="glyphicon glyphicon-pencil"></span> タスク登録</a></li>
+						<li th:if="${displayTaskManageListMenu}"><a href="#" id="allSearch"><span class="glyphicon glyphicon-share-alt"></span> 公開タスクの表示</a></li>
+						<li class="divider" th:if="${displayTaskManageListMenu}"></li>
+						<li th:if="${displayTaskManageListMenu}"><a href="#" id="closeDropConfirm"><span class="glyphicon glyphicon-remove-circle"></span> クローズしたタスクの消去</a></li>
 					</ul>
 				</li>
 			</ul>
-			<ul class="nav navbar-nav pull-right" >
+			<ul class="nav navbar-nav navbar-right" >
 				<li class="dropdown" th:if="${session.ACCOUNT} != null">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" >
 						<span class="glyphicon glyphicon-user"></span>
@@ -50,24 +51,19 @@
 						<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="http://wiki.ohmynobu.net/nol/" target="_blank">信長の野望オンライン寄合所（本陣）</a></li>
+						<li><a href="http://www.gamecity.ne.jp/nol/" target="_blank">『信長の野望 Online』Official Site</a></li>
 						<li class="divider"></li>
+						<li><a href="http://wiki.ohmynobu.net/nol/" target="_blank">信長の野望オンライン寄合所（本陣）</a></li>
 						<li><a href="http://a-pz.jp/fj2/r/" target="_blank">家臣団能力計算機</a></li>
 						<li class="divider"></li>
-						<li><a href="https://github.com/A-pZ/noltodo/"  target="_blank">github/A-pZ/noltodo</a></li>
-					</ul>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Technologies
-						<span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu" role="menu">
 						<li><a href="http://struts.apache.org/" target="_blank">Apache Struts</a></li>
 						<li><a href="http://spring.io/" target="_blank">Spring Project</a></li>
 						<li><a href="http://mybatis.github.io/mybatis-3/ja/" target="_blank">Mybatis</a></li>
 						<li><a href="http://jquery.com/" target="_blank">jQuery</a></li>
 						<li><a href="http://getbootstrap.com/" target="_blank">Bootstrap</a></li>
 						<li><a href="http://www.thymeleaf.org/" target="_blank">Thymeleaf</a></li>
+						<li class="divider"></li>
+						<li><a href="https://github.com/A-pZ/noltodo/"  target="_blank">github/A-pZ/noltodo</a></li>
 					</ul>
 				</li>
 			</ul>

@@ -5,11 +5,11 @@
 	<groupId>lumi</groupId>
 	<artifactId>noltodo</artifactId>
 	<packaging>war</packaging>
-	<version>1.3.0-SNAPSHOT</version>
+	<version>1.4.0</version>
 	<properties>
 		<java.version>1.7</java.version>
-		<lumi.version>3.2.0</lumi.version>
-		<spring-security.version>4.0.0.RELEASE</spring-security.version>
+		<lumi.version>3.5.0</lumi.version>
+		<spring-security.version>4.0.1.RELEASE</spring-security.version>
 	</properties>
 	<repositories>
 		<repository>
@@ -133,5 +133,5 @@
 * thymeleaf - View
 * lombok
 
-'lumi' is based on CoC,Struts2-Convention , individual implement classes are annotation base configulation , common configulation was xml , that means application configulation split Application behavior and Implementation.</description>
+'lumi' is based on CoC,Struts2-Convention , individual implement classes are annotation base configulation , common configulation was xml , that means application configulation split Application behavior and Implementation.																																															</description>
 </project>

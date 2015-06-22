@@ -1,9 +1,6 @@
 package lumi.service;
 
-import java.util.Arrays;
-import java.util.List;
-
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import lumi.dao.DAO;
 
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Scope("prototype")
 @Service
-@Slf4j
+@Log4j2
 @Transactional(
 	    propagation = Propagation.REQUIRED,
 	    isolation = Isolation.DEFAULT,
@@ -47,8 +44,7 @@ public class CloseDropService extends LumiService {
 		if ( count == 0 ) {
 			addWarnMessage("close.drop.failure");
 		} else {
-			List<Integer> message = Arrays.asList(count);
-			addInfoMessage("close.drop.success", message);
+			addInfoMessage("close.drop.success", String.valueOf(count));
 		}
 
 		return count;

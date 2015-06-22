@@ -2,7 +2,7 @@ package lumi.action.signup;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import lumi.action.LumiActionSupport;
 import lumi.vo.UserVO;
 
@@ -29,7 +29,7 @@ import com.opensymphony.xwork2.ActionSupport;
 })
 @Controller
 @Scope("prototype")
-@Slf4j
+@Log4j2
 public class DisplayAction extends LumiActionSupport {
 
 	/**

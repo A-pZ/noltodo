@@ -3,7 +3,7 @@
  */
 package lumi.service;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Scope("prototype")
 @Service
-@Slf4j
+@Log4j2
 @Transactional(
 	    propagation = Propagation.REQUIRED,
 	    isolation = Isolation.DEFAULT,

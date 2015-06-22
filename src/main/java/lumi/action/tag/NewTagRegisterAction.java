@@ -2,7 +2,7 @@ package lumi.action.tag;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import lumi.service.TagService;
 import lumi.vo.RegisterTagVO;
 
@@ -38,7 +38,7 @@ import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 })
 @Controller
 @Scope("prototype")
-@Slf4j
+@Log4j2
 @Validations(
 	visitorFields={
 		@VisitorFieldValidator(appendPrefix=false,fieldName="vo")

@@ -1,6 +1,6 @@
 package lumi.action.login;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import lumi.action.LumiActionSupport;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -27,7 +27,7 @@ import com.opensymphony.xwork2.Preparable;
 })
 @Controller
 @Scope("prototype")
-@Slf4j
+@Log4j2
 public class InvalidSessionAction extends LumiActionSupport implements Preparable {
 
 
