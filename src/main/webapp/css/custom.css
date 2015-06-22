@@ -81,3 +81,23 @@ body {
 blockquote {
 	border-color: #8B8DA6;
 }
+
+/**
+ * typeahead ‚ÌƒXƒ^ƒCƒ‹
+ */
+.tt-suggestion {
+	padding: 3px 10px;
+	// font-size: 16px;
+	line-height: 20px;
+}
+
+.tt-menu {
+	width: 197px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: #eef;
+}
+
+.tt-cursor {
+	color: #a33;
+}
