@@ -36,6 +36,7 @@
 	th:src="@{/js/bootstrap-datepicker.js}"></script>
 <script src="../../js/locales/bootstrap-datepicker.ja.js"
 	th:src="@{/js/locales/bootstrap-datepicker.ja.js}"></script>
+<script src="../../js/typeahead.bundle.min.js" th:src="@{/js/typeahead.bundle.min.js}"></script>
 <script src="../../js/common.js" th:src="@{/js/common.js}"></script>
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -49,12 +50,24 @@
 /** TypeAhead設定 */
 var typeaheadOptions = {
 	highlight: true ,
-	minLength: 0,
+	minLength: 1,
 	hint: true
 };
 
-$(document).ready(function() {
+/**
+ * TypeAheadを使ったタグのオートコンプリート。
+ */
+var states = new Bloodhound({
+	initialize: true,
+	datumTokenizer: Bloodhound.tokenizers.whitespace,
+	queryTokenizer: Bloodhound.tokenizers.whitespace,
+	identify: function(obj) {
+		return obj;
+	} ,
+	remote: /*[[ @{/tag/suggest} ]]*/ 'data.json'
+});
 
+$(document).ready(function() {
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$(document).ajaxSend(function(e, xhr, options) {
@@ -123,6 +136,13 @@ $(document).ready(function() {
 	tagarea.ready(function() {
 		renderTagarea();
 	});
+
+	return $('.typeahead').typeahead(typeaheadOptions,
+		{
+		  name: 'my-dataset',
+		  source: states ,
+		  limit: 15
+		});
 });
 
 var goSubmit = function(url) {
@@ -253,29 +273,6 @@ var handlingValidationError = function(result) {
 	});
 };
 
-/**
- * TypeAheadを使ったタグのオートコンプリート。
- */
-var states = new Bloodhound({
-	datumTokenizer: Bloodhound.tokenizers.whitespace,
-	queryTokenizer: Bloodhound.tokenizers.whitespace,
-	identify: function(obj) {
-		return obj;
-	} ,
-	//local:datasets
-	prefetch: /*[[@{/tag/suggest}]]*/ '.'
-});
-
-/**
- * TypeAheadで初期表示しておく設定。
- */
-var defaultSuggest = function(query,sync) {
-	if ( query === '' ) {
-		sync(states.get('週間依頼','俸禄','楽市','神秘','改装具','装備作成'));
-	} else {
-		states.search(query,sync);
-	}
-}
 
 /*]]>*/
 </script>

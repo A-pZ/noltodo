@@ -48,6 +48,7 @@ public class SuggestTagAction extends BaseTagAction {
 
 	@Blocked
 	@Autowired
+	@Getter @Setter
 	private TagService tagService;
 
 	@Getter @Setter
