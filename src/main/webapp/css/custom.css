@@ -113,3 +113,7 @@ blockquote {
   max-height: 150px;
   overflow-y: auto;
 }
+
+.retain-txtbox {
+	text-align: center;
+}

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sth="http://serendip.lumi"
+	lang="ja">
+
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type"></meta>
+<meta charset="utf-8"></meta>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<meta name="description" content=""></meta>
+<meta name="author" content=""></meta>
+
+<title>家臣団能力計算機 v2.0.0</title>
+<link href="./css/bootstrap.min.css" rel="stylesheet"
+	th:href="@{/css/bootstrap.min.css}" />
+<link href="./css/bootstrap-theme.min.css" rel="stylesheet"
+	th:href="@{/css/bootstrap-theme.min.css}" />
+<link href="./css/custom.css" rel="stylesheet"
+	th:href="@{/css/custom.css}" />
+<script src="./js/jquery-1.11.1.min.js"
+	th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script src="./js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<script src="./js/jquery.kashin.js" th:src="@{/js/jquery.kashin.js}"></script>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+$(document).ready( function() {
+	changejob();
+	recalcStatus();
+
+	$("#selectjob").change( function() {
+		changejob();
+		recalcStatus();
+	});
+
+	$("#recalc").click( function() {
+		getInitialStatus();
+
+		job = $("#selectjob").val();
+		recalcStatus();
+	});
+});
+
+/**
+ * ステータスのトータル再計算。複数関数をまとめる。
+ */
+var recalcStatus = function() {
+	setLevel();
+	statuscalc();
+	magicelement();
+	sumStatus();
+	trainCalc();
+}
+
+/**
+ * 初期振りとレベルの値を取得。
+ */
+var getInitialStatus = function() {
+	//lv = $("#lv").val();
+	i_str = parseInt($("#i_str").val());
+	i_vit = parseInt($("#i_vit").val());
+	i_agl = parseInt($("#i_agl").val());
+	i_itl = parseInt($("#i_itl").val());
+	i_cha = parseInt($("#i_cha").val());
+}
+
+var changejob = function () {
+	job = $("#selectjob").val();
+	jobselect();
+	$("#i_str").val(i_str);
+	$("#i_vit").val(i_vit);
+	$("#i_agl").val(i_agl);
+	$("#i_itl").val(i_itl);
+	$("#i_cha").val(i_cha);
+	$("#lv").val(lv);
+	sumStatus();
+};
+
+var sumStatus = function() {
+	$("#str").val( parseInt(str));
+	$("#vit").val( parseInt(vit));
+	$("#agl").val( parseInt(agl));
+	$("#itl").val( parseInt(itl));
+	$("#cha").val( parseInt(cha));
+	$("#earth").val( parseInt(earth));
+	$("#water").val( parseInt(water));
+	$("#fire").val( parseInt(fire));
+	$("#wind").val( parseInt(wind));
+	$("#hp").val( hitpoint() );
+	$("#mp").val( mentalpoint() );
+};
+
+var setLevel = function() {
+	var str_add = parseInt( $("#str_add").val());
+	var vit_add = parseInt( $("#vit_add").val());
+	var agl_add = parseInt( $("#agl_add").val());
+	var itl_add = parseInt( $("#itl_add").val());
+	var cha_add = parseInt( $("#cha_add").val());
+	var earth_add = parseInt( $("#earth_add").val());
+	var water_add = parseInt( $("#water_add").val());
+	var fire_add = parseInt( $("#fire_add").val());
+	var wind_add = parseInt( $("#wind_add").val());
+	var hp_add = parseInt( $("#hp_add").val());
+	var mp_add =parseInt( $("#mp_add").val());
+
+	var trainCount = str_add + vit_add + agl_add + itl_add + cha_add + earth_add + water_add + fire_add + wind_add + hp_add + mp_add;
+	lv = 10 + parseInt(trainCount / 3);
+
+	if ( lv >= lv_max ) {
+		lv = lv_max;
+	}
+	$("#lv").val(lv);
+}
+
+var trainCalc = function() {
+	var str = $("#str").val();
+	var vit = $("#vit").val();
+	var agl = $("#agl").val();
+	var itl = $("#itl").val();
+	var cha = $("#cha").val();
+	var earth = $("#earth").val();
+	var water = $("#water").val();
+	var fire = $("#fire").val();
+	var wind = $("#wind").val();
+	var hp = $("#hp").val();
+	var mp = $("#mp").val();
+
+	i_str = parseInt($("#i_str").val());
+	i_vit = parseInt($("#i_vit").val());
+	i_agl = parseInt($("#i_agl").val());
+	i_itl = parseInt($("#i_itl").val());
+	i_cha = parseInt($("#i_cha").val());
+
+	var str_add = parseInt( $("#str_add").val());
+	var vit_add = parseInt( $("#vit_add").val());
+	var agl_add = parseInt( $("#agl_add").val());
+	var itl_add = parseInt( $("#itl_add").val());
+	var cha_add = parseInt( $("#cha_add").val());
+	var earth_add = parseInt( $("#earth_add").val());
+	var water_add = parseInt( $("#water_add").val());
+	var fire_add = parseInt( $("#fire_add").val());
+	var wind_add = parseInt( $("#wind_add").val());
+	var hp_add = parseInt( $("#hp_add").val());
+	var mp_add =parseInt( $("#mp_add").val());
+
+	var trainCount = str_add + vit_add + agl_add + itl_add + cha_add + earth_add + water_add + fire_add + wind_add + hp_add + mp_add;
+	var maxTrainCount = ( lv_max - 10 ) *3;
+	lv = parseInt( $("#lv").val());
+
+	message = "訓練を行うステータスのボタンを押して訓練回数を指定してください";
+	i_all = i_str + i_vit + i_agl + i_itl + i_cha;
+	if ( i_all < 30 ) {
+		message ="初期能力に " + (30 - i_all) + "ポイント追加できます";
+	} else if ( i_all > 30 ) {
+		message ="初期能力が " + (i_all-30) + "ポイント超過しています";
+	} else {
+
+	}
+
+	if ( trainCount > maxTrainCount ) {
+		message = "訓練回数の上限を超えています。現在：" + trainCount + "/最大合計：" + maxTrainCount;
+	}
+
+	$("#message").text(message);
+	rate = $("#trainingRate").val();
+
+	str_ex = parseInt( $("#str_add").val() * ( 5 + rate*0.25) ) + parseInt(str);
+	vit_ex = parseInt( $("#vit_add").val() * ( 5 + rate*0.25) ) + parseInt(vit);
+	agl_ex = parseInt( $("#agl_add").val() * ( 5 + rate*0.25) ) + parseInt(agl);
+	itl_ex = parseInt( $("#itl_add").val() * ( 5 + rate*0.25) ) + parseInt(itl);
+	cha_ex = parseInt( $("#cha_add").val() * ( 5 + rate*0.25) ) + parseInt(cha);
+	earth_ex = parseInt( $("#earth_add").val() * ( 5 + rate*0.25) ) + parseInt(earth);
+	water_ex = parseInt( $("#water_add").val() * ( 5 + rate*0.25) ) + parseInt(water);
+	fire_ex = parseInt( $("#fire_add").val() * ( 5 + rate*0.25) ) + parseInt(fire);
+	wind_ex = parseInt( $("#wind_add").val() * ( 5 + rate*0.25) ) + parseInt(wind);
+	hp_ex = parseInt( $("#hp_add").val() * ( 60 + rate*2.5) ) + parseInt(hp);
+	mp_ex = parseInt( $("#mp_add").val() * ( 60 + rate*2.5) ) + parseInt(mp);
+
+	$("#str_ex").val(str_ex);
+	$("#vit_ex").val(vit_ex);
+	$("#agl_ex").val(agl_ex);
+	$("#itl_ex").val(itl_ex);
+	$("#cha_ex").val(cha_ex);
+	$("#earth_ex").val(earth_ex);
+	$("#water_ex").val(water_ex);
+	$("#fire_ex").val(fire_ex);
+	$("#wind_ex").val(wind_ex);
+	$("#hp_ex").val(hp_ex);
+	$("#mp_ex").val(mp_ex);
+};
+
+var pushStatus = function(target) {
+	buttonId = target.id;
+	position_status_name = buttonId.indexOf("_");
+	position_status_method = buttonId.indexOf("_" , position_status_name +1);
+	status_name = buttonId.substring(0,position_status_name);
+	status_method = buttonId.substring(position_status_name+1 , position_status_method);
+	status_value = buttonId.substring(position_status_method+1);
+
+	// 計算方法を決定
+	status_sign = ( status_method == 'minus') ? -1 : 1;
+	status_add_element = status_name + "_add";
+
+	status_add_value = parseInt($("#"+status_add_element ).val());
+	status_add_value += status_sign * status_value;
+
+	if ( status_add_value < status_min ) {
+		status_add_value = status_min;
+	} else if (status_add_value > status_max) {
+		status_add_value = status_max;
+	}
+	$("#"+status_add_element ).val(status_add_value);
+
+	getInitialStatus();
+	job = $("#selectjob").val();
+	recalcStatus();
+};
+
+var baseStatus=function(target) {
+	buttonId = target.id;
+	status_button_name = buttonId.substring(2);
+	position_status_method = status_button_name.indexOf("_");
+	// i_str_add
+	status_method = status_button_name.substring(position_status_method+1);
+	status_sign = ( status_method == 'minus') ? -1 : 1;
+
+	status_add_element = "i_" +buttonId.substring(2,position_status_method +2);
+	status_add_value = parseInt($("#"+status_add_element ).val());
+	status_add_value += status_sign;
+
+	if ( status_add_value < base_status_min ) {
+		status_add_value = base_status_min;
+	} else if (status_add_value > base_status_max) {
+		status_add_value = base_status_max;
+	}
+	$("#"+status_add_element ).val(status_add_value);
+	getInitialStatus();
+	job = $("#selectjob").val();
+	recalcStatus();
+};
+/*]]>*/
+</script>
+<style type="text/css">
+body {
+	font-family: meiryo, Osaka, tahoma;
+	padding-top: 60px;
+	/* 60px to make the container go all the way to the bottom of the topbar */
+}
+.errorLabel {
+	color: #70BB70;
+}
+
+.yform {
+	width: 800px;
+}
+.txt {
+	width: 230px;
+}
+.type-text {
+	font-family: meiryo , Osaka , tahoma;
+	font-size:14px;
+}
+.bluestrong {
+	color: #55D;
+	font-weight: 700;
+}
+.missionLabel {
+	witdh : 10em;
+	float : left;
+}
+.missionPulldown {
+	clear : left;
+}
+.ibox {
+	height : 28px;
+}
+.status {
+	width : 35px;
+	text-align : right;
+}
+
+.trainingRate {
+	width : 140px;
+}
+
+.status_ex {
+	background-color : #DDDDDD;
+	color : #8888EE;
+
+}
+.job {
+	width : 100px;
+}
+
+.tile-smallbox-font {
+	padding-left : 5px;
+	color : #222;
+}
+
+.label-after-train {
+	background-color : #67E !important;
+	color : #FFF !important;
+	text-shadow : 0 0 0 #FFF !important;
+}
+
+.label-base-status {
+	background-color : #5C5 !important;
+	color : #FFF !important;
+	text-shadow : 0 0 0 #FFF !important;
+}
+
+.input-append .add-on .label-after-train {
+	background-color : #9D9;
+}
+
+.ui-slider .ui-slider-handle {
+	position: absolute; z-index: 2; cursor: default; height: 32px;
+}
+
+.status_box {
+	display: inline-block;
+}
+
+.status_slider {
+	width: 70px; margin: 1px; height:13px; padding:6px;
+}
+
+.train_value {
+	width: 33px; vertical-align: middle; text-align: right; padding:3px;
+}
+
+.job_later {
+	color : #ccc;
+}
+
+.status_label {
+	width: 40px; text-align: right; display: inline-block; padding:3px;
+}
+
+.status_label_hp {
+	background-color : #EFE;
+}
+
+.status_label_sp {
+	background-color : #EEF;
+}
+
+.status_label_st {
+	background-color : #FFE;
+}
+
+.status_label_el {
+	background-color : #DFF;
+}
+</style>
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container" th:replace="templates/header :: header">
+			<!-- この中身はtemplates/headerのheaderスニペットに切り替わる -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Bootstrap theme</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Home</a></li>
+					<li><a href="#about">About</a></li>
+					<li><a href="#contact">Contact</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Action</a></li>
+							<li><a href="#">Another action</a></li>
+							<li><a href="#">Something else here</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-header">Nav header</li>
+							<li><a href="#">Separated link</a></li>
+							<li><a href="#">One more separated link</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+
+<div class="container" role="main">
+	<div th:replace="templates/messages :: messages">
+
+	</div>
+
+	<div class="row">
+			<div class="col-md-4">
+				<div class="alert alert-success">
+					<form class="form-inline" id="levelForm">
+					<span class="glyphicon glyphicon-tower" aria-hidden="true"></span>
+					<span class="sr-only">職業:</span>職 業
+					<select id="selectjob" class="form-control">
+						<option value="0">侍</option>
+						<option value="1">陰陽</option>
+						<option value="2">忍者</option>
+						<option value="3">僧</option>
+						<option value="4">神職</option>
+						<option value="5">鍛冶屋</option>
+						<option value="6">薬師</option>
+						<option value="7">傾奇者</option>
+					</select>
+					<span>レベル</span>
+					<input type="text" name="lv" id="lv" size="5" maxlength="5" class="form-control retain-txtbox" readonly="readonly" title="レベルは自動計算されます"/>
+
+					</form>
+				</div>
+
+				<form class="form-inline">
+					<div class="form-group">
+					<label for="trainingRate">訓練時の上昇率</label>
+					<select id="trainingRate" class="trainingRate form-control">
+						<option value="0">+5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+60</option>
+						<option value="1">+5.25&nbsp;+62.5</option>
+						<option value="2">+5.5&nbsp;&nbsp;&nbsp;+65</option>
+						<option value="3">+5.75&nbsp;+67.5</option>
+						<option value="4">+6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+70</option>
+						<option value="5">+6.25&nbsp;+72.5</option>
+						<option value="6">+6.5&nbsp;&nbsp;&nbsp;+75</option>
+						<option value="7">+6.75&nbsp;&nbsp;+77.5</option>
+					</select>
+					</div>
+				</form>
+				<hr />
+
+				<div class="alert alert-success">
+					<span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span>初期ステータス
+					<input type="button" class="btn btn-success" name="recalc" id="recalc" value="再計算" />
+				</div>
+
+				<form class="form-inline" id="baseForm">
+					<div class="form-group">
+						<label for="i_str">腕力</label>
+						<button class="btn btn-default" type="button" name="i_str_minus" id="i_str_minus" onclick="baseStatus(this)">&lt;</button>
+						<input type="text" name="i_str" id="i_str" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0" />
+						<button class="btn btn-default" type="button" name="i_str_plus" id="i_str_plus" onclick="baseStatus(this)">&gt;</button>
+					</div>
+					<br />
+					<div class="form-group">
+						<label for="i_vit">耐久</label>
+						<button class="btn btn-default" type="button" name="i_vit_minus" id="i_vit_minus" onclick="baseStatus(this)">&lt;</button>
+						<input type="text" name="i_vit" id="i_vit" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0" />
+						<button class="btn btn-default" type="button" name="i_vit_plus" id="i_vit_plus" onclick="baseStatus(this)">&gt;</button>
+					</div>
+					<br />
+					<div class="form-group">
+						<label for="i_agl">器用</label>
+						<button class="btn btn-default" type="button" name="i_agl_minus" id="i_agl_minus" onclick="baseStatus(this)">&lt;</button>
+						<input type="text" name="i_agl" id="i_agl" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0" />
+						<button class="btn btn-default" type="button" name="i_agl_plus" id="i_agl_plus" onclick="baseStatus(this)">&gt;</button>
+					</div>
+					<br />
+					<div class="form-group">
+						<label for="i_itl">知力</label>
+						<button class="btn btn-default" type="button" name="i_itl_minus" id="i_itl_minus" onclick="baseStatus(this)">&lt;</button>
+						<input type="text" name="i_itl" id="i_itl" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0" />
+						<button class="btn btn-default" type="button" name="i_itl_plus" id="i_itl_plus" onclick="baseStatus(this)">&gt;</button>
+					</div>
+					<br />
+					<div class="form-group">
+						<label for="i_cha">魅力</label>
+						<button class="btn btn-default" type="button" name="i_cha_minus" id="i_cha_minus" onclick="baseStatus(this)">&lt;</button>
+						<input type="text" name="i_cha" id="i_cha" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0" />
+						<button class="btn btn-default" type="button" name="i_cha_plus" id="i_cha_plus" onclick="baseStatus(this)">&gt;</button>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-md-8">
+				<div id="message" class="alert alert-info"></div>
+
+				<form class="form-inline" id="trainForm">
+					<!-- 生命 -->
+					<div class="form-group">
+						<span>生命</span>
+						<input type="text" name="hp" id="hp" size="5" maxlength="5" class="form-control input-sm retain-txtbox" />
+
+						<button class="btn btn-default" type="button" name="hp_minus_10" id="hp_minus_10" onclick="pushStatus(this)">&laquo;</button>
+						<button class="btn btn-default" type="button" name="hp_minus_1" id="hp_minus_1" onclick="pushStatus(this)">&lt;</button>
+						<input type="text" name="hp_add" id="hp_add" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0" />
+						<button class="btn btn-default" type="button" name="hp_plus_1" id="hp_plus_1" onclick="pushStatus(this)">&gt;</button>
+						<button class="btn btn-default" type="button" name="hp_plus_10" id="hp_plus_10" onclick="pushStatus(this)">&raquo;</button>
+
+						<span class="label label-default">訓練後</span>
+						<span>生命</span>
+						<input type="text" name="hp_ex" id="hp_ex" size="5" maxlength="5" class="form-control input-sm retain-txtbox" value="0"/>
+					</div>
+
+					<!-- 気合 -->
+					<div class="form-group">
+						<span>気合</span>
+						<input type="text" name="mp" id="mp" size="5" maxlength="5" class="form-control input-sm retain-txtbox" />
+
+						<button class="btn btn-default" type="button" name="mp_minus_10" id="mp_minus_10" onclick="pushStatus(this)">&laquo;</button>
+						<button class="btn btn-default" type="button" name="mp_minus_1" id="mp_minus_1" onclick="pushStatus(this)">&lt;</button>
+						<input type="text" name="mp_add" id="mp_add" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0" />
+						<button class="btn btn-default" type="button" name="mp_plus_1" id="mp_plus_1" onclick="pushStatus(this)">&gt;</button>
+						<button class="btn btn-default" type="button" name="mp_plus_10" id="mp_plus_10" onclick="pushStatus(this)">&raquo;</button>
+
+						<span class="label label-default">訓練後</span>
+						<span>気合</span>
+						<input type="text" name="mp_ex" id="mp_ex" size="5" maxlength="5" class="form-control input-sm retain-txtbox" value="0"/>
+					</div>
+
+					<!-- 腕力 -->
+					<div class="form-group">
+						<span>腕力</span>
+						<input type="text" name="str" id="str" size="5" maxlength="5" class="form-control input-sm retain-txtbox" />
+
+						<button class="btn btn-default" type="button" name="str_minus_10" id="str_minus_10" onclick="pushStatus(this)">&laquo;</button>
+						<button class="btn btn-default" type="button" name="str_minus_1" id="str_minus_1" onclick="pushStatus(this)">&lt;</button>
+						<input type="text" name="str_add" id="str_add" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0" />
+						<button class="btn btn-default" type="button" name="str_plus_1" id="str_plus_1" onclick="pushStatus(this)">&gt;</button>
+						<button class="btn btn-default" type="button" name="str_plus_10" id="str_plus_10" onclick="pushStatus(this)">&raquo;</button>
+
+						<span class="label label-default">訓練後</span>
+						<span>腕力</span>
+						<input type="text" name="str_ex" id="str_ex" size="5" maxlength="5" class="form-control input-sm retain-txtbox" value="0"/>
+					</div>
+
+					<!-- 耐久 -->
+					<div class="form-group">
+						<span>耐久</span>
+						<input type="text" name="vit" id="vit" size="5" maxlength="5" class="form-control input-sm retain-txtbox" />
+
+						<button class="btn btn-default" type="button" name="vit_minus_10" id="vit_minus_10" onclick="pushStatus(this)">&laquo;</button>
+						<button class="btn btn-default" type="button" name="vit_minus_1" id="vit_minus_1" onclick="pushStatus(this)">&lt;</button>
+						<input type="text" name="vit_add" id="vit_add" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0" />
+						<button class="btn btn-default" type="button" name="vit_plus_1" id="vit_plus_1" onclick="pushStatus(this)">&gt;</button>
+						<button class="btn btn-default" type="button" name="vit_plus_10" id="vit_plus_10" onclick="pushStatus(this)">&raquo;</button>
+
+						<span class="label label-default">訓練後</span>
+						<span>耐久</span>
+						<input type="text" name="vit_ex" id="vit_ex" size="5" maxlength="5" class="form-control input-sm retain-txtbox" value="0"/>
+					</div>
+
+					<!-- 器用 -->
+					<div class="form-group">
+						<span>器用</span>
+						<input type="text" name="agl" id="agl" size="5" maxlength="5" class="form-control input-sm retain-txtbox" />
+
+						<button class="btn btn-default" type="button" name="agl_minus_10" id="agl_minus_10" onclick="pushStatus(this)">&laquo;</button>
+						<button class="btn btn-default" type="button" name="agl_minus_1" id="agl_minus_1" onclick="pushStatus(this)">&lt;</button>
+						<input type="text" name="agl_add" id="agl_add" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0"/>
+						<button class="btn btn-default" type="button" name="agl_plus_1" id="agl_plus_1" onclick="pushStatus(this)">&gt;</button>
+						<button class="btn btn-default" type="button" name="agl_plus_10" id="agl_plus_10" onclick="pushStatus(this)">&raquo;</button>
+
+						<span class="label label-default">訓練後</span>
+						<span>器用</span>
+						<input type="text" name="agl_ex" id="agl_ex" size="5" maxlength="5" class="form-control input-sm retain-txtbox" value="0"/>
+					</div>
+
+					<!-- 知力 -->
+					<div class="form-group">
+						<span>知力</span>
+						<input type="text" name="itl" id="itl" size="5" maxlength="5" class="form-control input-sm retain-txtbox" />
+
+						<button class="btn btn-default" type="button" name="itl_minus_10" id="itl_minus_10" onclick="pushStatus(this)">&laquo;</button>
+						<button class="btn btn-default" type="button" name="itl_minus_1" id="itl_minus_1" onclick="pushStatus(this)">&lt;</button>
+						<input type="text" name="itl_add" id="itl_add" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0" />
+						<button class="btn btn-default" type="button" name="itl_plus_1" id="itl_plus_1" onclick="pushStatus(this)">&gt;</button>
+						<button class="btn btn-default" type="button" name="itl_plus_10" id="itl_plus_10" onclick="pushStatus(this)">&raquo;</button>
+
+						<span class="label label-default">訓練後</span>
+						<span>知力</span>
+						<input type="text" name="itl_ex" id="itl_ex" size="5" maxlength="5" class="form-control input-sm retain-txtbox" value="0"/>
+					</div>
+
+					<!-- 魅力 -->
+					<div class="form-group">
+						<span>魅力</span>
+						<input type="text" name="cha" id="cha" size="5" maxlength="5" class="form-control input-sm retain-txtbox" />
+
+						<button class="btn btn-default" type="button" name="cha_minus_10" id="cha_minus_10" onclick="pushStatus(this)">&laquo;</button>
+						<button class="btn btn-default" type="button" name="cha_minus_1" id="cha_minus_1" onclick="pushStatus(this)">&lt;</button>
+						<input type="text" name="cha_add" id="cha_add" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0" />
+						<button class="btn btn-default" type="button" name="cha_plus_1" id="cha_plus_1" onclick="pushStatus(this)">&gt;</button>
+						<button class="btn btn-default" type="button" name="cha_plus_10" id="cha_plus_10" onclick="pushStatus(this)">&raquo;</button>
+
+						<span class="label label-default">訓練後</span>
+						<span>魅力</span>
+						<input type="text" name="cha_ex" id="cha_ex" size="5" maxlength="5" class="form-control input-sm retain-txtbox" value="0"/>
+					</div>
+
+					<!-- 土 -->
+					<div class="form-group">
+						<span>土属</span>
+						<input type="text" name="earth" id="earth" size="5" maxlength="5" class="form-control input-sm retain-txtbox" />
+
+						<button class="btn btn-default" type="button" name="earth_minus_10" id="earth_minus_10" onclick="pushStatus(this)">&laquo;</button>
+						<button class="btn btn-default" type="button" name="earth_minus_1" id="earth_minus_1" onclick="pushStatus(this)">&lt;</button>
+						<input type="text" name="earth_add" id="earth_add" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0"/>
+						<button class="btn btn-default" type="button" name="earth_plus_1" id="earth_plus_1" onclick="pushStatus(this)">&gt;</button>
+						<button class="btn btn-default" type="button" name="earth_plus_10" id="earth_plus_10" onclick="pushStatus(this)">&raquo;</button>
+
+						<span class="label label-default">訓練後</span>
+						<span>土属 </span>
+						<input type="text" name="earth_ex" id="earth_ex" size="5" maxlength="5" class="form-control input-sm retain-txtbox" value="0"/>
+					</div>
+
+					<!-- 水 -->
+					<div class="form-group">
+						<span>水属</span>
+						<input type="text" name="water" id="water" size="5" maxlength="5" class="form-control input-sm retain-txtbox" />
+
+						<button class="btn btn-default" type="button" name="water_minus_10" id="water_minus_10" onclick="pushStatus(this)">&laquo;</button>
+						<button class="btn btn-default" type="button" name="water_minus_1" id="water_minus_1" onclick="pushStatus(this)">&lt;</button>
+						<input type="text" name="water_add" id="water_add" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0"/>
+						<button class="btn btn-default" type="button" name="water_plus_1" id="water_plus_1" onclick="pushStatus(this)">&gt;</button>
+						<button class="btn btn-default" type="button" name="water_plus_10" id="water_plus_10" onclick="pushStatus(this)">&raquo;</button>
+
+						<span class="label label-default">訓練後</span>
+						<span>水属</span>
+						<input type="text" name="water_ex" id="water_ex" size="5" maxlength="5" class="form-control input-sm retain-txtbox" value="0"/>
+					</div>
+
+					<!-- 火 -->
+					<div class="form-group">
+						<span>火属</span>
+						<input type="text" name="fire" id="fire" size="5" maxlength="5" class="form-control input-sm retain-txtbox" />
+
+						<button class="btn btn-default" type="button" name="fire_minus_10" id="fire_minus_10" onclick="pushStatus(this)">&laquo;</button>
+						<button class="btn btn-default" type="button" name="fire_minus_1" id="fire_minus_1" onclick="pushStatus(this)">&lt;</button>
+						<input type="text" name="fire_add" id="fire_add" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0"/>
+						<button class="btn btn-default" type="button" name="fire_plus_1" id="fire_plus_1" onclick="pushStatus(this)">&gt;</button>
+						<button class="btn btn-default" type="button" name="fire_plus_10" id="fire_plus_10" onclick="pushStatus(this)">&raquo;</button>
+
+						<span class="label label-default">訓練後</span>
+						<span>火属</span>
+						<input type="text" name="fire_ex" id="fire_ex" size="5" maxlength="5" class="form-control input-sm retain-txtbox" value="0"/>
+					</div>
+
+					<!-- 風 -->
+					<div class="form-group">
+						<span>風属</span>
+						<input type="text" name="wind" id="wind" size="5" maxlength="5" class="form-control input-sm retain-txtbox" />
+
+						<button class="btn btn-default" type="button" name="wind_minus_10" id="wind_minus_10" onclick="pushStatus(this)">&laquo;</button>
+						<button class="btn btn-default" type="button" name="wind_minus_1" id="wind_minus_1" onclick="pushStatus(this)">&lt;</button>
+						<input type="text" name="wind_add" id="wind_add" size="2" maxlength="2" class="form-control input-sm retain-txtbox" value="0"/>
+						<button class="btn btn-default" type="button" name="wind_plus_1" id="wind_plus_1" onclick="pushStatus(this)">&gt;</button>
+						<button class="btn btn-default" type="button" name="wind_plus_10" id="wind_plus_10" onclick="pushStatus(this)">&raquo;</button>
+
+						<span class="label label-default">訓練後</span>
+						<span>風属</span>
+						<input type="text" name="wind_ex" id="wind_ex" size="5" maxlength="5" class="form-control input-sm retain-txtbox" value="0"/>
+					</div>
+
+				</form>
+			</div>
+		</div>
+
+		<div class="row-fluid">
+
+		</div>
+	</div>
+</body>
+</html>

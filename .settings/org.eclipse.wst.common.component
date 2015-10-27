@@ -4,10 +4,10 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="lumi-core-3.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/lumi-core/lumi-core">
+        <dependent-module archiveName="lumi-core-3.6.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/lumi-core/lumi-core">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="struts2-thymeleaf-plugin-2.3.24.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/struts2-thymeleaf-plugin/struts2-thymeleaf-plugin">
+        <dependent-module archiveName="struts2-thymeleaf-plugin-2.5-BETA2.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/struts2-thymeleaf-plugin/struts2-thymeleaf-plugin">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="noltodo"/>
