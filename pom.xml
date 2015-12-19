@@ -8,7 +8,7 @@
 	<version>1.6.0</version>
 	<properties>
 		<java.version>1.7</java.version>
-		<lumi.version>3.6.0</lumi.version>
+		<lumi.version>4.1.0</lumi.version>
 		<spring-security.version>4.0.1.RELEASE</spring-security.version>
 	</properties>
 	<repositories>
