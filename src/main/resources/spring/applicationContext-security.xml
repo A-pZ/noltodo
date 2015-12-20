@@ -14,6 +14,7 @@
 	<sec:csrf />
 
 	<sec:intercept-url pattern="/login*" access="permitAll"/>
+	<sec:intercept-url pattern="/r" access="permitAll"/>
 	<sec:intercept-url pattern="/intro*" access="permitAll"/>
 	<sec:intercept-url pattern="/twitter*" access="permitAll"/>
 	<sec:intercept-url pattern="/signup*" access="permitAll"/>

@@ -4,7 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<settings>
-		<setting name="logImpl" value="SLF4J"/>
+		<setting name="logImpl" value="LOG4J2"/>
 	</settings>
 	<mappers>
 		<mapper resource="mybatis/sqldefs.xml"/>
